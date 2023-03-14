@@ -1,0 +1,175 @@
+body {
+   background-color: #141414;
+   margin: 0;
+   padding: 0;
+}
+
+#menu {
+   height: 100vh;
+   display: flex;
+   align-items: center;
+}
+
+#menu-items {
+   margin:0;
+   position: absolute;
+   top: 50%;
+   -ms-transform: translateY( -50% );
+   transform: translateY( -50% );
+   z-index: 2;
+
+   display: flex;
+   align-items: center;
+}
+
+#menu-items:hover > .card-wrapper {
+   opacity: 0.7;
+}
+
+#menu-items:hover > .card-wrapper:hover {
+   opacity: 1;
+}
+
+.card-wrapper {
+   position: relative;
+   display: inline-block;
+   width: 15vw;
+   aspect-ratio: 5 / 7;
+   margin: 0em 4em;
+}
+
+.card {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   height: 100%;
+   width: 100%;
+   z-index: 3;
+   align-items: center;
+   border-radius: 10px;
+
+   background: linear-gradient(
+      0deg,
+      rgb( 0, 0, 0 ),
+      rgb( 30, 30, 30 )
+   );
+}
+
+.card-text {
+   color: white;
+   font-size: clamp( 4vmin, 1.5vw, 1.5vh );
+   font-family: "Arial Black", sans-serif;
+
+   margin: 0;
+   position: relative;
+   text-align: center;
+   vertical-align: middle;
+   z-index: 4;
+   top: 50%;
+   -ms-transform: translateY( -50% );
+   transform: translateY( -50% );
+
+}
+
+.card-border {
+   position: absolute;
+   top: -2px;
+   left: -2px;
+   height: calc( 100% + 5px );
+   width: calc( 100% + 5px );
+   z-index: 2;
+   
+   background: linear-gradient(
+      45deg,
+      #18EAE6,
+      #089E9C,
+      #EB6417,
+      #9E3900,
+      #EAB800,
+      #61EA3B
+   );
+   background-size: 400%;
+   background-position: 0% 0%;
+   filter: blur( 25px );
+   opacity: 0.6;
+   animation: translate 30s ease infinite;
+}
+
+@keyframes translate {
+   0% {
+      background-position: 0% 0%;
+   }
+   50% {
+      background-position: 400% 400%;
+   }
+   100% {
+      background-position: 0% 0%;
+   }
+}
+
+#menu-background-pattern {
+   height: 100vh;
+   width: 100vw;
+
+   background-image: radial-gradient(
+      rgba( 255, 255, 255, 0.1) 5%,
+      transparent 9%
+   );
+   background-position: 0% 0%;
+   background-size: 12vmin 12vmin;
+
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   z-index: 1;
+
+   transition: opacity 800ms ease,
+               background-size 800ms ease,
+               background-position 800ms ease;
+}
+
+#menu-items:hover ~ #menu-background-pattern {
+   background-size: 11vmin 11vmin;
+   opacity: 0.5;
+}
+
+#menu[ data-active-index="0" ] > #menu-background-pattern {
+   background-position: -25% 0%;
+}
+
+#menu[ data-active-index="1" ] > #menu-background-pattern {
+   background-position: -50% 0%;
+}
+
+#menu[ data-active-index="2" ] > #menu-background-pattern {
+   background-position: -75% 0%;
+}
+
+#menu[ data-active-index="3" ] > #menu-background-pattern {
+   background-position: -100% 0%;
+}
+
+#menu-background-picture {
+   height: 100%;
+   width: 100%;
+
+   background-image: url( "https://marketplace.canva.com/EAFHm4JWsu8/1/0/1600w/canva-pink-landscape-desktop-wallpaper-HGxdJA_xIx0.jpg" );
+
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   z-index: 0;
+
+   background-position: center 40%;
+   background-size: 105vmax;
+   opacity: 0.05;
+
+   transition: opacity 800ms ease,
+               background-size 800ms ease,
+               background-position 800ms ease;
+}
+
+#menu-items:hover ~ #menu-background-picture {
+   background-size: 100vmax;
+   opacity: 0.10;
+}
