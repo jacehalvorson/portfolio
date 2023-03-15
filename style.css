@@ -2,6 +2,35 @@ body {
    background-color: #141414;
    margin: 0;
    padding: 0;
+
+   padding-left: auto;
+   padding-right: auto;
+}
+
+#header {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   height: 4vh;
+   width: 100vw;
+   z-index: 2;
+
+   display: flex;
+   align-items: left;
+   justify-content: left;
+
+   background-color: rgb( 10, 10, 10 );
+   border-bottom: solid white 1px;
+}
+
+.header-link {
+   position: relative;
+   margin: auto 1em;
+
+   color: white;
+   text-decoration: none;
+   font-weight: bold;
+   font-family: comnic sans ms, cursive;
 }
 
 #menu {
@@ -13,13 +42,15 @@ body {
 #menu-items {
    margin:0;
    position: absolute;
+   width: 100%;
    top: 50%;
-   -ms-transform: translateY( -50% );
-   transform: translateY( -50% );
+   left: 50%;
+   transform: translate( -50%, -50% );
    z-index: 2;
 
    display: flex;
    align-items: center;
+   justify-content: center;
 }
 
 #menu-items:hover > .card-wrapper {
@@ -36,6 +67,16 @@ body {
    width: 15vw;
    aspect-ratio: 5 / 7;
    margin: 0em 4em;
+
+   /* transition: margin 800ms ease; */
+   transition: all 800ms ease;
+   /* transition: opacity 800ms ease; */
+}
+
+.card-wrapper:hover {
+   /* margin: 0em 3em; */
+   transform: scale( 1.1 );
+   opacity: 0.9;
 }
 
 .card {
@@ -68,7 +109,6 @@ body {
    top: 50%;
    -ms-transform: translateY( -50% );
    transform: translateY( -50% );
-
 }
 
 .card-border {
