@@ -1,5 +1,6 @@
 const menu = document.getElementById( "menu" );
 
+// Background scrolling animation
 function setActiveIndex( index:number ): void
 {
    if ( menu != null )
@@ -16,3 +17,5 @@ for ( var i = 0; i < menuItems.length; i++ )
       menuItems[ index ].addEventListener( "mouseover", function(){ setActiveIndex( index ) } );
    })( i );
 }
+
+// Mouse tracker

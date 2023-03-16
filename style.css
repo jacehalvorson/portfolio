@@ -1,3 +1,7 @@
+:root {
+   --transition-time: 600ms;
+}
+
 body {
    background-color: #141414;
    margin: 0;
@@ -11,9 +15,9 @@ body {
    position: absolute;
    top: 0px;
    left: 0px;
-   height: 4vh;
+   height: 40px;
    width: 100vw;
-   z-index: 2;
+   z-index: 5;
 
    display: flex;
    align-items: left;
@@ -29,7 +33,6 @@ body {
 
    color: white;
    text-decoration: none;
-   font-weight: bold;
    font-family: comnic sans ms, cursive;
 }
 
@@ -66,17 +69,39 @@ body {
    display: inline-block;
    width: 15vw;
    aspect-ratio: 5 / 7;
-   margin: 0em 4em;
+   margin: 0em 4vw;
 
-   /* transition: margin 800ms ease; */
-   transition: all 800ms ease;
-   /* transition: opacity 800ms ease; */
+   transition: transform var( --transition-time, 600ms ) ease,
+               margin var( --transition-time, 600ms ) ease;
 }
 
 .card-wrapper:hover {
-   /* margin: 0em 3em; */
+   margin: 0em 6vw;
+   transition: transform var( --transition-time, 600ms ) ease,
+               margin var( --transition-time, 600ms ) ease;
    transform: scale( 1.1 );
    opacity: 0.9;
+}
+
+.card-wrapper:active {
+   transition: transform 25ms linear,
+               margin var( --transition-time, 600ms ) ease;
+   transform: scale( 1.0 );
+}
+
+.card::before {
+   content: "";
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   height: 100%;
+   width: 100%;
+   z-index: 3;
+   border-radius: 2vh;
+   background-image: url( https://static.clubs.nfl.com/image/private/f_auto/ravens/glkmjg4bdeuq4kdoowbr );
+   background-position: 0% 70%;
+   background-size: 100%;
+   opacity: 0.6;
 }
 
 .card {
@@ -87,28 +112,56 @@ body {
    width: 100%;
    z-index: 3;
    align-items: center;
-   border-radius: 10px;
-
-   background: linear-gradient(
+   border-radius: 2vh;
+   
+   background-image: linear-gradient(
       0deg,
       rgb( 0, 0, 0 ),
-      rgb( 30, 30, 30 )
-   );
+      rgb( 70, 70, 70 )
+      );
+      opacity: 1;
 }
 
-.card-text {
+.card-title {
    color: white;
    font-size: clamp( 4vmin, 1.5vw, 1.5vh );
-   font-family: "Arial Black", sans-serif;
+   font-family: comnic sans ms, cursive;
+   font-weight: bold;
 
    margin: 0;
    position: relative;
    text-align: center;
-   vertical-align: middle;
-   z-index: 4;
+   z-index: 6;
    top: 50%;
-   -ms-transform: translateY( -50% );
    transform: translateY( -50% );
+
+   transition: top 800ms ease;
+}
+
+.card:hover > .card-title {
+   top: 10%;
+}
+
+.card-text {
+   position: absolute;
+   top: 0%;
+   left: 10%;
+   text-align: center;
+   height: 70%;
+   width: 90%;
+   z-index: 5;
+   cursor: default;
+
+   color: transparent;
+   font-size: clamp( 2vmin, 1.5vw, 1.5vh );
+   font-family: comnic sans ms, cursive;
+
+   transition: color 300ms linear;
+}
+
+.card:hover > .card-text {
+   color: white;
+   transition-duration: 1000ms;
 }
 
 .card-border {
@@ -118,32 +171,28 @@ body {
    height: calc( 100% + 5px );
    width: calc( 100% + 5px );
    z-index: 2;
-   
+
    background: linear-gradient(
-      45deg,
-      #18EAE6,
-      #089E9C,
-      #EB6417,
-      #9E3900,
-      #EAB800,
-      #61EA3B
+      30deg,
+      #3DF00C 6%,
+      #00e0f0,
+      #F018C6,
+      #F08800,
+      #3DF00C 94%
    );
-   background-size: 400%;
-   background-position: 0% 0%;
-   filter: blur( 25px );
-   opacity: 0.6;
-   animation: translate 30s ease infinite;
+   background-size: 2000%;
+   background-position: bottom left;
+   filter: blur( 15px );
+   opacity: 0.5;
+   animation: translate 7s ease infinite;
 }
 
 @keyframes translate {
    0% {
-      background-position: 0% 0%;
-   }
-   50% {
-      background-position: 400% 400%;
+      background-position: bottom left;
    }
    100% {
-      background-position: 0% 0%;
+      background-position: top right;
    }
 }
 
@@ -163,9 +212,9 @@ body {
    top: 0px;
    z-index: 1;
 
-   transition: opacity 800ms ease,
-               background-size 800ms ease,
-               background-position 800ms ease;
+   transition: opacity var( --transition-time, 600ms ) ease,
+               background-size var( --transition-time, 600ms ) ease,
+               background-position var( --transition-time, 600ms ) ease;
 }
 
 #menu-items:hover ~ #menu-background-pattern {
@@ -202,14 +251,14 @@ body {
 
    background-position: center 40%;
    background-size: 105vmax;
-   opacity: 0.05;
+   opacity: 0.10;
 
-   transition: opacity 800ms ease,
-               background-size 800ms ease,
-               background-position 800ms ease;
+   transition: opacity var( --transition-time, 600ms ) ease,
+               background-size var( --transition-time, 600ms ) ease,
+               background-position var( --transition-time, 600ms ) ease;
 }
 
 #menu-items:hover ~ #menu-background-picture {
    background-size: 100vmax;
-   opacity: 0.10;
+   opacity: 0.15;
 }
