@@ -1,0 +1,115 @@
+/* Global styles */
+body {
+   margin: 0;
+   padding: 0;
+}
+
+main {
+   padding: 20px;
+}
+
+/* Product page styles */
+.product {
+   background: linear-gradient( 
+                  to bottom, 
+                  rgba( 20, 20, 20, 1 ), 
+                  rgba( 0, 0, 0, 0.9 )
+               );
+   border-radius: 5px;
+
+   position: relative;
+   display: grid;
+   grid-template-columns: 2fr 3fr;
+   grid-template-rows: auto 1fr;
+   align-items: start;
+   justify-items: start;
+   padding: 20px;
+}
+
+.product #image-container
+{
+   position: relative;
+   width: 100%;
+   grid-column: 1;
+   grid-row: 1 / span 4;
+   
+   display: grid;
+   grid-template-columns: repeat( 4, 1fr );
+   grid-template-rows: repeat( auto-fit, minmax( 60px, 1fr ));
+   grid-gap: 10px;
+   align-items: center;
+   justify-items: center;
+}
+
+#image-container img {
+   width: 100%;
+   border-radius: 5px;
+   margin-bottom: 10px;
+
+   grid-column: 1 / span 4;
+   grid-row: 1;
+}
+
+#image-container #left-icon,#right-icon {
+   font-size: 48px;
+   color: white;
+   grid-row: 2;
+   cursor: pointer;
+   color: rgba( 255, 255, 255, 0.6 );
+}
+
+#image-container #left-icon {
+   grid-column: 2;
+}
+
+#image-container #right-icon {
+   grid-column: 3;
+}
+
+.product #title-price-container {
+   grid-column: 2;
+   grid-row: 1;
+   align-self: start;
+   justify-self: start;
+   padding: 0 0 10px 20px;
+}
+
+.product #product-name {
+   font-size: 48px;
+}
+.product h1,h2 {
+   margin: 0;
+}
+
+.product #product-description {
+   grid-column: 2;
+   grid-row: 2;
+   padding-left: 20px;
+}
+
+.product #product-price {
+   font-weight: bold;
+   font-size: 20px;
+
+   grid-column: 2;
+   grid-row: 3;
+}
+
+.product #add-to-cart {
+   background-color: #007bff;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 4px;
+   font-size: 16px;
+   cursor: pointer;
+
+   grid-row: -1;
+   grid-column: -1;
+   align-self: end;
+   justify-self: end;
+}
+
+.product #add-to-cart:hover {
+   background-color: #0056b3;
+}

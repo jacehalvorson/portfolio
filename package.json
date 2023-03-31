@@ -1,0 +1,19 @@
+{
+  "name": "website",
+  "version": "9.5.0",
+  "description": "An interactive and visually appealing website to get practice with JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jace Halvorson",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "website"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

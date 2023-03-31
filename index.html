@@ -3,24 +3,29 @@
 <head>
    <title>Sample Website</title>
    <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="../ecommerce/header.css">
+   <link rel="stylesheet" href="../ecommerce/font.css">
 </head>
 
 <body>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    
-   <div id="header">
+   <header>
       <a class="fa-solid fa-house header-link" href="index.html"></a>
-      <a class="fa-brands fa-github header-link" style="transform:scale(1.2);" href="https://github.com/jacehalvorson"></a>
+      <a class="fa-brands fa-github header-link" href="https://github.com/jacehalvorson"></a>
       <a class="header-link" href="https://github.com/jacehalvorson">Contact</a>
-   </div>
+      <div id="header-right-side">
+         <a class="fa fa-cog header-link" aria-hidden="true"></a>
+         <a class="fa-solid fa-user header-link"></a>
+      </div>
+   </header>
 
    <div id="menu">
       <div id="menu-items">
          <div class="card-wrapper">
-            <div class="card">
+            <div class="card" id="card-nfl-stats" onclick="window.open( 'http://www.github.com/jacehalvorson/nflstats' )">
                <h2 class="card-title">NFL Stats</h2>
-               <img class="card-background-picture" src="">
                <p class="card-text">
                   Browse through pages of NFL data from every player with season stats in the selected category and year.
                   Data can be requested and sorted by 11 categories going back to 1993.
@@ -29,25 +34,22 @@
             <div class="card-border"></div>
          </div>
          <div class="card-wrapper">
-            <div class="card">
-               <h2 class="card-title">Card 2</h2>
-               <img src="">
-               <p class="card-text"></p>
+            <div class="card" id="card-ecommerce" onclick="window.open( './ecommerce/index.html' )">
+               <h2 class="card-title">E-Commerce Website</h2>
+               <p class="card-text">Offers a wide range of products from various categories, all available through a neat-looking user-friendly interface.</p>
             </div>
             <div class="card-border"></div>
          </div>
          <div class="card-wrapper">
-            <div class="card">
+            <div class="card" id="card-terminal-shortcuts">
                <h2 class="card-title">Card 3</h2>
-               <img src="">
                <p class="card-text"></p>
             </div>
             <div class="card-border"></div>
          </div>
          <div class="card-wrapper">
-            <div class="card">
+            <div class="card" id="card-http-server">
                <h2 class="card-title">Card 4</h2>
-               <img src="">
                <p class="card-text"></p>
             </div>
             <div class="card-border"></div>
@@ -58,7 +60,7 @@
       <div id="menu-background-picture"></div>
 </body>
 
-<script src="out/index.js"></script>
+<!-- <script src="out/index.js"></script> -->
 <script src="https://kit.fontawesome.com/f4993ef7f4.js" crossorigin="anonymous"></script>
 
 </html>
