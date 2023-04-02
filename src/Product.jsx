@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import ReadJSONAndExecuteSetter from "./utils";
-import productFileName from "./Ecommerce.jsx";
+import ReadJSONAndExecuteSetter from "./utils.js";
 import "./Product.css";
+
+const productsFileName = '/products.json';
 
 function Product( )
 {
@@ -13,12 +14,17 @@ function Product( )
    const [ productsObject, setProductsObject ] = useState( { } );
    useEffect( ( ) =>
    {
-      ReadJSONAndExecuteSetter( productFileName, setProductsObject )
+      ReadJSONAndExecuteSetter( productsFileName, setProductsObject )
    }, [ ] );
 
    // Find the product with the given ID
+   if ( ( !productsObject || !productsObject.products ) ) {
+      // Products not loaded yet
+      return ( <div></div> );
+   }
+   
    let productObject = productsObject.products.find( product => product.id === id );
-
+   
    if ( !productObject )
    {
       // No product with this ID exists

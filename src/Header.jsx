@@ -4,7 +4,7 @@ const Header = ( ) =>
 {
   return (
       <header>
-        <a className="fa-solid fa-house header-link" href="index.html"></a>
+        <a className="fa-solid fa-house header-link" href="/"></a>
         <a className="fa-brands fa-github header-link" href="https://github.com/jacehalvorson"></a>
         <a className="header-link" href="https://github.com/jacehalvorson">Contact</a>
 

@@ -6,7 +6,7 @@ const projectCardFileName = "/project_cards.json";
 function Card( props )
 {
   return (
-    <div className="card-wrapper">
+    <div className="card-wrapper" onMouseOver={ props.mouseOverFunction}>
       <div className="card" id={ props.id } onClick={ ( ) => { window.open( props.href ) } } >
           <h2 className="card-title">{ props.title }</h2>
           <p className="card-text">{ props.description }</p>
@@ -20,22 +20,11 @@ function Cards( props )
 {
   const [ cardsDict, setCardsDict ] = useState( { } );
   const [ activeIndex, setActiveIndex ] = useState( 0 );
-
+  
   useEffect( ( ) =>
   {
     // Read the project card list from the JSON file
     ReadJSONAndExecuteSetter( projectCardFileName, setCardsDict );
-    console.log( "Reading project cards from " + projectCardFileName + ": " );
-    console.log( cardsDict );
-
-    var menuItems = document.getElementsByClassName( "card-wrapper" );
-    for ( var i = 0; i < menuItems.length; i++ )
-    {
-      (function( index )
-      {
-          menuItems[ index ].addEventListener( "mouseover", function(){ setActiveIndex( index ) } );
-      })( i );
-    }
   }, [ ] );
 
   return (
@@ -43,13 +32,14 @@ function Cards( props )
       <div id="menu-items">
         {
           ( cardsDict.projectCards )
-          ? ( cardsDict.projectCards.map( ( card ) => 
+          ? ( cardsDict.projectCards.map( ( card, cardIndex ) => 
             (
               <Card
                 title={ card.title }
                 description={ card.description }
                 id={ card.id }
                 href={ card.href }
+                mouseOverFunction={ function( ){ console.log( 'activeIndex: ' + activeIndex ); setActiveIndex( cardIndex ) } }
               />
             ) ) )
           : ( <div></div> )
