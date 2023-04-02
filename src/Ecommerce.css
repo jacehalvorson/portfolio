@@ -3,7 +3,7 @@
    padding: 0;
 }
 
-main {
+#ecommerce {
    padding: 20px;
 
    display: flex;
@@ -34,7 +34,6 @@ main {
    background-image: url( https://via.placeholder.com/200x200 );
    background-size: cover;
    overflow: hidden;
-   /* cursor: pointer; */
 
    position: relative;
    width: 300px;
@@ -72,7 +71,6 @@ main {
    
    align-items: center;
    padding: 10px;
-   /* padding-top: 10%; */
    color: white;
 
    /* Reduce the opacity of the image behind the details */

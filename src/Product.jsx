@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import ReadJSONAndExecuteSetter from "./utils";
+import productFileName from "./Ecommerce.jsx";
 import "./Product.css";
 
 function Product( )
@@ -8,34 +10,34 @@ function Product( )
    const { productId: id } = useParams( );
 
    // Get the product data from the JSON file
-   const [ product, setProduct ] = useState( { } );
-
+   const [ productsObject, setProductsObject ] = useState( { } );
    useEffect( ( ) =>
    {
-      fetch( '/products.json' )
-         .then( response => response.json( ) )
-         .then( json => setProduct( json.products.find( product => product.id === id ) ) )
-         .catch( err => console.error( err ) )
+      ReadJSONAndExecuteSetter( productFileName, setProductsObject )
    }, [ ] );
 
-   if ( !product )
+   // Find the product with the given ID
+   let productObject = productsObject.products.find( product => product.id === id );
+
+   if ( !productObject )
    {
-      return null;
+      // No product with this ID exists
+      return ( <h1>404: Not Found</h1> );
    }
 
    return (
       <main>
          <article className="product">
             <div id="image-container">
-               <img src={ product.image } alt={ product.name } />
+               <img src={ productObject.image } alt={ productObject.name } />
                <i className="fa-solid fa-circle-chevron-left left-right-icons" id="left-icon"></i>
                <i className="fa-solid fa-circle-chevron-right left-right-icons" id="right-icon"></i>
             </div>
             <div id="title-price-container">
-               <h1 id="product-name">{ product.name }</h1>
-               <h2 className="price">{ '$' + product.price }</h2>
+               <h1 id="product-name">{ productObject.name }</h1>
+               <h2 className="price">{ '$' + productObject.price }</h2>
             </div>
-            <p id="product-description">{ product.description }</p>
+            <p id="product-description">{ productObject.description }</p>
             <button id="add-to-cart" onClick={ ( ) => console.log( "Add to cart" ) }>Add to Cart</button>
          </article>
       </main>

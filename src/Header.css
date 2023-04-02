@@ -16,16 +16,18 @@ header {
 
 .header-link {
    position: relative;
-   margin: auto 0.5em;
+   margin: auto 0;
+   margin-left: clamp( 18px, 3vw, 24px );
    
    color: white;
    text-decoration: none;
-   font-size: 34px;
-
+   font-size: clamp( 30px, 3vw, 46px );
+   
    cursor: pointer;
 }
 
 #header-right-side {
-   margin: auto 0.5em;
+   margin: auto 0;
+   margin-right: clamp( 18px, 3vw, 24px );
    margin-left: auto;
 }
