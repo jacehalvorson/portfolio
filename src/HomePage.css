@@ -3,12 +3,12 @@
 }
 
 body {
+   height: 100%;
    margin: 0;
    padding: 0;
 }
 
 #menu {
-   height: 100vh;
    display: flex;
    align-items: center;
 }
@@ -191,7 +191,7 @@ body {
       transparent 9%
    );
    background-position: 0% 0%;
-   background-size: 12vmin 12vmin;
+   background-size: 11vmin 11vmin;
 
    position: absolute;
    left: 0px;
@@ -204,7 +204,7 @@ body {
 }
 
 #menu-items:hover ~ #menu-background-pattern {
-   background-size: 11vmin 11vmin;
+   background-size: 10.5vmin 10.5vmin;
    opacity: 0.5;
 }
 
@@ -228,7 +228,7 @@ body {
    height: 100%;
    width: 100%;
 
-   background-image: url( "https://marketplace.canva.com/EAFHm4JWsu8/1/0/1600w/canva-pink-landscape-desktop-wallpaper-HGxdJA_xIx0.jpg" );
+   background-image: url( "https://media.istockphoto.com/id/507965390/photo/futuristic-data-center-with-servers-blue-network-of-global-connections.jpg?b=1&s=612x612&w=0&k=20&c=Z8Ok5MqizTZFSGnZ0wYTCQ2cfuZC8U1w4FblF2wHruY=" );
 
    position: absolute;
    left: 0px;

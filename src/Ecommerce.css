@@ -28,14 +28,13 @@ main {
    grid-gap: 20px;
 }
  
-.product {
-   box-sizing: content-box;
+.product-preview {
    border: 1px solid white;
    border-radius: 10px;
    background-image: url( https://via.placeholder.com/200x200 );
    background-size: cover;
    overflow: hidden;
-   cursor: pointer;
+   /* cursor: pointer; */
 
    position: relative;
    width: 300px;
@@ -48,14 +47,14 @@ main {
                transform 0.2s ease
 }
 
-.product:hover {
+.product-preview:hover {
    box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
    opacity: 0.9;
    transform: scale( 1.05 );
 }
 
 /* Shrink when clicked */
-.product:active {
+.product-preview:active {
    transition: box-shadow 0.2s ease,
                opacity 0.2s ease,
                transform 25ms linear;
@@ -80,7 +79,7 @@ main {
    background-image: linear-gradient(
                         180deg,
                         rgba( 0, 0, 0, 0 ) 0%,
-                        rgba( 0, 0, 0, 0.4 ) 30%,
+                        rgba( 0, 0, 0, 0.4 ) 20%,
                         rgba( 0, 0, 0, 0.8 ) 90%
                      );
 

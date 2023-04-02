@@ -1,0 +1,60 @@
+{
+   "products": [
+      {
+         "id": "0",
+         "name": "Ice Skates",
+         "description": "These high-quality ice skates are perfect for recreational and competitive skating. They feature a durable and comfortable design that will keep you skating for hours.",
+         "price": 50,
+         "image": "https://cdn.shopify.com/s/files/1/1366/7345/products/Photo2023-03-03_20243PM_300x.jpg?v=1677872854"
+      },
+      {
+         "id": "1",
+         "name": "Snowboard",
+         "description": "This premium snowboard is perfect for riders of all levels. With a lightweight design and high-performance materials, you'll be carving up the mountain in no time.",
+         "price": 300,
+         "image": "https://images.pexels.com/photos/3869851/pexels-photo-3869851.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+         "id": "2",
+         "name": "Hiking Boots",
+         "description": "These rugged hiking boots are built to handle any terrain. With a waterproof design and sturdy construction, they'll keep your feet comfortable and dry on even the toughest hikes.",
+         "price": 150,
+         "image": "https://images.pexels.com/photos/1467574/pexels-photo-1467574.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+         "id": "3",
+         "name": "Tennis Racquet",
+         "description": "Take your game to the next level with this high-quality tennis racquet. Featuring a lightweight design and advanced materials, it's the perfect choice for players of all levels.",
+         "price": 200,
+         "image": "https://images.pexels.com/photos/5739294/pexels-photo-5739294.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+         "id": "4",
+         "name": "Golf Clubs",
+         "description": "These premium golf clubs are designed to help you improve your game. With advanced materials and a custom fit, you'll be hitting longer, straighter shots in no time.",
+         "price": 500,
+         "image": "https://media.istockphoto.com/id/176233693/photo/gentelmans-tools-golfing.jpg?b=1&s=612x612&w=0&k=20&c=-ToRwUFTJsMdtIspkrKHK9RLKwKwwo1jxUj_FuhWis4="
+      },
+      {
+         "id": "5",
+         "name": "Basketball",
+         "description": "Take your game to the next level with this high-quality basketball. It features a durable rubber construction and provides excellent grip and control.",
+         "price": 25,
+         "image": "https://media.istockphoto.com/id/170096587/photo/basketball.jpg?b=1&s=612x612&w=0&k=20&c=JKDHUttcF1H7GYjU1JjyZcgNWrgd4E8U6kO4mEYDxbU="
+      },
+      {
+         "id": "6",
+         "name": "Swimming Goggles",
+         "description": "These comfortable and leak-proof swimming goggles are perfect for both recreational and competitive swimmers. They provide excellent visibility and protect your eyes from chlorine.",
+         "price": 20,
+         "image": "https://images.pexels.com/photos/9632569/pexels-photo-9632569.jpeg?auto=compress&cs=tinysrgb&w=600"
+      },
+      {
+         "id": "7",
+         "name": "Baseball Glove",
+         "description": "This high-quality baseball glove is perfect for players of all skill levels. It is made from top-grain leather and features a comfortable and durable design.",
+         "price": 60,
+         "image": "https://images.pexels.com/photos/2868705/pexels-photo-2868705.jpeg?auto=compress&cs=tinysrgb&w=600"
+      }
+   ]
+}

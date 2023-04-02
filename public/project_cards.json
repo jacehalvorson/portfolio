@@ -1,0 +1,16 @@
+{
+   "projectCards": [
+      {
+         "title": "NFL Stats",
+         "description": "Browse through pages of NFL data from every player with season stats in the selected category and year. Data can be requested and sorted by 11 categories going back to 1993.",
+         "id": "card-nfl-stats",
+         "href": "http://www.github.com/jacehalvorson/nflstats"
+      },
+      {
+         "title": "E-Commerce Website",
+         "id": "card-ecommerce",
+         "href": "/ecommerce",
+         "description": "Offers a wide range of products from various categories, all available through a neat-looking user-friendly interface."
+      }
+   ]
+}

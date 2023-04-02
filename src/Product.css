@@ -12,7 +12,7 @@ main {
 .product {
    background: linear-gradient( 
                   to bottom, 
-                  rgba( 20, 20, 20, 1 ), 
+                  rgba( 0, 0, 0, 0.2 ), 
                   rgba( 0, 0, 0, 0.9 )
                );
    border-radius: 5px;
@@ -54,7 +54,7 @@ main {
    font-size: 48px;
    color: white;
    grid-row: 2;
-   cursor: pointer;
+   /* cursor: pointer; */
    color: rgba( 255, 255, 255, 0.6 );
 }
 
