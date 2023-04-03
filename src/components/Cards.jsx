@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReadJSONAndExecuteSetter from "../utils.js";
+import { ReadJSONAndExecuteSetter } from "../utils.js";
 import '../style/Cards.css';
 
 const projectCardFileName = "/project_cards.json";

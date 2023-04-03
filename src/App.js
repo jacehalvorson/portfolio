@@ -5,6 +5,7 @@ import Cards from './components/Cards.jsx';
 import Ecommerce from './components/Ecommerce.jsx';
 import Product from './components/Product.jsx';
 import Checkout from './components/Checkout.jsx';
+import NFLStats from './components/NFLStats.jsx';
 import { ReadJSONAndExecuteSetter } from './utils.js';
 import './style/App.css';
 import './style/Header.css';
@@ -17,8 +18,9 @@ function App( )
       <Routes>
         <Route path="/" element={ <Cards /> } />
         <Route path="/ecommerce" element={ <Ecommerce /> } />
-        <Route path="/product/:productId" element={ <Product /> } />
+        <Route path="/ecommerce/product/:productId" element={ <Product /> } />
         <Route path="/ecommerce/checkout" element={ <Checkout /> } />
+        <Route path="/nflstats" element={ <NFLStats /> } />
         <Route path="*" element={<h1>404: Not Found</h1>} />
       </Routes>
     </Router>

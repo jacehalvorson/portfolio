@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReadJSONAndExecuteSetter from '../utils.js';
+import { ReadJSONAndExecuteSetter } from '../utils.js';
 import '../style/Ecommerce.css'
 
 // File names
@@ -25,7 +25,7 @@ function ProductPreviews( )
       {
          productDict.products.map( product => 
          (
-            <a href={ '/product/' + product.id }>
+            <a href={ '/ecommerce/product/' + product.id }>
                <li
                   className="product-preview"
                   style={{ backgroundImage: 'url( ' + product.image + ')' }}
