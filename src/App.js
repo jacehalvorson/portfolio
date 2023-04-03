@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './Header.jsx';
-import Cards from './Cards.jsx';
-import Ecommerce from './Ecommerce.jsx';
-import Product from './Product.jsx';
-import Checkout from './Checkout.jsx';
+import Header from './components/Header.jsx';
+import Cards from './components/Cards.jsx';
+import Ecommerce from './components/Ecommerce.jsx';
+import Product from './components/Product.jsx';
+import Checkout from './components/Checkout.jsx';
 import { ReadJSONAndExecuteSetter } from './utils.js';
-import './App.css';
-import './Header.css';
-import './HomePage.css';
+import './style/App.css';
+import './style/Header.css';
 
 function App( )
 {

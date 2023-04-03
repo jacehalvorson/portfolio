@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ReadJSONAndExecuteSetter from "./utils.js";
+import ReadJSONAndExecuteSetter from "../utils.js";
+import '../style/Cards.css';
 
 const projectCardFileName = "/project_cards.json";
 
@@ -7,9 +8,12 @@ function Card( props )
 {
   return (
     <div className="card-wrapper" onMouseOver={ props.mouseOverFunction}>
-      <div className="card" id={ props.id } onClick={ ( ) => { window.open( props.href ) } } >
+      <div className="card" id={ props.id }>
           <h2 className="card-title">{ props.title }</h2>
           <p className="card-text">{ props.description }</p>
+          <a href={ props.href }>
+            <button className="card-button">Check it out</button>
+          </a>
       </div>
       <div className="card-border"></div>
     </div>

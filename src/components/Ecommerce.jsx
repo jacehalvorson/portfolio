@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ReadJSONAndExecuteSetter from './utils.js';
-import './Ecommerce.css'
+import ReadJSONAndExecuteSetter from '../utils.js';
+import '../style/Ecommerce.css'
 
 // File names
 const productsFileName = '/products.json';
@@ -26,7 +25,7 @@ function ProductPreviews( )
       {
          productDict.products.map( product => 
          (
-            <Link to={ '/product/' + product.id }>
+            <a href={ '/product/' + product.id }>
                <li
                   className="product-preview"
                   style={{ backgroundImage: 'url( ' + product.image + ')' }}
@@ -37,7 +36,7 @@ function ProductPreviews( )
                   <p className="product-description">{ product.description }</p>
                </div>
                </li>
-            </Link>
+            </a>
          ))
       }
       </ul>
