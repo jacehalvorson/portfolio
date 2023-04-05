@@ -9,7 +9,7 @@ export function ReadJSONAndExecuteSetter( fileName, setterFunction )
 export async function getStatTable( ) {
   try
   {
-    const url = 'https://www.pro-football-reference.com/years/2022/passing.htm#passing';
+    const url = 'https://www.pro-football-reference.com/years/2022/passing.htm';
     const response = await fetch( url );
     const html = await response.text( );
 

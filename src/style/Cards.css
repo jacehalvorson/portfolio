@@ -48,10 +48,10 @@ body {
 }
 
 .card-wrapper:hover {
-   margin: 8vh 5vw 0 5vw;
+   margin: 8vh 4.5vw 0 4.5vw;
    transition: transform var( --transition-time, 600ms ) ease,
                margin var( --transition-time, 600ms ) ease;
-   transform: scale( 1.1 );
+   transform: scale( 1.05 );
    opacity: 0.9;
 }
 
