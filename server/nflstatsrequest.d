@@ -1,1 +1,0 @@
-C:\Users\every\Documents\nflstatsrequest\target\release\nflstatsrequest.exe: C:\Users\every\Documents\nflstatsrequest\src\get_stats_and_write_to_html.rs C:\Users\every\Documents\nflstatsrequest\src\lib.rs C:\Users\every\Documents\nflstatsrequest\src\main.rs
