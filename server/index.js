@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const exec = require('exec-sync');
 
 async function getStatTable( ) {
    try
@@ -10,9 +11,9 @@ async function getStatTable( ) {
       
       const parser = new DOMParser( );
       const parsedHtml = parser.parseFromString( html, 'text/html' );
-     const table = parsedHtml.querySelector( 'table' );
-     console.log( table );
-     return table;
+      const table = parsedHtml.querySelector( 'table' );
+      console.log( table );
+      return table;
    }
    catch ( error )
    {
@@ -20,12 +21,21 @@ async function getStatTable( ) {
    }
 }
 
+function execute( fileName ) { 
+   console.log("execute() start");
+   exec(fileName, ['2022', 'receiving'], function(err, data) {  
+      console.log(err)
+      console.log(data.toString());                       
+   });  
+   console.log("execute() finished");
+}
+
 const PORT = process.env.PORT || 3006;
 const app = express();
 
 app.get('/api/stat-table', (req, res) => {
-   res.setHeader('Content-Type', 'text/html');
-   res.sendFile(path.resolve(__dirname, 'stats_table.html'));
+   execute( 'nflstatsrequest.exe' );
+   res.sendFile(path.resolve(__dirname, 'stats_table.json'));
 });
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
