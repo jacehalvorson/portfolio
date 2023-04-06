@@ -1,3 +1,47 @@
-h1 {
-   color: #eee;
+body {
+   background: rgba(0,14,26,1);
+   background: linear-gradient(to bottom, #1A0901 0%, rgba(0,14,26,1) 100%);
+}
+
+table {
+   background-color: gray;
+}
+
+th {
+   border: 1px solid white;
+   background-color: rgb( 30, 30, 30 );
+   padding: 0.4em;
+
+   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   font-weight: 700;
+   color: white;
+   text-decoration: none;
+   cursor: default;
+   
+   transition: transform 10ms ease-in-out,
+               background-color 200ms ease-in-out;
+}
+
+th:hover {
+   background-color: rgb( 70, 70, 70 );
+}
+
+th:active {
+   transform: scale( 0.95 );
+}
+
+td {
+   background-color: rgb( 0, 0, 20 );
+   padding: 0.4em;
+   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   font-weight: 400;
+   color: white;
+   text-decoration: none;
+}
+
+caption {
+   margin: 0.5em;
+   font-size: 2em;
+   font-weight: bold;
+   color: white;
 }

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "../style/NFLStats.css";
+import "../style/index.css";
 import { useEffect } from "react";
 
 function NFLStats( )
@@ -16,7 +17,6 @@ function NFLStats( )
 
    return (
       <main id="nfl-stats">
-         <h1>NFL Stats</h1>
          <div dangerouslySetInnerHTML={{__html: table }}>
 
          </div>
