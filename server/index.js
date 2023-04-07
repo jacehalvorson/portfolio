@@ -1,40 +1,37 @@
 const express = require('express');
 const path = require('path');
-const exec = require('exec-sync');
+const execFile = require('child_process').execFile;
 
-async function getStatTable( ) {
-   try
-   {
-      const url = 'https://www.pro-football-reference.com/years/2022/passing.htm';
-      const response = await fetch( url );
-      const html = await response.text( );
-      
-      const parser = new DOMParser( );
-      const parsedHtml = parser.parseFromString( html, 'text/html' );
-      const table = parsedHtml.querySelector( 'table' );
-      console.log( table );
-      return table;
-   }
-   catch ( error )
-   {
-      console.error( 'Error: Could not get stat table - ' + error );
-   }
-}
+async function spawnChildProcess( fileName, year, category ) {
+   const startTime = process.hrtime.bigint();
+   console.log( `spawnChildProcess() started` );
 
-function execute( fileName ) { 
-   console.log("execute() start");
-   exec(fileName, ['2022', 'receiving'], function(err, data) {  
-      console.log(err)
-      console.log(data.toString());                       
-   });  
-   console.log("execute() finished");
+   // Spawn child process to update JSON file, don't return until it's done
+   const result = await new Promise( ( resolve, reject ) => {
+      execFile( fileName, [ year, category ], function(err, data) {
+         if ( err ) {
+            reject( err );
+         }
+         else {
+            console.log( `nflstatsrequest.exe completed with return ${data.toString()}` );
+            resolve( data );
+         }
+      });
+   });
+
+   const elapsedTime = process.hrtime.bigint() - startTime;
+   console.log( `spawnChildProcess() finished in ${elapsedTime} microseconds` );
+   return result;
 }
 
 const PORT = process.env.PORT || 3006;
 const app = express();
 
-app.get('/api/stat-table', (req, res) => {
-   execute( 'nflstatsrequest.exe' );
+app.get('/api/:year/:category', async (req, res) => {
+   // Spawn child process and wait for execution to finish
+   await spawnChildProcess( 'nflstatsrequest.exe', req.params.year, req.params.category );
+
+   // Now that JSON is updated, send it to the client
    res.sendFile(path.resolve(__dirname, 'stats_table.json'));
 });
 
@@ -43,49 +40,3 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.listen(PORT, () => {
    console.log(`Server is listening on port ${PORT}`);
 });
-
-// const path = require('path');
-// const fs = require('fs');
-
-// import React from 'react';
-// import ReactDOMServer from 'react-dom/server';
-// import App from '../src/App';
-// import NFLStats from '../src/components/NFLStats';
-// import getStatTable from '../src/utils';
-
-// const PORT = process.env.PORT || 3006;
-
-// const express = require('express');
-// const app = express();
-
-// app.get('/stat-table', (req, res) => {
-//    const NFLStatsComponent = ReactDOMServer.renderToString(<NFLStats />);
-//    console.log("stat-table");
-//    // const statTable = getStatTable();
-//    res.send(
-//       '<h1>Hello World</h1>'
-//    );
-// });
-
-// app.get('*', (req, res) => {
-//    const reactApp = ReactDOMServer.renderToString(<App />);
-//    console.log("stat-table");
-   
-//    const indexFile = path.resolve('../public/index.html');
-//    fs.readFile(indexFile, 'utf8', (err, data) => {
-//       if (err) {
-//          console.error('Something went wrong:', err);
-//          return res.status(500).send('Oops, better luck next time!');
-//       }
-   
-//       return res.send(
-//          data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
-//       );
-//    });
-// });
-
-// app.use(express.static(path.resolve(__dirname, '..', 'public')));
-
-// app.listen(PORT, () => {
-//    console.log(`Server is listening on port ${PORT}`);
-// });

@@ -45,3 +45,7 @@ caption {
    font-weight: bold;
    color: white;
 }
+
+.stats_table > thead > tr:not(.over_header) > th {
+   background-color: green;
+}
