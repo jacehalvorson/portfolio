@@ -25,7 +25,7 @@ function NFLStats( )
             // Create the table body
             setTableBody( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
          })
-         .catch( err => console.error( 'Error parsing NFL stats from ' + api_url + '\n' + err ) );
+         .catch( err => console.error( 'Error parsing NFL stats from ' + api_url + '\n\n' + err ) );
    }, [ ] );
 
    return (
@@ -40,7 +40,6 @@ function NFLStats( )
             <button class="nfl-stats-selection-item" id="nfl-stats-load-button">Load</button>
          </div>
          <table>
-            <caption>Passing Table</caption>
             { tableHeader }
             { tableBody }
          </table>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/Checkout.css';
 
 const states = [
@@ -44,15 +44,17 @@ const states = [
    { value: 'RI', label: 'Rhode Island' }
 ]
 
-function CartItem( )
+function CartItem( props )
 {
    return (
       <div className="cart-item">
-         <img src="https://images.unsplash.com/photo-1589989369979-8e1b5e1b5f1f?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FydHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="Product" />
+         <img src={ props.image } alt={ props.name } />
          <div className="cart-item-info">
-            <h2>Product Name</h2>
-            <h3>Price</h3>
-            <h3>Quantity</h3>
+            <div className="cart-item-name-price">
+               <h2>{ props.name }</h2>
+               <p>{ "$" + props.price }</p>
+            </div>
+            <p className="cart-item-quantity">{ "Quantity: " + props.quantity }</p>
          </div>
       </div>
    );
@@ -60,16 +62,26 @@ function CartItem( )
 
 function Checkout( )
 {
+   const [ test, setTest ] = useState( 0 );
+   useEffect( ( ) => {
+      setTest( test+1 );
+      console.log( "test: " + test );
+   }, [ ] );
+
    return (
       <main id="checkout">
          <div id="checkout-cart">
             <h1>Shopping Cart</h1>
             <div id="cart-items">
-               <CartItem />
+               <CartItem image={ "http://via.placeholder.com/200x200" } name={ "Temp" } price={ 50 } quantity={ 2 } />
+               <CartItem image={ "http://via.placeholder.com/200x200" } name={ "Temp" } price={ 50 } quantity={ 2 } />
+               <CartItem image={ "http://via.placeholder.com/200x200" } name={ "Temp" } price={ 50 } quantity={ 2 } />
             </div>
 
-            <div id="cart-item-total">
-               Number of items here
+            <div id="cart-item-totals">
+               <h3 id="cart-total-quantity">{test} Items</h3>
+               <h3 id="cart-total-price">{"$" + test}</h3>
+               <button id="checkout-button">Checkout</button>
             </div>
          </div>
 

@@ -2,7 +2,7 @@ body {
    background-color: rgb( 10, 10, 10 );
 }
 
-#nfl-stats {
+main#nfl-stats {
    position: relative;
    left: 0;
    display: flex;

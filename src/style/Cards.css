@@ -156,7 +156,7 @@ body {
 
 .card-button {
    position: relative;
-   width: 200%;
+   width: 190%;
    height: 6vh;
    left: 50%;
    transform: translate( -50%, 400% );
@@ -167,7 +167,7 @@ body {
    color: white;
    font-size: clamp( 14px, 2vw, 20px );
    background-color: #007bff;
-   border-radius: 4px;
+   border-radius: 5px;
    border: none;
 
    transition: transform 800ms ease;
@@ -179,7 +179,7 @@ body {
 }
 
 .card:hover .card-button {
-   transform: translate( -50%, 0% );
+   transform: translate( -50%, -30% );
 }
 
 .card-border {

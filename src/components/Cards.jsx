@@ -43,7 +43,7 @@ function Cards( props )
                 description={ card.description }
                 id={ card.id }
                 href={ card.href }
-                mouseOverFunction={ function( ){ console.log( 'activeIndex: ' + activeIndex ); setActiveIndex( cardIndex ) } }
+                mouseOverFunction={ function( ){ setActiveIndex( cardIndex ) } }
               />
             ) ) )
           : ( <div></div> )
