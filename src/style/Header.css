@@ -1,9 +1,14 @@
+#root {
+   /* Header position is fixed, account for that space by adding margin-top */
+   margin-top: 60px;
+}
+
 header {
-   position: relative;
+   position: fixed;
    top: 0px;
    left: 0px;
    height: 60px;
-   width: calc( 100vw - ( 100vw - 100% ) );
+   width: 100%;
    z-index: 2;
 
    display: flex;

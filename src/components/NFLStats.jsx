@@ -30,11 +30,21 @@ function NFLStats( )
 
    return (
       <main id="nfl-stats">
+         <div id="nfl-stats-selection-wrapper">
+            <input type="number" class="nfl-stats-selection-item" id="nfl-stats-select-year"></input>
+            <select class="nfl-stats-selection-item" id="nfl-stats-category">
+               <option value="passing">Passing</option>
+               <option value="rushing">Rushing</option>
+               <option value="receiving">Receiving</option>
+            </select>
+            <button class="nfl-stats-selection-item" id="nfl-stats-load-button">Load</button>
+         </div>
          <table>
             <caption>Passing Table</caption>
             { tableHeader }
             { tableBody }
          </table>
+         <div id="nfl-stats-background-picture"></div>
       </main>
    );
 }

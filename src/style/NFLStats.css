@@ -1,42 +1,14 @@
 body {
-   background: rgba(0,14,26,1);
-   background: linear-gradient(to bottom, #1A0901 0%, rgba(0,14,26,1) 100%);
+   background-color: rgb( 10, 10, 10 );
 }
 
-table {
-   background-color: gray;
-}
-
-th {
-   border: 1px solid white;
-   background-color: rgb( 30, 30, 30 );
-   padding: 0.4em;
-
-   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-   font-weight: 700;
-   color: white;
-   text-decoration: none;
-   cursor: default;
-   
-   transition: transform 10ms ease-in-out,
-               background-color 200ms ease-in-out;
-}
-
-th:hover {
-   background-color: rgb( 70, 70, 70 );
-}
-
-th:active {
-   transform: scale( 0.95 );
-}
-
-td {
-   background-color: rgb( 0, 0, 20 );
-   padding: 0.4em;
-   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-   font-weight: 400;
-   color: white;
-   text-decoration: none;
+#nfl-stats {
+   position: relative;
+   left: 0;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
 }
 
 caption {
@@ -46,6 +18,68 @@ caption {
    color: white;
 }
 
-.stats_table > thead > tr:not(.over_header) > th {
-   background-color: green;
+table {
+   padding: 0 0.5em 0.5em 0.5em;
+   margin-left: 10px;
+   opacity: 0.9;
+
+   background-color: rgb( 30, 30, 30 );
+   border: 1px solid white;
+   border-radius: 10px;
+   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
+   border-collapse: collapse;
+}
+
+tbody:hover > tr {
+   opacity: 0.8;
+}
+tbody:hover > tr:hover {
+   opacity: 0.9;
+   background-color: rgb( 10, 10, 10 );
+}
+
+
+th, td {
+   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   color: white;
+   text-decoration: none;
+   cursor: default;
+   text-align: center;
+
+   /* transition: transform 10ms ease-in-out,
+               background-color 50ms ease-in-out; */
+}
+
+th {
+   padding: 0.4em;
+   font-weight: 700;
+}
+
+td {
+   background-color: rgb( 0, 0, 0 );
+   padding: 0.4em;
+}
+
+th:hover {
+   background-color: rgb( 70, 70, 70 );
+}
+td:hover {
+   opacity: 1;
+}
+
+th:active {
+   transform: scale( 0.95 );
+}
+
+#nfl-stats-background-picture {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: -1;
+   opacity: 0.5;
+
+   background-image: url( https://static.clubs.nfl.com/image/private/t_editorial_landscape_12_desktop/vikings/dhxicid9fvyrl9dc0rih );
+   background-size: cover;
 }
