@@ -62,7 +62,7 @@ body {
 }
 
 #card-nfl-stats::before {
-   background-image: url( https://static.clubs.nfl.com/image/private/f_auto/ravens/glkmjg4bdeuq4kdoowbr );
+   background-image: url( https://images.unsplash.com/photo-1611000273610-f4fb9c7fd0be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW1lcmljYW4lMjBmb290YmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60 );
 }
 
 #card-ecommerce::before {
@@ -219,8 +219,8 @@ body {
    width: calc( 100vw - ( 100vw - 100% ) );
 
    background-image: radial-gradient(
-      rgba( 255, 255, 255, 0.1) 5%,
-      transparent 9%
+      rgba( 255, 255, 255, 0.1 ) 5%,
+      transparent 7%
    );
    background-position: 0% 0%;
    background-size: 11vmin 11vmin;
@@ -235,7 +235,7 @@ body {
                background-position var( --transition-time, 600ms ) ease;
 }
 
-#menu-items:hover #menu-background-pattern {
+#menu-items:hover ~ #menu-background-pattern {
    background-size: 10.5vmin 10.5vmin;
    opacity: 0.5;
 }
@@ -244,7 +244,7 @@ body {
    height: 100%;
    width: 100%;
 
-   background-image: url( "https://media.istockphoto.com/id/507965390/photo/futuristic-data-center-with-servers-blue-network-of-global-connections.jpg?b=1&s=612x612&w=0&k=20&c=Z8Ok5MqizTZFSGnZ0wYTCQ2cfuZC8U1w4FblF2wHruY=" );
+   background-image: url( "https://images.unsplash.com/photo-1663615199131-2f3adc4fc634?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" );
 
    position: absolute;
    left: 0px;
@@ -253,7 +253,7 @@ body {
 
    background-position: center 40%;
    background-size: 105vmax;
-   opacity: 0.10;
+   opacity: 0.15;
 
    transition: opacity var( --transition-time, 600ms ) ease,
                background-size var( --transition-time, 600ms ) ease,
@@ -262,5 +262,5 @@ body {
 
 #menu-items:hover ~ #menu-background-picture {
    background-size: 100vmax;
-   opacity: 0.15;
+   opacity: 0.20;
 }
