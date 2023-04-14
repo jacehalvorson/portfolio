@@ -32,30 +32,33 @@ function Cards( props )
   }, [ ] );
 
   return (
-    <div id="menu">
-      <div id="menu-items">
-        {
-          ( cardsDict.projectCards )
-          ? ( cardsDict.projectCards.map( ( card, cardIndex ) => 
-            (
-              <Card
-                title={ card.title }
-                description={ card.description }
-                id={ card.id }
-                href={ card.href }
-                mouseOverFunction={ function( ){ setActiveIndex( cardIndex ) } }
-              />
-            ) ) )
-          : ( <div></div> )
-        }
-      </div>
+    <main id="cards-main">
+      <h1 id="cards-title">Projects</h1>
+      <div id="menu">
+        <div id="menu-items">
+          {
+            ( cardsDict.projectCards )
+            ? ( cardsDict.projectCards.map( ( card, cardIndex ) => 
+              (
+                <Card
+                  title={ card.title }
+                  description={ card.description }
+                  id={ card.id }
+                  href={ card.href }
+                  mouseOverFunction={ function( ){ setActiveIndex( cardIndex ) } }
+                />
+              ) ) )
+            : ( <div></div> )
+          }
+        </div>
 
-      <div
-        id="menu-background-pattern"
-        style={{ backgroundPosition: `${ ( activeIndex * -25 ) - 25 }% 0%` }}
-      />
-      <div id="menu-background-picture" />
-    </div>
+        <div
+          id="menu-background-pattern"
+          style={{ backgroundPosition: `${ ( activeIndex * -25 ) - 25 }% 0%` }}
+        />
+        <div id="menu-background-picture" />
+      </div>
+    </main>
   );
 }
 

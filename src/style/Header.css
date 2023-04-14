@@ -9,7 +9,7 @@ header {
    left: 0px;
    height: 60px;
    width: 100%;
-   z-index: 2;
+   z-index: 5;
 
    display: flex;
    align-items: left;

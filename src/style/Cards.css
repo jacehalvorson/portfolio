@@ -2,15 +2,20 @@
    --transition-time: 600ms;
 }
 
-body {
-   height: 100%;
-   margin: 0;
-   padding: 0;
+#cards-title {
+   position: relative;
+   z-index: 2;
+   font-size: clamp( 40px, 3.5vw, 90px );
+   text-align: center;
+   user-select: none;
+   padding: 0.2em;
 }
 
 #menu {
+   width: 100%;
    display: flex;
    align-items: center;
+   padding: 0;
 }
 
 #menu-items {
@@ -39,16 +44,16 @@ body {
 .card-wrapper {
    position: relative;
    display: inline-block;
-   height: 60vh;
+   height: 50vh;
    aspect-ratio: 5 / 7;
-   margin: 8vh 4vw 0 4vw;
+   margin: 4vh 4vw 0 4vw;
 
    transition: transform var( --transition-time, 600ms ) ease,
                margin var( --transition-time, 600ms ) ease;
 }
 
 .card-wrapper:hover {
-   margin: 8vh 4.5vw 0 4.5vw;
+   margin: 4vh 4.5vw 0 4.5vw;
    transition: transform var( --transition-time, 600ms ) ease,
                margin var( --transition-time, 600ms ) ease;
    transform: scale( 1.05 );
@@ -121,13 +126,14 @@ body {
 
 .card-title {
    color: white;
-   font-size: clamp( 32px, 3vw, 80px );
+   font-size: clamp( 32px, 2vw, 80px );
    font-weight: bold;
 
    margin: 0;
    position: relative;
    z-index: 6;
 
+   margin: 0.5em;
    margin-top: 50%;
    transition: margin-top 400ms ease;
 }
@@ -189,6 +195,7 @@ body {
    height: calc( 100% + 5px );
    width: calc( 100% + 5px );
    z-index: 2;
+   border-radius: 2vh;
 
    background: linear-gradient(
       30deg,
@@ -246,7 +253,7 @@ body {
 
    background-image: url( "https://images.unsplash.com/photo-1663615199131-2f3adc4fc634?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" );
 
-   position: absolute;
+   position: fixed;
    left: 0px;
    top: 0px;
    z-index: 0;
