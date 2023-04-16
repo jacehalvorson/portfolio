@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/nflstats/{year}/{category}": {
+      "name": "/nflstats/{year}/{category}",
+      "lambdaFunction": "fetchAndReturnStats",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
