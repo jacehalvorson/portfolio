@@ -1,0 +1,70 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify09469828349a4-staging-41414-authRole",
+      "UnauthRoleArn": "arn:aws:iam::977933747533:role/amplify-amplify09469828349a4-staging-41414-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::977933747533:role/amplify-amplify09469828349a4-staging-41414-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-amplify09469828349a4-staging-41414-deployment",
+      "UnauthRoleName": "amplify-amplify09469828349a4-staging-41414-unauthRole",
+      "StackName": "amplify-amplify09469828349a4-staging-41414",
+      "StackId": "arn:aws:cloudformation:us-east-2:977933747533:stack/amplify-amplify09469828349a4-staging-41414/25f656a0-dc0d-11ed-b956-02389664131a",
+      "AmplifyAppId": "d23a2jtvurc6qe"
+    }
+  },
+  "function": {
+    "fetchAndReturnStats": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2023-04-16T04:57:21.948Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2023-04-16T04:57:28.231Z",
+      "distZipFilename": "fetchAndReturnStats-6565614771682b74706e-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-amplify09469828349a4-staging-41414-deployment",
+        "s3Key": "amplify-builds/fetchAndReturnStats-6565614771682b74706e-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
+        "logicalId": "functionfetchAndReturnStats"
+      },
+      "lastPushTimeStamp": "2023-04-16T04:59:03.444Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::977933747533:role/portfolioLambdaRoleb50e216b-staging",
+        "Region": "us-east-2",
+        "Arn": "arn:aws:lambda:us-east-2:977933747533:function:fetchAndReturnStats-staging",
+        "Name": "fetchAndReturnStats-staging",
+        "LambdaExecutionRole": "portfolioLambdaRoleb50e216b-staging"
+      },
+      "lastPushDirHash": "gckkcpymyru2hfUXfNBjbhONc7U="
+    }
+  },
+  "api": {
+    "nflstats": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "fetchAndReturnStats",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/api/nflstats-cloudformation-template.json",
+        "logicalId": "apinflstats"
+      },
+      "lastPushTimeStamp": "2023-04-16T04:59:03.444Z",
+      "output": {
+        "ApiName": "nflstats",
+        "RootUrl": "https://0dsvwsvbdb.execute-api.us-east-2.amazonaws.com/staging",
+        "ApiId": "0dsvwsvbdb"
+      },
+      "lastPushDirHash": "Y0+4sQNFP7L/MJHdXQyWys8mD0E="
+    }
+  }
+}
