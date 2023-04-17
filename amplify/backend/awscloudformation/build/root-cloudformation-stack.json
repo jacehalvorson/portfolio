@@ -152,21 +152,10 @@
         }
       }
     },
-    "functionfetchAndReturnStats": {
+    "apiapinflstats": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-amplify09469828349a4-staging-41414-deployment",
-          "s3Key": "amplify-builds/fetchAndReturnStats-6361582f6a524764324a-build.zip",
-          "env": "staging"
-        }
-      }
-    },
-    "apinflstats": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/api/nflstats-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apinflstats-cloudformation-template.json",
         "Parameters": {
           "functionfetchAndReturnStatsName": {
             "Fn::GetAtt": [
@@ -180,7 +169,18 @@
               "Outputs.Arn"
             ]
           },
-          "env": "staging"
+          "env": "main"
+        }
+      }
+    },
+    "functionfetchAndReturnStats": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
+          "s3Key": "amplify-builds/fetchAndReturnStats-39612b6569694e313158-build.zip",
+          "env": "main"
         }
       }
     }

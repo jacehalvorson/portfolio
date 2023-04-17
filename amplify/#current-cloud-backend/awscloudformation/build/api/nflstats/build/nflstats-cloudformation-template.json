@@ -1,5 +1,5 @@
 {
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"11.0.5\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Linux\",\"createdBy\":\"Amplify\",\"createdWith\":\"11.0.5\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionfetchAndReturnStatsName": {
@@ -368,7 +368,7 @@
         "Name": "nflstats"
       }
     },
-    "nflstatsDefault4XXResponsea3cec2a6": {
+    "nflstatsDefault4XXResponse44534ba7": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_4XX",
@@ -383,7 +383,7 @@
         }
       }
     },
-    "nflstatsDefault5XXResponsea3cec2a6": {
+    "nflstatsDefault5XXResponse44534ba7": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseType": "DEFAULT_5XX",
@@ -398,7 +398,7 @@
         }
       }
     },
-    "DeploymentAPIGWnflstats85bdd790": {
+    "DeploymentAPIGWnflstats374f8c46": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -416,8 +416,8 @@
         }
       },
       "DependsOn": [
-        "nflstatsDefault4XXResponsea3cec2a6",
-        "nflstatsDefault5XXResponsea3cec2a6"
+        "nflstatsDefault4XXResponse44534ba7",
+        "nflstatsDefault5XXResponse44534ba7"
       ]
     }
   }

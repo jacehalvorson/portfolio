@@ -3,7 +3,36 @@ import { API } from "aws-amplify";
 import "../style/NFLStats.css";
 import "../style/index.css";
 
-const apiName = "nflstats";
+const apiName = "apinflstats";
+
+const categories = [
+   { "name": "Passing", "value": "passing" },
+   { "name": "Rushing", "value": "rushing" },
+   { "name": "Receiving", "value": "receiving" },
+   { "name": "Scrimmage Stats", "value": "scrimmage" },
+   { "name": "Defense", "value": "defense" },
+   { "name": "Kicking", "value": "kicking" },
+   { "name": "Punting", "value": "punting" },
+   { "name": "Kick & Punt Returns", "value": "returns" },
+   { "name": "Scoring", "value": "scoring" }
+]
+
+function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
+{
+   API.get( apiName, `/nflstats/${year}/${category}` )
+      .then( json => {
+         // Create the table from stats in JSON
+         const attributeList = json.attributes;
+         const playerList = json.players;
+   
+         // Create the table header
+         tableHeaderSetter( <thead><tr key="-1">{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
+   
+         // Create the table body
+         tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
+      })
+      .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err ) );
+}
 
 function NFLStats( )
 {
@@ -13,25 +42,7 @@ function NFLStats( )
    useEffect( ( ) => {
       // Send a GET request to the server to get the NFL stats table
       console.log( `Reading NFL stats from ${apiName}` );
-      // fetch( apiName )
-      //    .then( response => response.json() )
-      //    .then( json => {
-      //       // Create the table from stats in JSON
-      //       const attributeList = json.attributes;
-      //       const playerList = json.players;
-      
-      //       // Create the table header
-      //       setTableHeader( <thead><tr>{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
-      
-      //       // Create the table body
-      //       setTableBody( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
-      //    })
-      //    .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err ) );
-      API.get( apiName, '/nflstats/2022/receiving' )
-         .then( response => {
-            console.log( response )
-         })
-         .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err + '\n' ) );
+      fetchStatsAndSetTable( 2022, categories[ 0 ].value, setTableHeader, setTableBody );
    }, [ ] );
 
    return (
@@ -39,11 +50,17 @@ function NFLStats( )
          <div id="nfl-stats-selection-wrapper">
             <input type="number" className="nfl-stats-selection-item" id="nfl-stats-select-year"></input>
             <select className="nfl-stats-selection-item" id="nfl-stats-category">
-               <option value="passing">Passing</option>
-               <option value="rushing">Rushing</option>
-               <option value="receiving">Receiving</option>
+               { categories.map( category => <option value={ category.value }>{ category.name }</option> ) }
             </select>
-            <button className="nfl-stats-selection-item" id="nfl-stats-load-button">Load</button>
+            <button
+               className="nfl-stats-selection-item"
+               id="nfl-stats-load-button"
+               onClick={ ( ) => {
+                  const year = document.getElementById( "nfl-stats-select-year" ).value;
+                  const category = document.getElementById( "nfl-stats-category" ).value;
+                  fetchStatsAndSetTable( year, category, setTableHeader, setTableBody );
+               }}
+            >Load</button>
          </div>
          <table>
             { tableHeader }

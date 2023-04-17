@@ -1,6 +1,6 @@
 {
   "api": {
-    "nflstats": {
+    "apinflstats": {
       "dependsOn": [
         {
           "attributes": [
