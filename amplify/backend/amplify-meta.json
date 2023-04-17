@@ -17,19 +17,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2023-04-16T04:57:21.948Z",
+      "lastBuildTimeStamp": "2023-04-17T17:02:57.532Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-04-16T04:57:28.231Z",
-      "distZipFilename": "fetchAndReturnStats-6565614771682b74706e-build.zip",
+      "lastPackageTimeStamp": "2023-04-17T17:03:16.453Z",
+      "distZipFilename": "fetchAndReturnStats-6361582f6a524764324a-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-amplify09469828349a4-staging-41414-deployment",
-        "s3Key": "amplify-builds/fetchAndReturnStats-6565614771682b74706e-build.zip"
+        "s3Key": "amplify-builds/fetchAndReturnStats-6361582f6a524764324a-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "logicalId": "functionfetchAndReturnStats"
       },
-      "lastPushTimeStamp": "2023-04-16T04:59:03.444Z",
+      "lastPushTimeStamp": "2023-04-17T17:04:21.827Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::977933747533:role/portfolioLambdaRoleb50e216b-staging",
         "Region": "us-east-2",
@@ -37,7 +37,7 @@
         "Name": "fetchAndReturnStats-staging",
         "LambdaExecutionRole": "portfolioLambdaRoleb50e216b-staging"
       },
-      "lastPushDirHash": "gckkcpymyru2hfUXfNBjbhONc7U="
+      "lastPushDirHash": "O7Hi862IUptbRlxcX7IaX6GDNsM="
     }
   },
   "api": {
@@ -58,7 +58,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify09469828349a4-staging-41414-deployment/amplify-cfn-templates/api/nflstats-cloudformation-template.json",
         "logicalId": "apinflstats"
       },
-      "lastPushTimeStamp": "2023-04-16T04:59:03.444Z",
+      "lastPushTimeStamp": "2023-04-17T17:04:21.451Z",
       "output": {
         "ApiName": "nflstats",
         "RootUrl": "https://0dsvwsvbdb.execute-api.us-east-2.amazonaws.com/staging",

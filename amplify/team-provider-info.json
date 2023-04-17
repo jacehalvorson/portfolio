@@ -15,7 +15,7 @@
       "function": {
         "fetchAndReturnStats": {
           "deploymentBucketName": "amplify-amplify09469828349a4-staging-41414-deployment",
-          "s3Key": "amplify-builds/fetchAndReturnStats-6565614771682b74706e-build.zip"
+          "s3Key": "amplify-builds/fetchAndReturnStats-6361582f6a524764324a-build.zip"
         }
       },
       "api": {

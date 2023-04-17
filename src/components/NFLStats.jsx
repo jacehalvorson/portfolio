@@ -31,7 +31,7 @@ function NFLStats( )
          .then( response => {
             console.log( response )
          })
-         .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err ) );
+         .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err + '\n' ) );
    }, [ ] );
 
    return (

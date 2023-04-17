@@ -6,12 +6,10 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const execFile = require('child_process').execFile;
 
 // declare a new express app
 const app = express()
@@ -25,66 +23,48 @@ app.use(function(req, res, next) {
   next()
 });
 
+/**********************
+ * Helper functions *
+ **********************/
+// Spawn child process to update JSON file, don't return until it's done
+async function spawnChildProcess( fileName, year, category ) {
+  const startTime = process.hrtime.bigint();
+  console.log( `spawnChildProcess() started` );
+
+  const result = await new Promise( ( resolve, reject ) => {
+     execFile( fileName, [ year, category ], function(err, data) {
+        if ( err ) {
+           reject( err );
+        }
+        else {
+           console.log( `nflstatsrequest.exe completed with return ${data.toString()}` );
+           resolve( data );
+        }
+     });
+  });
+
+  const elapsedTime = process.hrtime.bigint() - startTime;
+  console.log( `spawnChildProcess() finished in ${elapsedTime} microseconds` );
+  return result;
+}
+
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/nflstats/:year/:category', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+app.get('/nflstats/:year/:category', async function(req, res) {
+  // Spawn child process and wait for execution to finish
+  await spawnChildProcess( 'request.exe', req.params.year, req.params.category );
+
+  // Now that JSON is updated, send it to the client
+  res.sendFile(path.resolve(__dirname, 'stats_table.json'));
 });
 
 app.get('/nflstats/:year/:category/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({error: 'Invalid parameters', url: req.url});
 });
 
-/****************************
-* Example post method *
-****************************/
-
-app.post('/nflstats/:year/:category', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
-});
-
-app.post('/nflstats/:year/:category/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
-});
-
-/****************************
-* Example put method *
-****************************/
-
-app.put('/nflstats/:year/:category', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-app.put('/nflstats/:year/:category/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-/****************************
-* Example delete method *
-****************************/
-
-app.delete('/nflstats/:year/:category', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.delete('/nflstats/:year/:category/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.listen(3000, function() {
-    console.log("App started")
-});
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
