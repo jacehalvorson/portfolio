@@ -36,7 +36,7 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
 
 function NFLStats( )
 {
-   const [ tableHeader, setTableHeader ] = useState( <thead></thead> );
+   const [ tableHeader, setTableHeader ] = useState( <thead>Loading...</thead> );
    const [ tableBody, setTableBody ] = useState( <tbody></tbody> );
    
    useEffect( ( ) => {
@@ -58,6 +58,8 @@ function NFLStats( )
                onClick={ ( ) => {
                   const year = document.getElementById( "nfl-stats-select-year" ).value;
                   const category = document.getElementById( "nfl-stats-category" ).value;
+                  setTableHeader( <thead>Loading...</thead> );
+                  setTableBody( <tbody></tbody> );
                   fetchStatsAndSetTable( year, category, setTableHeader, setTableBody );
                }}
             >Load</button>
