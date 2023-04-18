@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 async function getStatsAndReturnJson(url) {
   try {
     // Send GET request to the URL and get HTML in plaintext
-    const response = await fetch( url );
+    const response = await axios.get( url );
 
     if ( response.status !== 200 ) {
       throw new Error(`GET ${url} request failed`);
@@ -100,7 +100,7 @@ async function getStatsAndReturnJson(url) {
  * GET method *
  **********************/
 
-app.get('/nflstats/:year/:category', async function(req, res) {
+app.get('/nflstats/:year/:category', function(req, res) {
   getStatsAndReturnJson( `https://www.pro-football-reference.com/years/${req.params.year}//${req.params.category}.htm` )
     .then( ( data ) => {
       res.json( data );

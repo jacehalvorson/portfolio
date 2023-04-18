@@ -15,7 +15,7 @@
       "function": {
         "fetchAndReturnStats": {
           "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
-          "s3Key": "amplify-builds/fetchAndReturnStats-70554b334f34306d5036-build.zip"
+          "s3Key": "amplify-builds/fetchAndReturnStats-7438316350634d514349-build.zip"
         }
       },
       "api": {

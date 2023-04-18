@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 async function getStatsAndReturnJson(url) {
   try {
     // Send GET request to the URL and get HTML in plaintext
-    const response = await fetch( url );
+    const response = await axios.get( url );
 
     if ( response.status !== 200 ) {
       throw new Error(`GET ${url} request failed`);
