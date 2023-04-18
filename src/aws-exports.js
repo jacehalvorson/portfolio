@@ -9,6 +9,13 @@ const awsmobile = {
             "endpoint": "https://zs8qi2592b.execute-api.us-east-2.amazonaws.com/main",
             "region": "us-east-2"
         }
+    ],
+    "aws_dynamodb_all_tables_region": "us-east-2",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "NFLStats-main",
+            "region": "us-east-2"
+        }
     ]
 };
 

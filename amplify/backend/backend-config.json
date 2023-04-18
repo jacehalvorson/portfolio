@@ -15,9 +15,11 @@
       "service": "API Gateway"
     }
   },
+  "auth": {},
   "function": {
     "fetchAndReturnStats": {
       "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
@@ -38,6 +40,12 @@
           "resourceName": "fetchAndReturnStats"
         }
       ]
+    }
+  },
+  "storage": {
+    "NFLStats": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     }
   }
 }

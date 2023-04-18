@@ -179,7 +179,19 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
-          "s3Key": "amplify-builds/fetchAndReturnStats-42734144684772734a63-build.zip",
+          "s3Key": "amplify-builds/fetchAndReturnStats-726b4953696e56426664-build.zip",
+          "env": "main"
+        }
+      }
+    },
+    "storageNFLStats": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/NFLStats-cloudformation-template.json",
+        "Parameters": {
+          "tableName": "NFLStats",
+          "partitionKeyName": "id",
+          "partitionKeyType": "S",
           "env": "main"
         }
       }
