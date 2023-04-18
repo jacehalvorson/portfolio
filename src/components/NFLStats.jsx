@@ -5,6 +5,11 @@ import "../style/index.css";
 
 const apiName = "apinflstats";
 
+const years = [];
+for ( let i = 2022; i >= 1930; i-- ) {
+  years.push( { name: String(i), value: i } );
+}
+
 const categories = [
    { "name": "Passing", "value": "passing" },
    { "name": "Rushing", "value": "rushing" },
@@ -18,8 +23,14 @@ const categories = [
 ]
 
 const teamMap = {
-   "NWE": "NE",
-   "GNB": "GB"
+   NWE: "NE",
+   GNB: "GB",
+   KAN: "KC",
+   SFO: "SF",
+   NOS: "NO",
+   TAM: "TB",
+   NOR: "NO",
+   "": "0"
 };
 
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
@@ -34,31 +45,33 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
          tableHeaderSetter( <thead><tr>{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
    
          // Create the table body
-         tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
+         tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ teamMap[ cell ] || cell }</td> ) }</tr> ) }</tbody> );
       })
    .catch( err => {
       console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err );
-      tableHeaderSetter( <thead>Error loading stats</thead> );
+      tableHeaderSetter( <caption>Error loading stats</caption> );
       tableBodySetter( <tbody></tbody> );
    });
 }
 
 function NFLStats( )
 {
-   const [ tableHeader, setTableHeader ] = useState( <thead>Loading...</thead> );
+   const [ tableHeader, setTableHeader ] = useState( <caption>Loading...</caption> );
    const [ tableBody, setTableBody ] = useState( <tbody></tbody> );
    
    useEffect( ( ) => {
       // Send a GET request to the server to get the NFL stats table
       console.log( `Reading NFL stats from ${apiName}` );
-      fetchStatsAndSetTable( 2022, categories[ 0 ].value, setTableHeader, setTableBody );
+      fetchStatsAndSetTable( years[ 0 ].value, categories[ 0 ].value, setTableHeader, setTableBody );
    }, [ ] );
 
    return (
       <main id="nfl-stats">
          <div id="nfl-stats-selection-wrapper">
-            <input type="number" className="nfl-stats-selection-item" id="nfl-stats-select-year"></input>
-            <select className="nfl-stats-selection-item" id="nfl-stats-category">
+            <select className="nfl-stats-selection-item" id="nfl-stats-select-year">
+               { years.map( year => <option value={ year.value }>{ year.name }</option> ) }
+            </select>
+            <select className="nfl-stats-selection-item" id="nfl-stats-select-category">
                { categories.map( category => <option value={ category.value }>{ category.name }</option> ) }
             </select>
             <button
@@ -66,8 +79,8 @@ function NFLStats( )
                id="nfl-stats-load-button"
                onClick={ ( ) => {
                   const year = document.getElementById( "nfl-stats-select-year" ).value;
-                  const category = document.getElementById( "nfl-stats-category" ).value;
-                  setTableHeader( <thead>Loading...</thead> );
+                  const category = document.getElementById( "nfl-stats-select-category" ).value;
+                  setTableHeader( <caption>Loading...</caption> );
                   setTableBody( <tbody></tbody> );
                   fetchStatsAndSetTable( year, category, setTableHeader, setTableBody );
                }}
