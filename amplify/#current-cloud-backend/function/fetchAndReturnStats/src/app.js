@@ -100,7 +100,7 @@ async function getStatsAndReturnJson(url) {
  * GET method *
  **********************/
 
-app.get('/nflstats/:year/:category', async function(req, res) {
+app.get('/nflstats/:year/:category', function(req, res) {
   getStatsAndReturnJson( `https://www.pro-football-reference.com/years/${req.params.year}//${req.params.category}.htm` )
     .then( ( data ) => {
       res.json( data );

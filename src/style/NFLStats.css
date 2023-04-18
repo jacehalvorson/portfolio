@@ -1,75 +1,79 @@
-body {
-   background-color: rgb( 10, 10, 10 );
-}
-
 main#nfl-stats {
    position: relative;
-   left: 0;
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
 }
 
-caption {
-   margin: 0.5em;
-   font-size: 2em;
-   font-weight: bold;
-   color: white;
+#nfl-stats-selection-wrapper {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   margin: 1em 0;
+}
+
+.nfl-stats-selection-item {
+   margin: 0 1em;
 }
 
 table {
-   padding: 0 0.5em 0.5em 0.5em;
-   margin-left: 10px;
-   opacity: 0.9;
+   padding: 10px 0.5em 0.5em 0.5em;
+   margin-top: 1em;
+   opacity: 0.95;
 
    background-color: rgb( 30, 30, 30 );
-   border: 1px solid white;
-   border-radius: 10px;
-   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
+   border-radius: 1vh;
+   box-shadow: 0px 0px 12px rgba( 255, 255, 255, 0.5 );
    border-collapse: collapse;
+
+   overflow: hidden;
 }
 
-tbody:hover > tr {
-   opacity: 0.8;
-}
 tbody:hover > tr:hover {
-   opacity: 0.9;
-   background-color: rgb( 10, 10, 10 );
+   opacity: 1;
+   background-color: rgb( 30, 30, 30 );
 }
-
+tbody > tr:nth-child( 2n + 1 ) > td {
+   background-color: rgb( 20, 20, 20 );
+}
 
 th, td {
    font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   font-size: clamp( 12px, 1vw, 20px );
    color: white;
    text-decoration: none;
    cursor: default;
    text-align: center;
 
-   /* transition: transform 10ms ease-in-out,
-               background-color 50ms ease-in-out; */
+   border-left: 1px solid rgb( 50, 50, 50 );
+
+   transition: transform 10ms ease-in-out,
+               background-color 50ms ease-in-out;
 }
 
 th {
-   padding: 0.4em;
    font-weight: 700;
+   padding: 0.3em;
+   border-left: none;
+   border-bottom: 1px solid white;
+}
+th:hover {
+   background-color: rgb( 70, 70, 70 );
+}
+th:active {
+   transform: scale( 0.95 );
 }
 
 td {
    background-color: rgb( 0, 0, 0 );
-   padding: 0.4em;
-}
-
-th:hover {
-   background-color: rgb( 70, 70, 70 );
+   padding: 0.3em;
 }
 td:hover {
    opacity: 1;
 }
 
-th:active {
-   transform: scale( 0.95 );
-}
 
 #nfl-stats-background-picture {
    position: fixed;

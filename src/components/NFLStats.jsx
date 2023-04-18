@@ -17,6 +17,11 @@ const categories = [
    { "name": "Scoring", "value": "scoring" }
 ]
 
+const teamMap = {
+   "NWE": "NE",
+   "GNB": "GB"
+};
+
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
 {
    API.get( apiName, `/nflstats/${year}/${category}` )
@@ -26,12 +31,16 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
          const playerList = json.players;
    
          // Create the table header
-         tableHeaderSetter( <thead><tr key="-1">{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
+         tableHeaderSetter( <thead><tr>{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
    
          // Create the table body
          tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
       })
-      .catch( err => console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err ) );
+   .catch( err => {
+      console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err );
+      tableHeaderSetter( <thead>Error loading stats</thead> );
+      tableBodySetter( <tbody></tbody> );
+   });
 }
 
 function NFLStats( )

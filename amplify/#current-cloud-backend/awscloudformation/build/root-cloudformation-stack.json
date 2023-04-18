@@ -179,7 +179,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
-          "s3Key": "amplify-builds/fetchAndReturnStats-7438316350634d514349-build.zip",
+          "s3Key": "amplify-builds/fetchAndReturnStats-42734144684772734a63-build.zip",
           "env": "main"
         }
       }
