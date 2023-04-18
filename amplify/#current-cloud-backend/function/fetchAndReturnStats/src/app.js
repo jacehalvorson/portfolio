@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 async function getStatsAndReturnJson(url) {
   try {
     // Send GET request to the URL and get HTML in plaintext
-    const response = await axios.get(url);
+    const response = await fetch( url );
 
     if ( response.status !== 200 ) {
       throw new Error(`GET ${url} request failed`);
@@ -103,19 +103,12 @@ async function getStatsAndReturnJson(url) {
 app.get('/nflstats/:year/:category', async function(req, res) {
   getStatsAndReturnJson( `https://www.pro-football-reference.com/years/${req.params.year}//${req.params.category}.htm` )
     .then( ( data ) => {
-      console.log( `getStatsAndReturnJson() returned ${data}` );
       res.json( data );
     })
     .catch( ( err ) => {
-      console.log( `getStatsAndReturnJson() returned ${err}` );
       res.json({error: err, url: req.url});
     });
 });
-
-app.get('/nflstats/:year/:category/*', function(req, res) {
-  res.json({error: 'Invalid parameters', url: req.url});
-});
-
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
