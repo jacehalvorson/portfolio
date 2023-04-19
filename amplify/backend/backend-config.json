@@ -19,7 +19,17 @@
   "function": {
     "fetchAndReturnStats": {
       "build": true,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "NFLStats"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }

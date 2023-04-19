@@ -1,6 +1,9 @@
 /* Amplify Params - DO NOT EDIT
 	ENV
 	REGION
+	STORAGE_NFLSTATS_ARN
+	STORAGE_NFLSTATS_NAME
+	STORAGE_NFLSTATS_STREAMARN
 Amplify Params - DO NOT EDIT *//*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -29,30 +32,9 @@ app.use(function(req, res, next) {
   next()
 });
 
-const params = {
-  TableName: 'NFLStats',
-  Item: {
-    'id': 'test',
-    'attributes': ['test'],
-    'players': ['test']
-  }
-}
-
 /**********************
  * Helper functions *
  **********************/
-async function addTestItemToDynamoDB() {
-  returnStr = '';
-  await dynamodb.put(params, (err, data) => {
-    if (err) {
-      returnStr = 'Error adding item to DynamoDB' + err;
-    } else {
-      returnStr = 'Successfully added item to DynamoDB';
-    }
-  });
-  return returnStr;
-}
-
 async function getStatsAndReturnJson(url) {
   try {
     // Send GET request to the URL and get HTML in plaintext
@@ -136,8 +118,23 @@ app.get('/nflstats/:year/:category', function(req, res) {
     });
 });
 
-app.get('/testdynamodb', async function(req, res) {
-  res.json({error: await addTestItemToDynamoDB( ), url: req.url});
+const params = {
+  TableName: process.env.STORAGE_NFLSTATS_NAME,
+  Item: {
+    'id': 'test',
+    'attributes': ['test'],
+    'players': ['test']
+  }
+};
+
+app.get('/testdynamodb', function(req, res) {
+  dynamodb.put( params ).promise( )
+    .then( ( data ) => {
+      res.json( { error: JSON.stringify( data ), url: req.url } );
+    })
+    .catch( ( err ) => {
+      res.json({error: err, url: req.url});
+    }); 
 });
 
 // Export the app object. When executing the application local this does nothing. However,

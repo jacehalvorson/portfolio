@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
+import AWS from 'aws-sdk';
 import "../style/NFLStats.css";
 import "../style/index.css";
+AWS.config.update({region: 'REGION'});
 
 const apiName = "apinflstats";
+const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const years = [];
 for ( let i = 2022; i >= 1930; i-- ) {
@@ -33,6 +36,10 @@ const teamMap = {
    "": "0"
 };
 
+const params = {
+   TableName: "NFLStats"
+};
+
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
 {
    API.get( apiName, `/nflstats/${year}/${category}` )
@@ -47,11 +54,11 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
          // Create the table body
          tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ teamMap[ cell ] || cell }</td> ) }</tr> ) }</tbody> );
       })
-   .catch( err => {
-      console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err );
-      tableHeaderSetter( <caption>Error loading stats</caption> );
-      tableBodySetter( <tbody></tbody> );
-   });
+      .catch( err => {
+         console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err );
+         tableHeaderSetter( <caption>Error loading stats</caption> );
+         tableBodySetter( <tbody></tbody> );
+      });
 }
 
 function NFLStats( )

@@ -1,4 +1,13 @@
 {
   "lambdaLayers": [],
-  "permissions": {}
+  "permissions": {
+    "storage": {
+      "NFLStats": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }
