@@ -14,34 +14,45 @@
   },
   "api": {
     "apinflstats": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "fetchAndReturnStats",
           "attributes": [
             "Name",
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "fetchAndReturnStats"
         }
       ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apinflstats-cloudformation-template.json",
-        "logicalId": "apiapinflstats"
-      },
-      "lastPushTimeStamp": "2023-04-19T21:36:13.824Z",
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway",
       "output": {
         "ApiName": "apinflstats",
         "RootUrl": "https://zs8qi2592b.execute-api.us-east-2.amazonaws.com/main",
         "ApiId": "zs8qi2592b"
       },
-      "lastPushDirHash": "Xh8SFCFLoB/SigqiOTXz6eUj6+k="
+      "lastPushTimeStamp": "2023-04-21T17:41:46.149Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apinflstats-cloudformation-template.json",
+        "logicalId": "apiapinflstats"
+      }
     }
   },
+  "auth": {},
   "function": {
     "fetchAndReturnStats": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "NFLStats"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "output": {
@@ -51,7 +62,7 @@
         "Name": "fetchAndReturnStats-main",
         "LambdaExecutionRole": "portfolioLambdaRoleb50e216b-main"
       },
-      "lastPushTimeStamp": "2023-04-19T21:36:14.272Z",
+      "lastPushTimeStamp": "2023-04-21T17:41:46.166Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "logicalId": "functionfetchAndReturnStats"
@@ -59,36 +70,13 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
         "s3Key": "amplify-builds/fetchAndReturnStats-4f626c74516a635a6545-build.zip"
-      },
-      "lastBuildTimeStamp": "2023-04-19T21:34:13.099Z",
-      "lastBuildType": "DEV",
-      "lastPackageTimeStamp": "2023-04-19T21:34:50.523Z",
-      "distZipFilename": "fetchAndReturnStats-4f626c74516a635a6545-build.zip",
-      "lastPushDirHash": "57yjsBF8aOwJHtnN/8gyvE9oqBg=",
-      "lastDevBuildTimeStamp": "2023-04-19T21:40:21.962Z",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "NFLStats",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
+      }
     }
   },
-  "auth": {},
   "storage": {
     "NFLStats": {
-      "service": "DynamoDB",
       "providerPlugin": "awscloudformation",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/NFLStats-cloudformation-template.json",
-        "logicalId": "storageNFLStats"
-      },
-      "lastPushTimeStamp": "2023-04-19T21:36:13.863Z",
+      "service": "DynamoDB",
       "output": {
         "PartitionKeyName": "id",
         "Region": "us-east-2",
@@ -97,7 +85,11 @@
         "PartitionKeyType": "S",
         "Name": "NFLStats-main"
       },
-      "lastPushDirHash": "LPn2/AhiQnd31zFoWgrxF65mTtE="
+      "lastPushTimeStamp": "2023-04-21T17:41:46.179Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/NFLStats-cloudformation-template.json",
+        "logicalId": "storageNFLStats"
+      }
     }
   }
 }

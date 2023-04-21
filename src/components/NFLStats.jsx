@@ -3,10 +3,17 @@ import { API } from "aws-amplify";
 import AWS from 'aws-sdk';
 import "../style/NFLStats.css";
 import "../style/index.css";
-AWS.config.update({region: 'REGION'});
 
+const dynamoDBConfig = {
+   apiVerision: "2012-08-10",
+   region: "us-east-2",
+   // Credentials for read-only access to NFL stats table
+   accessKeyId: "AKIA6HMLEYVGXCIHQH4O",
+   secretAccessKey: "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"
+}
+AWS.config.update( dynamoDBConfig );
+const dynamodb = new AWS.DynamoDB.DocumentClient( dynamoDBConfig );
 const apiName = "apinflstats";
-const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const years = [];
 for ( let i = 2022; i >= 1930; i-- ) {
@@ -36,22 +43,25 @@ const teamMap = {
    "": "0"
 };
 
-const params = {
-   TableName: "NFLStats"
-};
-
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
 {
-   API.get( apiName, `/nflstats/${year}/${category}` )
+   const params = {
+      TableName: "NFLStats-main",
+      Key: {
+         // The primary key is the year and category concatenated, ex. "2017receiving"
+         "id": year + category
+      }
+   };
+   dynamodb.get( params ).promise( )
       .then( json => {
          // Create the table from stats in JSON
-         const attributeList = json.attributes;
-         const playerList = json.players;
+         const attributeList = json.Item?.attributes;
+         const playerList = json.Item?.players;
    
-         // Create the table header
+         // Set the table header
          tableHeaderSetter( <thead><tr>{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
    
-         // Create the table body
+         // Set the table body
          tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ teamMap[ cell ] || cell }</td> ) }</tr> ) }</tbody> );
       })
       .catch( err => {
