@@ -4,15 +4,7 @@ import AWS from 'aws-sdk';
 import "../style/NFLStats.css";
 import "../style/index.css";
 
-const dynamoDBConfig = {
-   apiVerision: "2012-08-10",
-   region: "us-east-2",
-   // Credentials for read-only access to NFL stats table
-   accessKeyId: "AKIA6HMLEYVGXCIHQH4O",
-   secretAccessKey: "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"
-}
-AWS.config.update( dynamoDBConfig );
-const dynamodb = new AWS.DynamoDB.DocumentClient( dynamoDBConfig );
+const dynamodb = new AWS.DynamoDB.DocumentClient( );
 const apiName = "apinflstats";
 
 const years = [];
