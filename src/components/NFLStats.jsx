@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-import AWS from 'aws-sdk';
 import "../style/NFLStats.css";
 import "../style/index.css";
 
-const dynamodb = new AWS.DynamoDB.DocumentClient( );
 const apiName = "apinflstats";
 
 const years = [];
@@ -24,17 +22,6 @@ const categories = [
    { "name": "Scoring", "value": "scoring" }
 ]
 
-const teamMap = {
-   NWE: "NE",
-   GNB: "GB",
-   KAN: "KC",
-   SFO: "SF",
-   NOS: "NO",
-   TAM: "TB",
-   NOR: "NO",
-   "": "0"
-};
-
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
 {
    const params = {
@@ -44,8 +31,7 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
          "id": year + category
       }
    };
-   // API.get( apiName, `/nflstats/${year}/${category}` ) 
-   dynamodb.get( params ).promise( )
+   API.get( apiName, `/nflstats/${year}/${category}` ) 
       .then( json => {
          // Create the table from stats in JSON
          const attributeList = json.attributes;

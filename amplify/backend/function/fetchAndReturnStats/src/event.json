@@ -1,4 +1,4 @@
 {
   "httpMethod": "GET",
-  "path": "/testdynamodb"
+  "path": "/nflstats/2000/passing"
 }

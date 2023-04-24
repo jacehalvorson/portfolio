@@ -15,8 +15,7 @@ main#nfl-stats {
 .nfl-stats-selection-item {
    font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
    font-size: clamp( 20px, 1vw, 20px );
-   font-weight: 700;
-   color: black;
+   color: white;
    margin: 0 1em;
    border: none;
    border-radius: 0.5vh;
@@ -56,18 +55,23 @@ table {
    margin: 1em auto 0 auto;
    opacity: 0.95;
 
-   background-color: rgb( 30, 30, 30 );
    border-radius: 1vh;
    box-shadow: 0px 0px 12px rgba( 255, 255, 255, 0.5 );
    border-collapse: collapse;
-
-   overflow: hidden;
+   table-layout: auto;
+   /* width: 100%; */
 }
 
-thead, tbody {
+thead {
+   position: sticky;
+   top: 60px;
+   background-color: rgb( 0, 0, 0 );
    padding: 1em;
 }
 
+tbody {
+   padding: 1em;
+}
 tbody:hover > tr:hover > td {
    /* Hover effect for individual rows in the body */
    background-color: rgb( 0, 0, 0 );
@@ -82,14 +86,11 @@ th, td {
    text-align: center;
 
    border-left: 1px solid rgb( 50, 50, 50 );
-
-   transition: transform 10ms ease-in-out,
-               background-color 50ms ease-in-out;
 }
 
 th {
    font-weight: 700;
-   padding: 0.3em;
+   padding: 0.4em;
    border-left: none;
    border-bottom: 1px solid white;
 }
@@ -103,7 +104,6 @@ th:active {
 td {
    background-color: rgb( 10, 10, 10 );
    padding: 0.3em;
-   transition: background-color 50ms ease-in-out;
 }
 tbody > tr:nth-child( 2n + 1 ) > td {
    /* Every other row is lighter */
@@ -112,7 +112,6 @@ tbody > tr:nth-child( 2n + 1 ) > td {
 td:hover {
    opacity: 1;
 }
-
 
 #nfl-stats-background-picture {
    position: fixed;

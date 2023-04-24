@@ -60,12 +60,6 @@
    opacity: 0.9;
 }
 
-.card-wrapper:active {
-   transition: transform 25ms linear,
-               margin var( --transition-time, 600ms ) ease;
-   transform: scale( 1.0 );
-}
-
 #card-nfl-stats::before {
    background-image: url( https://images.unsplash.com/photo-1611000273610-f4fb9c7fd0be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW1lcmljYW4lMjBmb290YmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60 );
 }
