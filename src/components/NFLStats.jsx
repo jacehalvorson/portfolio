@@ -44,17 +44,18 @@ function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySett
          "id": year + category
       }
    };
+   // API.get( apiName, `/nflstats/${year}/${category}` ) 
    dynamodb.get( params ).promise( )
       .then( json => {
          // Create the table from stats in JSON
-         const attributeList = json.Item?.attributes;
-         const playerList = json.Item?.players;
+         const attributeList = json.attributes;
+         const playerList = json.players;
    
          // Set the table header
          tableHeaderSetter( <thead><tr>{ attributeList.map( attribute => <th>{ attribute }</th> ) }</tr></thead> );
    
          // Set the table body
-         tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ teamMap[ cell ] || cell }</td> ) }</tr> ) }</tbody> );
+         tableBodySetter( <tbody>{ playerList.map( row => <tr>{ row.map( cell => <td>{ cell }</td> ) }</tr> ) }</tbody> );
       })
       .catch( err => {
          console.error( 'Error parsing NFL stats from ' + apiName + '\n\n' + err );
