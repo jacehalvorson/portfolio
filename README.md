@@ -1,17 +1,17 @@
-# E-Commerce Website
+# Jace Halvorson's Portfolio
+This web application showcasing my experience as a software engineer was built with NodeJS/React, styled with CSS, and deployed with AWS Amplify (S3, API Gateway, Lambda, and DynamoDB).
 
-This is an e-commerce website where users can buy and sell products. The web application is built using React and it maintains a product list which is displayed on the home page. When a user clicks on a product, they will be redirected to that specific product page.
+## Gridiron Guru
+A comprehensive NFL statistics application that provides extensive access to historical data from 1938 to the present day. Built on the React framework, this app delivers a highly responsive and user-friendly browsing experience for both casual viewers and sports analysts. The stats were acquired with a Rust-based web scraper, which extracted them from Pro Football Reference, converted them to JSON format, and securely stored them in an Amazon DynamoDB database.
 
-## Getting Started
-To run this project on your local machine, you will need to have Node.js installed.
+In addition to the browser interface, Gridiron Guru offers a REST API for developers, enabling integration with custom applications or further analysis of the provided data. This API gives developers access to data in the Amazon DynamoDB database, ensuring optimized loading speeds and performance for quick and reliable extraction. This streamlined setup allows users to access and analyze NFL statistics seamlessly, facilitating a comprehensive exploration of historical trends and player performance metrics.
 
-1. Clone this repository to your local machine.
-2. Open the terminal in the project directory and run `npm install` to install the dependencies.
-3. Run `npm start` to start the development server.
-4. Open your browser and navigate to http://localhost:3000 to view the website.
+REST API endpoint (adjust parameters for different stats): https://zs8qi2592b.execute-api.us-east-2.amazonaws.com/main/nflstats/2022/passing
 
-## Deployment
-This project can be deployed to any web hosting platform that supports React applications, such as Firebase, Netlify, or Heroku.
+Gridiron Guru offers a valuable resource for those seeking to gain insight into the world of NFL statistics and is designed to cater to various user preferences, from casual browsing to advanced statistical analysis.
+
+## E-Commerce Store
+Mock e-commerce store to view and "buy" products.
 
 ## Credits
-This project was developed by Jace Halvorson. If you have any questions or suggestions, please contact me at jacehalvorson33@gmail.com.
+These projects, along with the web application they are showcased on, were developed by Jace Halvorson. If you have any questions or suggestions, please contact me at jacehalvorson33@gmail.com.

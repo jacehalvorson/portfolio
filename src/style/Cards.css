@@ -144,14 +144,14 @@
    cursor: default;
    text-align: center;
    color: white;
-   font-size: clamp( 14px, 2vw, 20px );
+   font-size: clamp( 14px, 1vw, 20px );
 
    margin-top: 80%;
    transition: margin-top 800ms ease;
 }
 
 .card:hover > .card-text {
-   margin-top: 10%;
+   margin-top: 0.5em;
 }
 
 .card-button {
@@ -165,7 +165,7 @@
    cursor: pointer;
    text-align: center;
    color: white;
-   font-size: clamp( 14px, 2vw, 20px );
+   font-size: clamp( 14px, 1.5vw, 20px );
    background-color: #007bff;
    border-radius: 5px;
    border: none;
@@ -177,9 +177,12 @@
 .card-button:hover {
    background-color: #0056b3;
 }
+.card-button:active {
+   background-color: #003380;
+}
 
 .card:hover .card-button {
-   transform: translate( -50%, -30% );
+   transform: translate( -50%, -20% );
 }
 
 .card-border {

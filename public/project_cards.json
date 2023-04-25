@@ -1,8 +1,8 @@
 {
    "projectCards": [
       {
-         "title": "NFL Stats",
-         "description": "Browse through pages of NFL data from every player with season stats in the selected category and year. Data can be requested and sorted by 11 categories going back to 1993.",
+         "title": "Gridiron Guru",
+         "description": "A comprehensive NFL statistics application that provides extensive access to historical data from 1938 to the present day. Built on the React framework, this app delivers a highly responsive and user-friendly browsing experience for both casual viewers and sports analysts.",
          "id": "card-nfl-stats",
          "href": "/nflstats"
       },
