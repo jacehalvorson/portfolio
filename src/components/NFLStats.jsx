@@ -24,13 +24,6 @@ const categories = [
 
 function fetchStatsAndSetTable( year, category, tableHeaderSetter, tableBodySetter )
 {
-   const params = {
-      TableName: "NFLStats-main",
-      Key: {
-         // The primary key is the year and category concatenated, ex. "2017receiving"
-         "id": year + category
-      }
-   };
    API.get( apiName, `/nflstats/${year}/${category}` ) 
       .then( json => {
          // Create the table from stats in JSON
