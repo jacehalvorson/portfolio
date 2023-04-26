@@ -69,7 +69,7 @@
    z-index: 3;
    align-items: center;
    border-radius: 2vh;
-   font-size: clamp( 10px, 0.9vw, 24px );
+   font-size: clamp( 12px, 1vw, 40px );
 
    display: flex;
    flex-direction: column;
@@ -115,12 +115,12 @@
    color: white;
    font-size: 1em;
 
-   margin-top: 15em;
+   margin-top: 80%;
    transition: margin-top 800ms ease;
 }
 
 .card:hover > .card-text {
-   margin-top: 2em;
+   margin-top: 1.5em;
 }
 
 .card-button {
@@ -134,7 +134,7 @@
    cursor: pointer;
    text-align: center;
    color: white;
-   font-size: 1em;
+   font-size: 1.2em;
    background-color: #007bff;
    border-radius: 5px;
    border: none;
