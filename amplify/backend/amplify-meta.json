@@ -31,7 +31,7 @@
         "RootUrl": "https://zs8qi2592b.execute-api.us-east-2.amazonaws.com/main",
         "ApiId": "zs8qi2592b"
       },
-      "lastPushTimeStamp": "2023-04-25T19:44:55.018Z",
+      "lastPushTimeStamp": "2023-04-26T18:27:06.645Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apinflstats-cloudformation-template.json",
         "logicalId": "apiapinflstats"
@@ -62,7 +62,7 @@
         "Name": "fetchAndReturnStats-main",
         "LambdaExecutionRole": "portfolioLambdaRoleb50e216b-main"
       },
-      "lastPushTimeStamp": "2023-04-25T19:44:55.038Z",
+      "lastPushTimeStamp": "2023-04-26T18:27:06.662Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "logicalId": "functionfetchAndReturnStats"
@@ -91,7 +91,7 @@
         "PartitionKeyType": "S",
         "Name": "NFLStats-main"
       },
-      "lastPushTimeStamp": "2023-04-25T19:44:55.056Z",
+      "lastPushTimeStamp": "2023-04-26T18:27:06.674Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/NFLStats-cloudformation-template.json",
         "logicalId": "storageNFLStats"
