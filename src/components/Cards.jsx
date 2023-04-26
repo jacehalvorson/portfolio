@@ -24,7 +24,7 @@ function Card( props )
   )
 }
 
-function Cards( props )
+function Cards( )
 {
   const [ cardsDict, setCardsDict ] = useState( { } );
   const [ activeIndex, setActiveIndex ] = useState( 0 );

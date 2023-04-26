@@ -6,7 +6,7 @@ import "../style/index.css";
 const apiName = "apinflstats";
 
 const years = [];
-for ( let i = 2022; i >= 1930; i-- ) {
+for ( let i = 2022; i >= 1939; i-- ) {
   years.push( { name: String(i), value: i } );
 }
 
