@@ -34,7 +34,7 @@
 }
 
 #menu-items:hover > .card-wrapper {
-   opacity: 0.7;
+   opacity: 0.8;
 }
 
 #menu-items:hover > .card-wrapper:hover {
@@ -60,36 +60,6 @@
    opacity: 0.9;
 }
 
-#card-nfl-stats::before {
-   background-image: url( https://images.unsplash.com/photo-1611000273610-f4fb9c7fd0be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW1lcmljYW4lMjBmb290YmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60 );
-}
-
-#card-ecommerce::before {
-   background-image: url( https://www.aivanet.com/wp-content/uploads/2019/12/technology-gadgets-card-game-100-cool-tech-in-2019-best-products-you-need.jpg );
-   background-size: cover;
-}
-
-#card-terminal-shortcuts::before {
-   background-image: linear-gradient( 45deg, black, blue );
-}
-#card-http-server::before {
-   background-image: linear-gradient( 45deg, yellow, orange );
-}
-
-.card::before {
-   content: "";
-   position: absolute;
-   top: 0px;
-   left: 0px;
-   height: 100%;
-   width: 100%;
-   z-index: 3;
-   border-radius: 2vh;
-   background-position: 0% 70%;
-   background-size: 100%;
-   opacity: 0.6;
-}
-
 .card {
    position: relative;
    top: 0px;
@@ -99,6 +69,7 @@
    z-index: 3;
    align-items: center;
    border-radius: 2vh;
+   font-size: clamp( 10px, 0.9vw, 24px );
 
    display: flex;
    flex-direction: column;
@@ -113,14 +84,12 @@
       rgb( 0, 0, 0 ),
       rgb( 70, 70, 70 )
       );
-      opacity: 1;
-
-   transition: padding-top 400ms ease;
+   opacity: 1;
 }
 
 .card-title {
    color: white;
-   font-size: clamp( 32px, 2vw, 80px );
+   font-size: 2em;
    font-weight: bold;
 
    margin: 0;
@@ -144,14 +113,14 @@
    cursor: default;
    text-align: center;
    color: white;
-   font-size: clamp( 14px, 1vw, 20px );
+   font-size: 1em;
 
-   margin-top: 80%;
+   margin-top: 15em;
    transition: margin-top 800ms ease;
 }
 
 .card:hover > .card-text {
-   margin-top: 0.5em;
+   margin-top: 2em;
 }
 
 .card-button {
@@ -165,7 +134,7 @@
    cursor: pointer;
    text-align: center;
    color: white;
-   font-size: clamp( 14px, 1.5vw, 20px );
+   font-size: 1em;
    background-color: #007bff;
    border-radius: 5px;
    border: none;
@@ -183,6 +152,19 @@
 
 .card:hover .card-button {
    transform: translate( -50%, -20% );
+}
+
+.card-background {
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+   background-size: cover;
+   opacity: 1;
+   z-index: 4;
 }
 
 .card-border {
@@ -248,7 +230,7 @@
    height: 100%;
    width: 100%;
 
-   background-image: url( "https://images.unsplash.com/photo-1663615199131-2f3adc4fc634?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" );
+   background-image: url( https://images.unsplash.com/photo-1663615199131-2f3adc4fc634?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80 );
 
    position: fixed;
    left: 0px;

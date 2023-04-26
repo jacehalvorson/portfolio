@@ -9,11 +9,15 @@ function Card( props )
   return (
     <div className="card-wrapper" onMouseOver={ props.mouseOverFunction }>
       <div className="card" id={ props.id }>
-          <h2 className="card-title">{ props.title }</h2>
-          <p className="card-text">{ props.description }</p>
-          <a href={ props.href }>
-            <button className="card-button">Check it out</button>
-          </a>
+        <div
+          className="card-background"
+          style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url( ${ props.image } )` }}>
+        </div>
+        <h2 className="card-title">{ props.title }</h2>
+        <p className="card-text">{ props.description }</p>
+        <a href={ props.href }>
+          <button className="card-button">Check it out</button>
+        </a>
       </div>
       <div className="card-border"></div>
     </div>
@@ -43,7 +47,7 @@ function Cards( props )
                 <Card
                   title={ card.title }
                   description={ card.description }
-                  id={ card.id }
+                  image={ card.image }
                   href={ card.href }
                   mouseOverFunction={ function( ){ setActiveIndex( cardIndex ) } }
                 />
