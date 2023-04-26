@@ -44,7 +44,6 @@ function Card( props )
 
 function Cards( props )
 {
-  // const [ cardsDict, setCardsDict ] = useState( projectCardsList );
   const [ activeIndex, setActiveIndex ] = useState( 0 );
 
   return (
