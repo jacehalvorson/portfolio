@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ReadJSONAndExecuteSetter } from '../utils.js';
+import { ReadJSONAndExecuteSetter } from '../utils/readJSON.js';
 import '../style/Ecommerce.css'
 
 // File names
