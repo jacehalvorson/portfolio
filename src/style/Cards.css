@@ -69,7 +69,7 @@
    z-index: 3;
    align-items: center;
    border-radius: 2vh;
-   font-size: clamp( 12px, 1vw, 40px );
+   font-size: clamp( 12px, 1vw, 16px );
 
    display: flex;
    flex-direction: column;
