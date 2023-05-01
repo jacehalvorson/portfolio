@@ -1,7 +1,7 @@
 import React from 'react';
 import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
-
-const TIMELINE_INDEX = 2;
+import { TIMELINE_INDEX } from "./home.jsx";
+import './timeline.css';
 
 function Timeline( props )
 {

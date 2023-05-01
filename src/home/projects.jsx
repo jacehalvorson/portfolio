@@ -1,9 +1,8 @@
 import React from 'react';
 import projectCardList from "../utils/projectCardList.js";
 import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
+import { PROJECTS_INDEX } from "./home.jsx";
 import './projects.css';
-
-const PROJECTS_INDEX = 1;
 
 function Card( props )
 {

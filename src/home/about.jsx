@@ -1,8 +1,7 @@
 import React from "react";
 import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
+import { ABOUT_INDEX } from "./home.jsx";
 import './about.css';
-
-const ABOUT_INDEX = 0;
 
 function About( props )
 {

@@ -1,9 +1,11 @@
+body {
+   overflow-x: hidden;
+}
+
 main#home {
    position: relative;
 
    max-width: calc( 100vw - ( 100vw - 100% ) );
-   height: 100vh;
-   overflow-x: hidden;
 
    border: 1px solid green;
 }
@@ -22,8 +24,6 @@ main#home {
    justify-content: center;
    text-align: center;
    gap: 1em;
-
-   border: 1px solid blue;
 }
 
 .home-arrow-icon {
@@ -35,25 +35,23 @@ main#home {
    position: relative;
    margin-top: 1em;
    left: 50%;
-   transform: translate( -50%, -50% );
+   transform: translateX( -50% );
    z-index: 2;
-
-   border: 1px solid yellow;
 }
 
-/* Projects */
 .section-wrapper {
    position: absolute;
    width: 80vw;
-   top: 10vh;
+   margin-top: 1em;
    left: 50%;
    transform: translateX( -50% );
+   padding-bottom: 1em;
 
-   background-color: white;
-   border: 2px solid #0069d9;
+   background-color: rgb( 20, 20, 20 );
+   border: 1px solid white;
    border-radius: 1vh;
 
-   transition: left var( --transition-time ) ease-in-out;
+   transition: left var( --transition-time, 600ms ) ease-in-out;
 }
 
 .hidden-left {
