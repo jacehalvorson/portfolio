@@ -1,6 +1,9 @@
 import React from 'react';
 import projectCardList from "../utils/projectCardList.js";
+import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
 import './projects.css';
+
+const PROJECTS_INDEX = 1;
 
 function Card( props )
 {
@@ -25,7 +28,7 @@ function Card( props )
 function Projects( props )
 {
    return (
-      <div id="projects-wrapper" className="section-wrapper">
+      <div id="projects-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, PROJECTS_INDEX ) }>
         <div id="projects-content">
           <div id="menu-items">
             {
@@ -39,7 +42,7 @@ function Projects( props )
                     href={ card.href }
                   />
                 ) ) )
-              : ( <div></div> )
+              : ( <></> )
             }
           </div>
         </div>

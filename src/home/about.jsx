@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
 import './about.css';
 
-function About( )
+const ABOUT_INDEX = 0;
+
+function About( props )
 {
   return (
-    <div id="about-wrapper" className="section-wrapper hidden-left">
+    <div id="about-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, ABOUT_INDEX ) }>
       <div id="about-content">
         <div id="about-text">
           <p>

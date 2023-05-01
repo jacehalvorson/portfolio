@@ -12,12 +12,12 @@ function MenuBackground( props )
     <>
       <div
         id="background-pattern"
-        style={{ backgroundPosition: `${ ( props.activeIndex * -25 ) }% 0%` }}
+        style={{ backgroundPosition: `${ ( props.activeIndex * -100 ) }% 0%` }}
       />
 
       <div
         id="background-picture"
-        style={{ backgroundPosition: `${ ( props.activeIndex * 2 ) }% 40%` }}  
+        style={{ backgroundPosition: `${ ( props.activeIndex * 5 ) }% 40%` }}  
       />
     </>
   )
@@ -48,9 +48,9 @@ function Home( )
       </div>
 
       <div id="home-content">
-        <Projects />
-        <About />
-        <Timeline />
+        <Projects activeIndex={activeIndex} />
+        <About activeIndex={activeIndex} />
+        <Timeline activeIndex={activeIndex} />
       </div>
 
       <MenuBackground activeIndex={activeIndex} />

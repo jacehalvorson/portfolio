@@ -1,9 +1,12 @@
 import React from 'react';
+import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
 
-function Timeline( )
+const TIMELINE_INDEX = 2;
+
+function Timeline( props )
 {
   return (
-    <div id="timeline-wrapper" className="section-wrapper hidden-right">
+    <div id="timeline-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, TIMELINE_INDEX ) }>
       <div id="timeline-content">
         <div id="timeline-text">
           <p>
