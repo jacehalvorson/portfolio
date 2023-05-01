@@ -7,13 +7,11 @@ import Product from './ecommerce/product.jsx';
 import Checkout from './ecommerce/checkout.jsx';
 import NFLStats from './stat_huddle/stat_huddle.jsx';
 import './App.css';
-import './Header.css';
 
 function App( )
 {
   return (
     <Router>
-      <Header />
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/ecommerce" element={ <Ecommerce /> } />
