@@ -9,11 +9,11 @@ function MenuBackground( props )
   return (
     <>
       <div
-        id="menu-background"
+        id="background-pattern"
         style={{ backgroundPosition: `${ ( props.activeIndex * -25 ) - 25 }% 0%` }}
       />
 
-      <div id="menu-background-picture" />
+      <div id="background-picture" />
     </>
   )
 }
@@ -23,7 +23,7 @@ function Home( )
   const [ activeIndex, setActiveIndex ] = useState( 0 );
 
   return (
-    <main id="home-main">
+    <main id="home">
       <Projects />
       <About />
       <Timeline />

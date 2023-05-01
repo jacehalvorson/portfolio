@@ -26,12 +26,12 @@ function Projects( props )
 {
    return (
       <div id="projects-wrapper">
-        <h1 id="cards-title">Projects</h1>
+        <h1 id="projects-title">Projects</h1>
         <div id="menu">
           <div id="menu-items">
             {
               ( projectCardList )
-              ? ( projectCardList.map( ( card, cardIndex ) => 
+              ? ( projectCardList.map( ( card ) => 
                 (
                   <Card
                     title={ card.title }
