@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header.jsx';
-import Home from './components/Home.jsx';
-import Ecommerce from './components/Ecommerce.jsx';
-import Product from './components/Product.jsx';
-import Checkout from './components/Checkout.jsx';
-import NFLStats from './components/NFLStats.jsx';
-import './style/App.css';
-import './style/Header.css';
+import Header from './Header.jsx';
+import Home from './home/home.jsx';
+import Ecommerce from './ecommerce/ecommerce.jsx';
+import Product from './ecommerce/product.jsx';
+import Checkout from './ecommerce/checkout.jsx';
+import NFLStats from './stat_huddle/stat_huddle.jsx';
+import './App.css';
+import './Header.css';
 
 function App( )
 {

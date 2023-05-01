@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../style/Checkout.css';
+import './checkout.css';
 
 const states = [
    { value: 'AL', label: 'Alabama' },

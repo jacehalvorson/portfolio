@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { ReadJSONAndExecuteSetter } from "../utils/readJSON.js";
-import "../style/Product.css";
+import "./product.css";
 
 const productsFileName = '/products.json';
 

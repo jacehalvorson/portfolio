@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-import "../style/NFLStats.css";
-import "../style/index.css";
+import "./stat_huddle.css";
+import "../index.css";
 
 const apiName = "apinflstats";
 
