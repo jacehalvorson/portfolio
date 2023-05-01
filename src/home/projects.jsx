@@ -25,9 +25,8 @@ function Card( props )
 function Projects( props )
 {
    return (
-      <div id="projects-wrapper">
-        <h1 id="projects-title">Projects</h1>
-        <div id="menu">
+      <div id="projects-wrapper" className="section-wrapper">
+        <div id="projects-content">
           <div id="menu-items">
             {
               ( projectCardList )

@@ -3,8 +3,7 @@ import React from 'react';
 function Timeline( )
 {
   return (
-    <div id="timeline-wrapper">
-      <h1 id="timeline-title">Timeline</h1>
+    <div id="timeline-wrapper" className="section-wrapper hidden-right">
       <div id="timeline-content">
         <div id="timeline-text">
           <p>
