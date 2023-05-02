@@ -1,11 +1,9 @@
-body {
-   overflow-x: hidden;
-}
-
 main#home {
    position: relative;
+   padding: 0;
 
    max-width: calc( 100vw - ( 100vw - 100% ) );
+   overflow-x: hidden;
 
    border: 1px solid green;
 }
@@ -37,12 +35,16 @@ main#home {
    left: 50%;
    transform: translateX( -50% );
    z-index: 2;
+
+   overflow: visible;
+   border: 1px solid yellow;
 }
 
 .section-wrapper {
    position: absolute;
    width: 80vw;
-   margin-top: 1em;
+   margin: 1em 0;
+   top: 0px;
    left: 50%;
    transform: translateX( -50% );
    padding-bottom: 1em;

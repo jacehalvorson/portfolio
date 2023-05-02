@@ -27,7 +27,7 @@ function Card( props )
 function Projects( props )
 {
    return (
-      <div id="projects-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, PROJECTS_INDEX ) }>
+      <div id="projects-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, PROJECTS_INDEX ) } style={{ position: "relative" }}>
         <div id="projects-content">
           <div id="menu-items">
             {
