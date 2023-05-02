@@ -4,8 +4,6 @@ main#home {
 
    max-width: calc( 100vw - ( 100vw - 100% ) );
    overflow-x: hidden;
-
-   border: 1px solid green;
 }
 
 #home-header {
@@ -36,8 +34,7 @@ main#home {
    transform: translateX( -50% );
    z-index: 2;
 
-   overflow: visible;
-   border: 1px solid yellow;
+   /* overflow: visible; */
 }
 
 .section-wrapper {
