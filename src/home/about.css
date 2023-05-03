@@ -50,6 +50,11 @@
 }
 
 @media screen and ( max-width: 768px ) {
+   #about-wrapper {
+      padding: 0;
+      width: 90%;
+   }
+
    /* Center the image with the titles below it*/
    #about-header {
       flex-direction: column;
@@ -61,6 +66,6 @@
 
    /* Make the titles smaller */
    #about-titles {
-      font-size: 1.3em;
+      font-size: 1.1em;
    }
 }

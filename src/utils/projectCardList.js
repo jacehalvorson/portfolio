@@ -7,7 +7,7 @@ export const projectCardList = [
    },
    {
      "title": "VirtuMart",
-     "description": "This state-of-the-art mock e-commerce website is engineered with a focus on functionality and style, utilizing the latest web technologies and design principles to create an immersive, seamless, and user-friendly shopping environment. While VirtuMart doesn't process real transactions or ship products, it offers a stunning representation of a modern e-commerce platform.",
+     "description": "This state-of-the-art mock e-commerce website utilizes the latest web technologies and design principles to create an immersive, seamless, and user-friendly shopping environment. While VirtuMart doesn't process real transactions or ship products, it offers a stunning representation of a modern e-commerce platform.",
      "image": "https://www.aivanet.com/wp-content/uploads/2019/12/technology-gadgets-card-game-100-cool-tech-in-2019-best-products-you-need.jpg",
      "href": "/ecommerce"
    },
