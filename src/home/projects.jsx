@@ -11,7 +11,7 @@ function Card( props )
       <div className="card" id={ props.id }>
         <div
           className="card-background"
-          style={{backgroundImage: `linear-gradient( rgba( 0, 0, 0, 0.3 ), rgba( 0, 0, 0, 0.3 ) ), url( ${ props.image } )` }}>
+          style={{ backgroundImage: `linear-gradient( rgba( 0, 0, 0, 0.4 ), rgba( 0, 0, 0, 0.4 ) ), url( ${ props.image } )` }}>
         </div>
         <h2 className="card-title">{ props.title }</h2>
         <p className="card-text">{ props.description }</p>

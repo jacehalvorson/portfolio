@@ -33,18 +33,18 @@ main#home {
    left: 50%;
    transform: translateX( -50% );
    z-index: 2;
-
-   /* overflow: visible; */
 }
 
 .section-wrapper {
    position: absolute;
-   width: 80vw;
+   width: 90vw;
    margin: 1em 0;
    top: 0px;
    left: 50%;
    transform: translateX( -50% );
    padding-bottom: 1em;
+
+   font-size: clamp( 14px, 1vw, 28px );
 
    background-color: rgb( 20, 20, 20 );
    border: 1px solid white;
