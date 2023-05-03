@@ -37,7 +37,7 @@
    background-color: #0069d9;
    border-radius: 50%;
    z-index: 1;
-   top: 10px;
+   top: 0.5em;
    left: calc( 50% - 10px );
 }
 
