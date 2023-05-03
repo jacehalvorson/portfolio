@@ -17,12 +17,11 @@
 #menu-items {
    position: relative;
    max-width: calc( 100vw - ( 100vw - 100% ) );
-   overflow: hidden;
    margin: 0 auto;
    z-index: 3;
    
    display: grid;
-   grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   grid-template-columns: repeat( auto-fit, minmax( 400px, 1fr ) );
    grid-template-rows: repeat( auto-fit, 1fr );
    align-items: center;
    justify-items: center;
@@ -192,3 +191,9 @@
       background-position: top right;
    }
 } */
+
+@media screen and ( max-width: 768px ) {
+   #menu-items {
+      grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   }
+}
