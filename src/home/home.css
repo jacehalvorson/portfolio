@@ -37,11 +37,12 @@ main#home {
 
 .section-wrapper {
    position: absolute;
-   width: 90vw;
+   width: 80vw;
    margin: 1em 0;
    top: 0px;
    left: 50%;
    transform: translateX( -50% );
+   padding: 0;
    padding-bottom: 1em;
 
    font-size: clamp( 14px, 1vw, 28px );
@@ -77,9 +78,9 @@ main#home {
    top: 0px;
    z-index: -1;
 
-   transition: opacity var( --transition-time, 600ms ) ease,
-               background-size var( --transition-time, 600ms ) ease,
-               background-position var( --transition-time, 600ms ) ease;
+   transition: opacity var( --transition-time, 600ms ) ease-in-out,
+               background-size var( --transition-time, 600ms ) ease-in-out,
+               background-position var( --transition-time, 600ms ) ease-in-out;
 }
 
 #menu-items:hover ~ #background-pattern {
@@ -100,9 +101,9 @@ main#home {
    background-size: 105vmax;
    opacity: 0.3;
 
-   transition: opacity var( --transition-time, 600ms ) ease,
-               background-size var( --transition-time, 600ms ) ease,
-               background-position var( --transition-time, 600ms ) ease;
+   transition: opacity var( --transition-time, 600ms ) ease-in-out,
+               background-size var( --transition-time, 600ms ) ease-in-out,
+               background-position var( --transition-time, 600ms ) ease-in-out;
 }
 
 #menu-items:hover ~ #background-picture {

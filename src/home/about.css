@@ -1,0 +1,66 @@
+#about-content {
+   display: block;
+   text-align: center;
+}
+#about-content > h2 {
+   margin-top: 0;
+   margin-bottom: 1em;
+}
+
+#about-header {
+   display: flex;
+   margin: 2em;
+}
+
+#about-picture {
+   position: relative;
+   width: 20em;
+   border-radius: 50%;
+
+   display: block;
+   margin: 0 auto;
+   object-fit: cover;
+}
+
+#about-titles {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   margin: 0 auto;
+
+   font-size: 2em;
+   font-family: "Times New Roman", sans-serif;
+}
+#about-titles > h1 {
+   font-size: 3em;
+}
+#about-titles > a {
+   color: white;
+   text-decoration: none;
+}
+
+#about-text {
+   margin: 2em;
+   border-top: 1px solid white;
+}
+#about-text > p {
+   margin: 1em 0;
+   /* text-align: left; */
+}
+
+@media screen and ( max-width: 768px ) {
+   /* Center the image with the titles below it*/
+   #about-header {
+      flex-direction: column;
+   }
+   #about-picture {
+      width: 90%;
+      margin: 0 auto;
+   }
+
+   /* Make the titles smaller */
+   #about-titles {
+      font-size: 1.3em;
+   }
+}

@@ -2,6 +2,10 @@
    --transition-time: 600ms;
 }
 
+#projects-wrapper {
+   width: 90vw;
+}
+
 #projects-content {
    width: 100%;
    height: 100%;

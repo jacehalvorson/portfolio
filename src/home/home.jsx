@@ -15,7 +15,7 @@ function MenuBackground( props )
     <>
       <div
         id="background-pattern"
-        style={{ backgroundPosition: `${ ( props.activeIndex * -90 ) }% 0%` }}
+        style={{ backgroundPosition: `${ ( props.activeIndex * -25 ) }% 0%` }}
       />
 
       <div
@@ -28,7 +28,7 @@ function MenuBackground( props )
 
 function HomeHeader( props )
 {
-  const titleArray = [ "About", "Projects", "Timeline" ];
+  const titleArray = [ "About", "Projects", "Experience" ];
   const [ activeIndex, setActiveIndex ] = [ props.activeIndex, props.setActiveIndex ];
 
   return (
@@ -56,7 +56,7 @@ function HomeHeader( props )
 
 function Home( )
 {
-  const [ activeIndex, setActiveIndex ] = useState( 1 );
+  const [ activeIndex, setActiveIndex ] = useState( ABOUT_INDEX );
 
   return (
     <main id="home">

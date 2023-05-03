@@ -8,18 +8,30 @@ function About( props )
   return (
     <div id="about-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, ABOUT_INDEX ) }>
       <div id="about-content">
-        <div id="about-text">
-          <p>
-            I'm a software developer with a passion for learning and creating. I'm currently studying Computer Science at the University of Waterloo.
-          </p>
-          <p>
-            I'm interested in full-stack web development, mobile development, and machine learning. I'm also interested in game development, and I'm currently working on a 2D game engine.
-          </p>
-          <p>
-            I'm always looking for new opportunities to learn and grow as a developer. If you'd like to get in touch, feel free to send me an email at <a href="mailto:jacehalvorson33@gmail.com>">jacehalvorson33@gmail.com</a>
-          </p>
+        <div id="about-header">
+          <img id="about-picture" src="/jacehalvorson.jpg" alt="Picture of Jace Halvorson" />
+          <div id="about-titles">
+            <h1>Jace Halvorson</h1>
+            <h2>Software Engineer</h2>
+            <a href="mailto:jacehalvorson33@gmail.com">jacehalvorson33@gmail.com</a>
+            <p>+1 (952) 447-7533</p>
+            <p>Bloomington, MN</p>
+          </div>
         </div>
-        <div id="about-picture" />
+
+        <div id="about-text">
+          <p>Welcome to my professional website! Take the time to explore some of the projects and experiences that have shaped my career.
+             As you delve into the details of my work, you'll gain insight into my dedication to continuous learning, adaptability,
+             and innovative problem-solving. Some of these projects were developed for class projects, and others were for personal use.
+             Please don't hesitate to get in touch if you have any questions or would like to discuss potential collaboration opportunities.</p>
+          <p>As a recent graduate from the University of Minnesota's College of Science and Engineering, I have an insatiable curiosity
+             and a remarkable ability to learn quickly. My unwavering enthusiasm for learning enables me to stay on the cutting edge of
+             emerging technologies and programming paradigms, which is crucial in today's ever-evolving tech landscape.</p>
+          <p>My meticulous approach to software design prioritizes the creation of robust, adaptable, and maintainable code. I excel at
+             devising efficient and scalable solutions that are built to withstand the test of time, anticipating future requirements and
+             adaptions with ease. My well-rounded skills and passion for excellence make me a valuable asset to any organization seeking a
+             dedicated and innovative software engineer.</p>
+        </div>
       </div>
     </div>
   )

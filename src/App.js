@@ -15,7 +15,7 @@ function App( )
         <Route path="/ecommerce" element={ <Ecommerce /> } />
         <Route path="/ecommerce/product/:productId" element={ <Product /> } />
         <Route path="/ecommerce/checkout" element={ <Checkout /> } />
-        <Route path="/nflstats" element={ <NFLStats /> } />
+        <Route path="/stathuddle" element={ <NFLStats /> } />
         <Route path="*" element={<h1>404: Not Found</h1>} />
       </Routes>
     </Router>
