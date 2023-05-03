@@ -17,16 +17,17 @@
 #menu-items {
    position: relative;
    max-width: calc( 100vw - ( 100vw - 100% ) );
-   
-   left: 50%;
-   transform: translateX( -50% );
+   overflow: hidden;
+   margin: 0 auto;
    z-index: 3;
    
    display: grid;
-   grid-template-columns: repeat( auto-fit, minmax( 400px, 1fr ) );
-   grid-template-rows: repeat( auto-fit, minmax( 400px, 1fr ) );
+   grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   grid-template-rows: repeat( auto-fit, 1fr );
    align-items: center;
    justify-items: center;
+
+   /* border: 1px solid blue; */
 }
 
 #menu-items:hover > .card-wrapper {
@@ -42,7 +43,8 @@
    display: inline-block;
    height: 50vh;
    aspect-ratio: 5 / 7;
-   margin: 4vh 0vw 0 0vw;
+   margin-top: 2em;
+   /* border: 1px solid yellow; */
 
    transition: transform var( --transition-time, 600ms ) ease;
 }
