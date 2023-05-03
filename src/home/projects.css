@@ -11,20 +11,19 @@
    height: 100%;
    display: flex;
    align-items: center;
-   padding: 0;
+   padding-bottom: 1em;
 }
 
 #menu-items {
    position: relative;
    max-width: calc( 100vw - ( 100vw - 100% ) );
-   
-   left: 50%;
-   transform: translateX( -50% );
+   overflow: hidden;
+   margin: 0 auto;
    z-index: 3;
    
    display: grid;
-   grid-template-columns: repeat( auto-fit, minmax( 400px, 1fr ) );
-   grid-template-rows: repeat( auto-fit, minmax( 400px, 1fr ) );
+   grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   grid-template-rows: repeat( auto-fit, 1fr );
    align-items: center;
    justify-items: center;
 }
@@ -42,7 +41,7 @@
    display: inline-block;
    height: 50vh;
    aspect-ratio: 5 / 7;
-   margin: 4vh 0vw 0 0vw;
+   margin-top: 2em;
 
    transition: transform var( --transition-time, 600ms ) ease;
 }
@@ -60,6 +59,7 @@
    width: 100%;
    z-index: 3;
    align-items: center;
+   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
    border-radius: 2vh;
    font-size: 1em;
 
@@ -105,7 +105,7 @@
    cursor: default;
    text-align: center;
    color: white;
-   font-size: 1em;
+   font-size: 0.9em;
 
    margin-top: 80%;
    transition: margin-top 800ms ease;
@@ -159,7 +159,8 @@
    z-index: 4;
 }
 
-.card-border {
+/* This animation is too slow, but it looks cool */
+/* .card-border {
    position: absolute;
    top: -2px;
    left: -2px;
@@ -190,4 +191,4 @@
    100% {
       background-position: top right;
    }
-}
+} */

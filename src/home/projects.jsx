@@ -19,7 +19,8 @@ function Card( props )
           <button className="card-button">Check it out</button>
         </a>
       </div>
-      <div className="card-border"></div>
+      {/* Glowing border with color changes, too slow for production
+       <div className="card-border"></div> */}
     </div>
   )
 }

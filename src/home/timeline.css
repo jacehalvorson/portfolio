@@ -37,7 +37,7 @@
    background-color: #0069d9;
    border-radius: 50%;
    z-index: 1;
-   top: 0;
+   top: 0.5em;
    left: calc( 50% - 10px );
 }
 
@@ -74,6 +74,7 @@
 @media screen and ( max-width: 768px ) {
    /* Get rid of left-side padding on parent container */
    #timeline-wrapper {
+      width: 90vw;
       padding: 0 1em 0 0;
    }
    
@@ -89,5 +90,16 @@
    .timeline-event-content {
       width: 90%;
       margin-left: 4em;
+   }
+
+   /* Add spacing in between events, but not outside of them */
+   .timeline-event {
+      margin: 2em 0;
+   }
+   .timeline-event:first-child {
+      margin-top: 0;
+   }
+   .timeline-event:last-child {
+      margin-bottom: 0;
    }
 }
