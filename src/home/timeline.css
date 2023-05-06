@@ -8,7 +8,7 @@
    margin: 0 auto;
    padding: 1em 0;
    
-   /* For some reason giving this a transparent border connects the blue line to the top and bottom */
+   /* For some reason giving this a border connects the blue line to the top and bottom */
    border: 1px solid transparent;
 }
 
@@ -37,14 +37,18 @@
    background-color: #0069d9;
    border-radius: 50%;
    z-index: 1;
-   top: 0.5em;
+   top: 2em;
    left: calc( 50% - 10px );
+}
+
+.timeline-date-range {
+   color: #0069d9;
 }
 
 .timeline-event-content {
    align-self: flex-end;
    justify-self: flex-end;
-   width: 45%;
+   width: 46%;
 }
 
 .timeline-event-content > h3 {
@@ -62,11 +66,19 @@
    
    .timeline-event.left > .timeline-event-content {
       text-align: right;
-      margin-right: 0.5em;
    }
    .timeline-event.right > .timeline-event-content {
       text-align: left;
-      margin-left: 0.5em;
+   }
+   .timeline-event.right > .timeline-date-range {
+      text-align: right;
+      margin-top: 1.65em;
+      margin-right: 8%;
+   }
+   .timeline-event.left > .timeline-date-range {
+      text-align: left;
+      margin-top: 1.65em;
+      margin-left: 8%;
    }
 }
 
@@ -101,5 +113,16 @@
    }
    .timeline-event:last-child {
       margin-bottom: 0;
+   }
+
+   /* Move the date range to be beside the titles and adjust their widths so they both fit */
+   .timeline-date-range {
+      position: absolute;
+      top: 0;
+      left: 3.5em;
+      margin: 0;
+   }
+   .timeline-event-content > h2 {
+      margin-top: 1em;
    }
 }

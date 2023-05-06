@@ -4,6 +4,10 @@
 
 #projects-wrapper {
    width: 90vw;
+   padding-bottom: 2em;
+
+   border: none;
+   background-color: transparent;
 }
 
 #projects-content {
@@ -11,18 +15,16 @@
    height: 100%;
    display: flex;
    align-items: center;
-   padding-bottom: 1em;
 }
 
 #menu-items {
    position: relative;
    max-width: calc( 100vw - ( 100vw - 100% ) );
-   overflow: hidden;
    margin: 0 auto;
    z-index: 3;
    
    display: grid;
-   grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   grid-template-columns: repeat( auto-fit, minmax( 390px, 1fr ) );
    grid-template-rows: repeat( auto-fit, 1fr );
    align-items: center;
    justify-items: center;
@@ -39,7 +41,7 @@
 .card-wrapper {
    position: relative;
    display: inline-block;
-   height: 50vh;
+   height: 28em;
    aspect-ratio: 5 / 7;
    margin-top: 2em;
 
@@ -59,8 +61,8 @@
    width: 100%;
    z-index: 3;
    align-items: center;
-   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
-   border-radius: 2vh;
+   box-shadow: 0px 0px 14px rgba( 255, 255, 255, 0.5 );
+   border-radius: 1em;
    font-size: 1em;
 
    display: flex;
@@ -118,7 +120,7 @@
 .card-button {
    position: relative;
    width: 190%;
-   height: 6vh;
+   height: 2.5em;
    left: 50%;
    transform: translate( -50%, 400% );
    margin-bottom: 15%;
@@ -128,7 +130,7 @@
    color: white;
    font-size: 1.2em;
    background-color: #007bff;
-   border-radius: 5px;
+   border-radius: 0.5em;
    border: none;
 
    transition: transform 800ms ease;
@@ -192,3 +194,9 @@
       background-position: top right;
    }
 } */
+
+@media screen and ( max-width: 768px ) {
+   #menu-items {
+      grid-template-columns: repeat( auto-fit, minmax( 20em, 1fr ) );
+   }
+}

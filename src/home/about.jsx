@@ -9,7 +9,7 @@ function About( props )
     <div id="about-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, ABOUT_INDEX ) }>
       <div id="about-content">
         <div id="about-header">
-          <img id="about-picture" src="/jacehalvorson.jpg" alt="Picture of Jace Halvorson" />
+          <img id="about-picture" src="/jacehalvorson.jpg" alt="Jace Halvorson's face" />
           <div id="about-titles">
             <h1>Jace Halvorson</h1>
             <h2>Software Engineer</h2>
@@ -25,7 +25,7 @@ function About( props )
              and innovative problem-solving. Some of these projects were developed for class projects, and others were made for personal use.
              Please don't hesitate to reach out if you have any questions or would like to discuss potential collaboration opportunities.</p>
           <p>As a recent graduate from the University of Minnesota's College of Science and Engineering, I have an insatiable curiosity
-             and a remarkable ability to learn quickly. My unwavering enthusiasm for learning enables me to stay on the cutting edge of
+             and a remarkable ability to learn quickly. My unwavering enthusiasm for learning allows me to stay on the cutting edge of
              emerging technologies and programming paradigms, which is crucial in today's ever-evolving tech landscape.</p>
           <p>My meticulous approach to software design prioritizes the creation of robust, adaptable, and maintainable code. I excel at
              devising efficient and scalable solutions that are built to withstand the test of time, anticipating future requirements and
