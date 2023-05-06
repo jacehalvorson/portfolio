@@ -14,7 +14,7 @@ export const projectCardList = [
   {
     "title": "Checkers",
     "description": "Checkers engine featuring an AI that utilizes a minimax algorithm with alpha-beta pruning to make optimal moves against the player.",
-    "image": "checkersinprogress.png",
+    "image": "checkers.png",
     "href": "https://github.com/gpatt45/checkers_bot"
   },
   {
