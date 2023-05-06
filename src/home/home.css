@@ -23,6 +23,7 @@ main#home {
 }
 
 .home-arrow-icon {
+   color: white;
    font-size: 2em;
    cursor: pointer;
 }
@@ -35,7 +36,7 @@ main#home {
    z-index: 2;
 
    /* Removing this border pushes up the projects section too far for some reason */
-   border: 1px solid transparent;
+   /* border: 1px solid transparent; */
 }
 
 .section-wrapper {
@@ -48,11 +49,11 @@ main#home {
    padding: 0;
    padding-bottom: 1em;
 
-   font-size: clamp( 14px, 1vw, 28px );
+   font-size: clamp( 14px, 1.2vw, 28px );
 
    background-color: rgb( 20, 20, 20 );
    border: 1px solid white;
-   border-radius: 1vh;
+   border-radius: 1em;
 
    transition: left var( --transition-time, 600ms ) ease-in-out;
 }
@@ -62,6 +63,18 @@ main#home {
 }
 .hidden-right {
    left: 150%;
+}
+
+.unclickable {
+   pointer-events: none;
+   cursor: default;
+   color:rgba( 255, 255, 255, 0.2 );
+}
+
+.clickable {
+   pointer-events: auto;
+   cursor: pointer;
+   color: white;
 }
 
 /* Background */
@@ -74,7 +87,6 @@ main#home {
       transparent 7%
    );
    background-position: 0% 0%;
-   background-size: 11vmin 11vmin;
 
    position: fixed;
    left: 0px;
@@ -84,11 +96,6 @@ main#home {
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
                background-size var( --transition-time, 600ms ) ease-in-out,
                background-position var( --transition-time, 600ms ) ease-in-out;
-}
-
-#menu-items:hover ~ #background-pattern {
-   background-size: 10.5vmin 10.5vmin;
-   opacity: 0.5;
 }
 
 #background-picture {
@@ -101,7 +108,7 @@ main#home {
    z-index: -2;
    
    background-image: url( https://images.unsplash.com/photo-1500534623283-312aade485b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80 );
-   background-size: cover;
+   background-size: 105vmax;
    opacity: 0.3;
 
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
