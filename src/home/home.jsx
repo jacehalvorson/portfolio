@@ -16,12 +16,15 @@ function MenuBackground( props )
     <>
       <div
         id="background-pattern"
-        style={{ backgroundPosition: `${ ( props.sectionIndex * -25 ) }% 0%` }}
+        style={{ backgroundPosition: `${ ( props.sectionIndex * -25 ) }% 0%`,
+                 opacity: `${ ( props.projectHoverIndex > 0 ) ? 0.5 : 1 }`,
+                 backgroundSize: `${ ( props.projectsHovered ) ? "10.5vmin 10.5vmin" : "11vmin 11vmin" }` }}
       />
 
       <div
         id="background-picture"
-        style={{ backgroundPosition: `${ ( props.sectionIndex * 20 ) }% 40%` }}  
+        style={{ backgroundPosition: `${ ( props.sectionIndex * 33 ) }% center`,
+                 opacity: `${ ( props.projectsHovered ) ? 0.35 : 0.3 }`, }}  
       />
     </>
   )
@@ -52,23 +55,19 @@ function HomeHeader( props )
 function Home( )
 {
   const [ sectionIndex, setSectionIndex ] = useState( ABOUT_INDEX );
-  const [ projectHoverIndex, setProjectHoverIndex ] = useState( -1 );
+  const [ projectsHovered, setProjectsHovered ] = useState( false );
 
   return (
     <main id="home">
-      <HomeHeader
-        sectionIndex={sectionIndex}
-        setSectionIndex={setSectionIndex}
-        projectHoverIndex={projectHoverIndex}
-      />
+      <HomeHeader sectionIndex={sectionIndex} setSectionIndex={setSectionIndex} />
 
       <div id="home-content">
-        <Projects sectionIndex={sectionIndex} setProjectHoverIndex={setProjectHoverIndex} />
+        <Projects sectionIndex={sectionIndex} setProjectsHovered={setProjectsHovered} />
         <About sectionIndex={sectionIndex} />
         <Timeline sectionIndex={sectionIndex} />
       </div>
 
-      <MenuBackground sectionIndex={sectionIndex} />
+      <MenuBackground sectionIndex={sectionIndex} projectsHovered={projectsHovered} />
     </main>
   );
 }

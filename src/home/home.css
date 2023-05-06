@@ -87,7 +87,6 @@ main#home {
       transparent 7%
    );
    background-position: 0% 0%;
-   background-size: 11vmin 11vmin;
 
    position: fixed;
    left: 0px;
@@ -97,11 +96,6 @@ main#home {
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
                background-size var( --transition-time, 600ms ) ease-in-out,
                background-position var( --transition-time, 600ms ) ease-in-out;
-}
-
-#menu-items:hover ~ #background-pattern {
-   background-size: 10.5vmin 10.5vmin;
-   opacity: 0.5;
 }
 
 #background-picture {
@@ -114,7 +108,7 @@ main#home {
    z-index: -2;
    
    background-image: url( https://images.unsplash.com/photo-1500534623283-312aade485b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80 );
-   background-size: cover;
+   background-size: 105vmax;
    opacity: 0.3;
 
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
