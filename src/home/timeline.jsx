@@ -33,15 +33,19 @@ const timelineEventList = [
 
 function TimelineEvent( props )
 {
+  const isEventIndexEven = ( props.eventIndex % 2 === 0 );
+
   return (
-    <div className={ ( props.eventIndex % 2 === 0 ) ? "timeline-event right" : "timeline-event left" }>
-      {/* <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> */}
+    <div className={ isEventIndexEven ? "timeline-event right" : "timeline-event left" }>
+      { isEventIndexEven ? <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> : <></> }
       <i className="timeline-circle" />
       <div className="timeline-event-content">
         <h2>{ props.title }</h2>
         <h3>{ props.employer }</h3>
         <p>{ props.description }</p>
       </div>
+      { isEventIndexEven ? <></> : <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> }
+      
     </div>
   )
 }
