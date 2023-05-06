@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import About from "./about.jsx";
 import Timeline from "./timeline.jsx";
 import Projects from "./projects.jsx";
+import { changeSectionIndex } from "../utils/sectionIndexUtils.js";
 import './home.css';
 
-const numSections = 3;
+export const numSections = 3;
 export const ABOUT_INDEX = 0;
 export const PROJECTS_INDEX = 1;
 export const TIMELINE_INDEX = 2;
@@ -15,12 +16,12 @@ function MenuBackground( props )
     <>
       <div
         id="background-pattern"
-        style={{ backgroundPosition: `${ ( props.activeIndex * -25 ) }% 0%` }}
+        style={{ backgroundPosition: `${ ( props.sectionIndex * -25 ) }% 0%` }}
       />
 
       <div
         id="background-picture"
-        style={{ backgroundPosition: `${ ( props.activeIndex * 20 ) }% 40%` }}  
+        style={{ backgroundPosition: `${ ( props.sectionIndex * 20 ) }% 40%` }}  
       />
     </>
   )
@@ -29,26 +30,20 @@ function MenuBackground( props )
 function HomeHeader( props )
 {
   const titleArray = [ "About", "Projects", "Experience" ];
-  const [ activeIndex, setActiveIndex ] = [ props.activeIndex, props.setActiveIndex ];
+  const [ sectionIndex, setSectionIndex ] = [ props.sectionIndex, props.setSectionIndex ];
 
   return (
     <div id="home-header">
-      <i className="fas fa-arrow-left home-arrow-icon"
-          onClick={ ( ) => {
-          if ( activeIndex > 0 ) {
-            setActiveIndex( ( activeIndex - 1 ) );
-          }
-          }}
+      <i id="home-arrow-left"
+          className="fas fa-arrow-left home-arrow-icon unclickable"
+          onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "prev", numSections ); }}
       />
       <h1 id="home-title">
-        { titleArray[ activeIndex ] }
+        { titleArray[ sectionIndex ] }
       </h1>
-      <i className="fas fa-arrow-right home-arrow-icon"
-          onClick={ ( ) => {
-          if ( activeIndex < ( numSections - 1 ) ) {
-            setActiveIndex( ( activeIndex + 1 ) );
-          }
-          }}
+      <i id="home-arrow-right"
+          className="fas fa-arrow-right home-arrow-icon"
+          onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "next", numSections ); }}
       />
     </div>
   )
@@ -56,19 +51,24 @@ function HomeHeader( props )
 
 function Home( )
 {
-  const [ activeIndex, setActiveIndex ] = useState( ABOUT_INDEX );
+  const [ sectionIndex, setSectionIndex ] = useState( ABOUT_INDEX );
+  const [ projectHoverIndex, setProjectHoverIndex ] = useState( -1 );
 
   return (
     <main id="home">
-      <HomeHeader activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      <HomeHeader
+        sectionIndex={sectionIndex}
+        setSectionIndex={setSectionIndex}
+        projectHoverIndex={projectHoverIndex}
+      />
 
       <div id="home-content">
-        <Projects activeIndex={activeIndex} />
-        <About activeIndex={activeIndex} />
-        <Timeline activeIndex={activeIndex} />
+        <Projects sectionIndex={sectionIndex} setProjectHoverIndex={setProjectHoverIndex} />
+        <About sectionIndex={sectionIndex} />
+        <Timeline sectionIndex={sectionIndex} />
       </div>
 
-      <MenuBackground activeIndex={activeIndex} />
+      <MenuBackground sectionIndex={sectionIndex} />
     </main>
   );
 }

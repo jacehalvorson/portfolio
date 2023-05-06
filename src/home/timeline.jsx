@@ -1,5 +1,5 @@
 import React from 'react';
-import getSectionWrapperClassNames from "../utils/getSectionWrapperClassNames.js";
+import { getSectionWrapperClassNames } from "../utils/sectionIndexUtils.js";
 import { TIMELINE_INDEX } from "./home.jsx";
 import './timeline.css';
 
@@ -53,7 +53,7 @@ function TimelineEvent( props )
 function Timeline( props )
 {
   return (
-    <div id="timeline-wrapper" className={ getSectionWrapperClassNames( props.activeIndex, TIMELINE_INDEX ) }>
+    <div id="timeline-wrapper" className={ getSectionWrapperClassNames( props.sectionIndex, TIMELINE_INDEX ) }>
       <div id="timeline-content">
 
         {/* Map over event list and create a timeline event for each one */

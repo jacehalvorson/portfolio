@@ -23,6 +23,7 @@ main#home {
 }
 
 .home-arrow-icon {
+   color: white;
    font-size: 2em;
    cursor: pointer;
 }
@@ -62,6 +63,18 @@ main#home {
 }
 .hidden-right {
    left: 150%;
+}
+
+.unclickable {
+   pointer-events: none;
+   cursor: default;
+   color:rgba( 255, 255, 255, 0.2 );
+}
+
+.clickable {
+   pointer-events: auto;
+   cursor: pointer;
+   color: white;
 }
 
 /* Background */
