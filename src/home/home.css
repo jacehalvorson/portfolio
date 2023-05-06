@@ -36,7 +36,7 @@ main#home {
    z-index: 2;
 
    /* Removing this border pushes up the projects section too far for some reason */
-   border: 1px solid transparent;
+   /* border: 1px solid transparent; */
 }
 
 .section-wrapper {
@@ -49,11 +49,11 @@ main#home {
    padding: 0;
    padding-bottom: 1em;
 
-   font-size: clamp( 14px, 1vw, 28px );
+   font-size: clamp( 14px, 1.2vw, 28px );
 
    background-color: rgb( 20, 20, 20 );
    border: 1px solid white;
-   border-radius: 1vh;
+   border-radius: 1em;
 
    transition: left var( --transition-time, 600ms ) ease-in-out;
 }

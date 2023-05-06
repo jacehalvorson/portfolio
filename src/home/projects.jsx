@@ -13,8 +13,8 @@ function Card( props )
       <div className="card">
         <div
           className="card-background"
-          // Add this card's image as a background image with 0.4 opacity
-          style={{ backgroundImage: `linear-gradient( rgba( 0, 0, 0, 0.4 ), rgba( 0, 0, 0, 0.4 ) ), url( ${ props.image } )` }}
+          // Add this card's image as a background image with 0.5 opacity
+          style={{ backgroundImage: `linear-gradient( rgba( 0, 0, 0, 0.4 ), rgba( 0, 0, 0, 0.7 ) ), url( ${ props.image } )` }}
         />
         <h2 className="card-title">{ props.title }</h2>
         <p className="card-text">{ props.description }</p>
