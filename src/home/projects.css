@@ -19,13 +19,13 @@
 
 #menu-items {
    position: relative;
-   max-width: calc( 100vw - ( 100vw - 100% ) );
+   max-width: 100%;
    /* Offset the margin-top of the first card and center the cards */
    margin: -1.5em auto 0 auto;
    z-index: 3;
    
    display: grid;
-   grid-template-columns: repeat( auto-fit, minmax( 390px, 1fr ) );
+   grid-template-columns: repeat( auto-fit, minmax( calc( 22em + 20px ), 1fr ) );
    grid-template-rows: repeat( auto-fit, 1fr );
    align-items: center;
    justify-items: center;
@@ -42,7 +42,7 @@
 .card-wrapper {
    position: relative;
    display: inline-block;
-   height: 30em;
+   width: 21em;
    aspect-ratio: 5 / 7;
    margin-top: 2.5em;
 
