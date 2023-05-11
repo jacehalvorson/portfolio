@@ -8,7 +8,6 @@ main#home {
 
 #home-header {
    font-size: clamp( 20px, 2vw, 28px );
-
    position: relative;
    margin-top: 1em;
    left: 50%;
@@ -31,38 +30,29 @@ main#home {
 #home-content {
    position: relative;
    margin-top: 1em;
-   left: 50%;
-   transform: translateX( -50% );
    z-index: 2;
+   width: auto;
 
-   /* Removing this border pushes up the projects section too far for some reason */
-   /* border: 1px solid transparent; */
-}
-
-.section-wrapper {
-   position: absolute;
-   width: 80vw;
-   margin: 1em 0;
-   top: 0px;
-   left: 50%;
-   transform: translateX( -50% );
-   padding: 0;
-   padding-bottom: 1em;
-
-   font-size: clamp( 14px, 1.2vw, 28px );
-
-   background-color: rgb( 20, 20, 20 );
-   border: 1px solid white;
-   border-radius: 1em;
+   display: flex;
+   align-items: flex-start;
+   justify-content: center;
+   gap: 10%;
 
    transition: left var( --transition-time, 600ms ) ease-in-out;
 }
 
-.hidden-left {
-   left: -50%;
-}
-.hidden-right {
-   left: 150%;
+.section-wrapper {
+   position: relative;
+   min-width: 90%;
+   top: 0;
+   padding: 0;
+   margin-bottom: 2em;
+   border: 1px solid black;
+
+   font-size: clamp( 14px, 1.2vw, 28px );
+
+   background-color: rgb( 20, 20, 20 );
+   border-radius: 1em;
 }
 
 .unclickable {
@@ -79,7 +69,7 @@ main#home {
 
 /* Background */
 #background-pattern {
-   height: 100vh;
+   height: 100%;
    width: calc( 100vw - ( 100vw - 100% ) );
 
    background-image: radial-gradient(

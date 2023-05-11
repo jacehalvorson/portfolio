@@ -1,6 +1,16 @@
+#about-wrapper {
+   background-color: white;
+   color: #0069d9;
+   padding: 0;
+}
+
 #about-content {
    display: block;
    text-align: center;
+   border-radius: inherit;
+
+   padding: 0;
+   margin: 0;
 }
 #about-content > h2 {
    margin-top: 0;
@@ -9,17 +19,7 @@
 
 #about-header {
    display: flex;
-   margin: 2em;
-}
-
-#about-picture {
-   position: relative;
-   width: 20em;
-   border-radius: 50%;
-
-   display: block;
-   margin: 0 auto;
-   object-fit: cover;
+   margin: 6em 2em;
 }
 
 #about-titles {
@@ -29,43 +29,160 @@
    justify-content: center;
    margin: 0 auto;
 
-   font-size: 2em;
-   font-family: "Times New Roman", sans-serif;
+   font-size: 1.5em;
+   font-weight: 700;
 }
 #about-titles > h1 {
    font-size: 3em;
 }
+#about-titles > h2 {
+   padding-bottom: 1em;
+}
 #about-titles > a {
-   color: white;
+   color: #0069d9;
    text-decoration: none;
 }
 
-#about-text {
-   font-size: 1.2em;
-   margin: 2em;
-   border-top: 1px solid white;
+#about-body {
+   position: relative;
+   background: rgb(0,105,217);
+   background: radial-gradient(circle, rgba(0,105,217,1) 0%, rgba(25,16,201,1) 100%);
+   color: white;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   width: calc( 100% + 2px );
+   left: -1px;
 }
-#about-text > p {
+
+#about-picture {
+   position: relative;
+   width: 20em;
+   border-radius: 50%;
+
+   margin: 2em;
+   object-fit: cover;
+}
+
+#about-body-text, #about-resume-text {
+   height: 100%;
+   text-align: left;
+   font-size: 1.2em;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+#about-body-text > p,
+#about-resume-text > p {
    margin: 1em 0;
+}
+#about-body-text {
+   padding-right: 2em;
+   margin: 1em;
+}
+#about-resume-text {
+   margin: 2em;
+}
+
+#about-resume {
+   background-color: white;
+   color: #0069d9;
+   font-weight: 500;
+   border-radius: inherit;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#about-resume-text {
+   margin: 2em;
+}
+
+#resume-download {
+   margin: 2em;
+   border: 1px solid #0069d9;
+   border-radius: 1em;
+
+   position: relative;
+}
+#resume-download > img {
+   position: relative;
+   border-radius: inherit;
+   transition: opacity 200ms ease-in-out;
+}
+#resume-download:hover > img {
+   /* Fade the image on hover */
+   opacity: 0.6;
+}
+#resume-download:hover > #resume-download-icon {
+   /* Make the icon visible */
+   color: #0069d9;
+   /* Create a white backdrop for the partly transparent icon */
+   background-color: white;
+}
+
+#resume-download-icon {
+   font-size: 4em;
+   color: transparent;
+   opacity: 1;
+   
+   background-color: transparent;
+   border-radius: 50%;
+   width: 0.7em;
+   height: 0.7em;
+   
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate( -50%, -50% );
+   transition: color 200ms ease-in-out,
+               background-color 200ms ease-in-out;
 }
 
 @media screen and ( max-width: 768px ) {
+   /* Make the about section full width */
    #about-wrapper {
       padding: 0;
-      width: 90%;
+      /* width: 90vw; */
+   }
+   
+   /* Make the titles smaller */
+   #about-titles {
+      font-size: 1.2em;
    }
 
-   /* Center the image with the titles below it*/
-   #about-header {
+   /* Center the image with the text below it*/
+   #about-body {
       flex-direction: column;
    }
    #about-picture {
-      width: 90%;
-      margin: 0 auto;
+      /* width: 90%; */
+      margin: 1em auto;
+   }
+   #about-body-text {
+      text-align: center;
+      margin: 0;
+      padding: 0 1em;
    }
 
-   /* Make the titles smaller */
-   #about-titles {
-      font-size: 1.1em;
+   /* Make the resume section flex in column direction */
+   #about-resume {
+      flex-direction: column;
+      padding-bottom: 2em;
+   }
+   #resume-download-icon {
+      /* Make the icon visible */
+      color: #0069d9;
+      /* Create a white backdrop for the partly transparent icon */
+      background-color: white;
    }
 }

@@ -1,7 +1,5 @@
 import React from 'react';
 import projectCardList from "../utils/projectCardList.js";
-import { getSectionWrapperClassNames } from "../utils/sectionIndexUtils.js";
-import { PROJECTS_INDEX } from "./home.jsx";
 import './projects.css';
 
 function Card( props )
@@ -18,8 +16,8 @@ function Card( props )
         />
         <h2 className="card-title">{ props.title }</h2>
         <p className="card-text">{ props.description }</p>
-        <a href={ props.href }>
-          <button className="card-button">Check it out</button>
+        <a href={ props.href } tabindex="-1">
+          <button className="card-button" tabindex="-1">Check it out</button>
         </a>
       </div>
       {/* Glowing border with color changes, too slow for production
@@ -31,7 +29,7 @@ function Card( props )
 function Projects( props )
 {
   return (
-    <div id="projects-wrapper" className={ getSectionWrapperClassNames( props.sectionIndex, PROJECTS_INDEX ) } style={{ position: "relative" }}>
+    <div id="projects-wrapper" className="section-wrapper">
       <div id="projects-content">
         <div id="menu-items">
           {

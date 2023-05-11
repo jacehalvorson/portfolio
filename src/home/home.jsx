@@ -61,10 +61,10 @@ function Home( )
     <main id="home">
       <HomeHeader sectionIndex={sectionIndex} setSectionIndex={setSectionIndex} />
 
-      <div id="home-content">
-        <Projects sectionIndex={sectionIndex} setProjectsHovered={setProjectsHovered} />
-        <About sectionIndex={sectionIndex} />
-        <Timeline sectionIndex={sectionIndex} />
+      <div id="home-content" style={{ left: `${ sectionIndex * -100 + 100 }%` }}>
+        <About />
+        <Projects setProjectsHovered={setProjectsHovered} />
+        <Timeline />
       </div>
 
       <MenuBackground sectionIndex={sectionIndex} projectsHovered={projectsHovered} />

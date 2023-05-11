@@ -1,19 +1,3 @@
-export function getSectionWrapperClassNames( activeIndex, sectionIndex )
-{
-  let classNames = "section-wrapper";
-
-  if ( activeIndex > sectionIndex )
-  {
-    classNames += " hidden-left";
-  }
-  else if ( activeIndex < sectionIndex )
-  {
-    classNames += " hidden-right";
-  }
-
-  return classNames;
-}
-
 export function changeSectionIndex( sectionIndex, setSectionIndex, change, numSections )
 {
   const previousSectionIndex = sectionIndex;
