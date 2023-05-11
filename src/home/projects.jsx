@@ -18,8 +18,8 @@ function Card( props )
         />
         <h2 className="card-title">{ props.title }</h2>
         <p className="card-text">{ props.description }</p>
-        <a href={ props.href }>
-          <button className="card-button">Check it out</button>
+        <a href={ props.href } tabindex="-1">
+          <button className="card-button" tabindex="-1">Check it out</button>
         </a>
       </div>
       {/* Glowing border with color changes, too slow for production
