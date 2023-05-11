@@ -43,7 +43,10 @@ function About( props )
             dedicated and innovative software engineer.</p>
           </div>
           <a id="resume-download" href="/JaceHalvorsonResume.pdf" download="JaceHalvorsonResume">
-            <img src="/JaceHalvorsonResume.pdf" alt="Resume" />
+            <img src="/ResumeScreenshot.png" alt="Resume" width="300em"/>
+            <div id="resume-download-icon">
+              <i className="fas fa-cloud-arrow-down" />
+            </div>
           </a>
         </div>
       </div>
