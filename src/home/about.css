@@ -53,7 +53,8 @@
    align-items: center;
    justify-content: center;
 
-   margin: 0;
+   width: calc( 100% + 2px );
+   left: -1px;
 }
 
 #about-picture {
@@ -64,7 +65,6 @@
    margin: 2em;
    object-fit: cover;
 }
-
 
 #about-body-text, #about-resume-text {
    height: 100%;
@@ -91,6 +91,7 @@
 #about-resume {
    background-color: white;
    color: #0069d9;
+   font-weight: 500;
    border-radius: inherit;
 
    display: flex;
@@ -111,8 +112,8 @@
 }
 #resume-download > img {
    position: relative;
-   z-index: 2;
    border-radius: inherit;
+   transition: opacity 200ms ease-in-out;
 }
 #resume-download:hover > img {
    /* Fade the image on hover */
@@ -120,48 +121,68 @@
 }
 #resume-download:hover > #resume-download-icon {
    /* Make the icon visible */
-   z-index: 3;
-   opacity: 1;
+   color: #0069d9;
+   /* Create a white backdrop for the partly transparent icon */
+   background-color: white;
 }
 
 #resume-download-icon {
    font-size: 4em;
-   color: #0069d9;
+   color: transparent;
+   opacity: 1;
    
-   /* Create a white backdrop for the partly transparent icon */
-   background-color: white;
+   background-color: transparent;
    border-radius: 50%;
    width: 0.7em;
    height: 0.7em;
-
+   
    display: flex;
    align-items: center;
    justify-content: center;
-
+   
    position: absolute;
    top: 50%;
    left: 50%;
    transform: translate( -50%, -50% );
-   z-index: 1;
+   transition: color 200ms ease-in-out,
+               background-color 200ms ease-in-out;
 }
 
-@media screen and ( max-width: 768px ) {
+@media screen and ( max-width: 899px ) {
+   /* Make the about section full width */
    #about-wrapper {
       padding: 0;
       width: 90%;
    }
+   
+   /* Make the titles smaller */
+   #about-titles {
+      font-size: 1.2em;
+   }
 
-   /* Center the image with the titles below it*/
-   #about-header {
+   /* Center the image with the text below it*/
+   #about-body {
       flex-direction: column;
    }
    #about-picture {
       width: 90%;
-      margin: 0 auto;
+      margin: 1em auto;
+   }
+   #about-body-text {
+      text-align: center;
+      margin: 0;
+      padding: 0 1em;
    }
 
-   /* Make the titles smaller */
-   #about-titles {
-      font-size: 1.1em;
+   /* Make the resume section flex in column direction */
+   #about-resume {
+      flex-direction: column;
+      padding-bottom: 2em;
+   }
+   #resume-download-icon {
+      /* Make the icon visible */
+      color: #0069d9;
+      /* Create a white backdrop for the partly transparent icon */
+      background-color: white;
    }
 }
