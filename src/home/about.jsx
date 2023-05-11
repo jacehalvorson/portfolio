@@ -1,12 +1,10 @@
 import React from "react";
-import { getSectionWrapperClassNames } from "../utils/sectionIndexUtils.js";
-import { ABOUT_INDEX } from "./home.jsx";
 import './about.css';
 
 function About( props )
 {
   return (
-    <div id="about-wrapper" className={ getSectionWrapperClassNames( props.sectionIndex, ABOUT_INDEX ) }>
+    <div id="about-wrapper" className="section-wrapper">
       <div id="about-content">
         <div id="about-header">
           <div id="about-titles">

@@ -1,7 +1,5 @@
 import React from 'react';
 import projectCardList from "../utils/projectCardList.js";
-import { getSectionWrapperClassNames } from "../utils/sectionIndexUtils.js";
-import { PROJECTS_INDEX } from "./home.jsx";
 import './projects.css';
 
 function Card( props )
@@ -31,7 +29,7 @@ function Card( props )
 function Projects( props )
 {
   return (
-    <div id="projects-wrapper" className={ getSectionWrapperClassNames( props.sectionIndex, PROJECTS_INDEX ) } style={{ position: "relative" }}>
+    <div id="projects-wrapper" className="section-wrapper">
       <div id="projects-content">
         <div id="menu-items">
           {
