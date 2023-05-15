@@ -152,7 +152,6 @@
    /* Make the about section full width */
    #about-wrapper {
       padding: 0;
-      /* width: 90vw; */
    }
    
    /* Make the titles smaller */
@@ -165,7 +164,6 @@
       flex-direction: column;
    }
    #about-picture {
-      /* width: 90%; */
       margin: 1em auto;
    }
    #about-body-text {
@@ -179,6 +177,17 @@
       flex-direction: column;
       padding-bottom: 2em;
    }
+
+   #about-resume-text {
+      order: 2;
+      text-align: center;
+   }
+
+   #resume-download {
+      order: 1;
+      margin-bottom: 0;
+   }
+
    #resume-download-icon {
       /* Make the icon visible */
       color: #0069d9;
