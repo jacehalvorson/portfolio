@@ -109,6 +109,7 @@
    border-radius: 1em;
 
    position: relative;
+   transition: transform 50ms ease-in-out;
 }
 #resume-download > img {
    position: relative;
@@ -121,20 +122,20 @@
 }
 #resume-download:hover > #resume-download-icon {
    /* Make the icon visible */
-   color: #0069d9;
+   fill: #0069d9;
    /* Create a white backdrop for the partly transparent icon */
    background-color: white;
 }
 
 #resume-download-icon {
-   font-size: 4em;
-   color: transparent;
+   font-size: 3em;
+   fill: transparent;
    opacity: 1;
    
    background-color: transparent;
    border-radius: 50%;
-   width: 0.7em;
-   height: 0.7em;
+   width: 0.9em;
+   height: 0.9em;
    
    display: flex;
    align-items: center;
@@ -144,8 +145,13 @@
    top: 50%;
    left: 50%;
    transform: translate( -50%, -50% );
-   transition: color 200ms ease-in-out,
+   transition: fill 200ms ease-in-out,
                background-color 200ms ease-in-out;
+}
+
+#resume-download:active {
+   transform: scale( 0.95 );
+   transition: none;
 }
 
 @media screen and ( max-width: 768px ) {
@@ -188,9 +194,9 @@
       margin-bottom: 0;
    }
 
-   #resume-download-icon {
+   #resume-download-icon > svg {
       /* Make the icon visible */
-      color: #0069d9;
+      fill: #0069d9;
       /* Create a white backdrop for the partly transparent icon */
       background-color: white;
    }
