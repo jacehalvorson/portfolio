@@ -28,7 +28,8 @@
    align-items: center;
    justify-content: center;
    margin: 0 auto;
-
+   
+   font-family: 'Lato', Helvetica, sans-serif;
    font-size: 1.5em;
    font-weight: 700;
 }
@@ -91,7 +92,6 @@
 #about-resume {
    background-color: white;
    color: #0069d9;
-   font-weight: 500;
    border-radius: inherit;
 
    display: flex;

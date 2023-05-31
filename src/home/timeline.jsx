@@ -7,9 +7,9 @@ const timelineEventList = [
     employer: "Dairy Queen",
     startDate: "February 2019",
     endDate: "August 2021",
-    bulletPoints: [
+    description: [
       "Managed and trained employees to ensure quality customer service.",
-      "Maintained a safe work environment by properly cleaning and maintaining equipment."
+      "Supported a safe work environment by properly cleaning and maintaining equipment."
     ]
   },
   {
@@ -17,18 +17,14 @@ const timelineEventList = [
     employer: "University of Minnesota",
     startDate: "October 2021",
     endDate: "May 2022",
-    bulletPoints: [
-      "Kept constant, concise, and meticulous communication via logging and radio discussion.",
-      "Continuous surveillance and campus building patrols to ensure security and safety for both students and faculty.",
-      "Aided students with safe travel through UMN’s 24/7 safe-walk program."
-    ]
+    description: "Kept constant, concise, and meticulous communication via logging and radio discussion. Held continuous surveillance and campus building patrols to ensure security and safety for both students and faculty, and provided assistance to students with safe travel through UMN’s 24/7 safe-walk program."
   },
   {
     title: "Firmware Engineering Intern",
     employer: "Seagate Technology",
     startDate: "May 2022",
     endDate: "December 2022",
-    bulletPoints: [
+    description: [
       "Developed, improved, and tested controller firmware for HDD products.",
       "Effectively utilized engineering strategies while addressing problems to improve adaptability and robustness of code.",
       "Frequent discussion with stakeholders to find the ideal implementation of systems."
@@ -48,10 +44,13 @@ function TimelineEvent( props )
         <h2>{ props.title }</h2>
         <h3>{ props.employer }</h3>
         <ul>
-          { console.log( props.bulletPoints )}
-          { props.bulletPoints.map( ( bulletPoint ) => (
-              ( <li>{ bulletPoint }</li> )
-          ))}
+          { console.log( props.description )}
+          { ( props.description instanceof Array )
+              ? props.description.map( ( bulletPoint ) => (
+                ( <li>{ bulletPoint }</li> )
+              ))
+              : ( <p>{ props.description }</p> )
+          }
         </ul>
       </div>
       { isEventIndexEven ? <></> : <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> }
@@ -74,7 +73,7 @@ function Timeline( props )
             employer={ event.employer }
             startDate={ event.startDate }
             endDate={ event.endDate }
-            bulletPoints={ event.bulletPoints }
+            description={ event.description }
           />
         ))}
       </div>
