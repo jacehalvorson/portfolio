@@ -40,7 +40,7 @@ function HomeHeader( props )
       {/* Left arrow icon */}
       <svg
         id="home-arrow-left"
-        className="home-arrow-icon unclickable"
+        className="home-arrow-icon"
         onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "prev", numSections ); }}
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -73,7 +73,7 @@ function HomeHeader( props )
 
 function Home( )
 {
-  const [ sectionIndex, setSectionIndex ] = useState( ABOUT_INDEX );
+  const [ sectionIndex, setSectionIndex ] = useState( PROJECTS_INDEX );
   const [ projectsHovered, setProjectsHovered ] = useState( false );
 
   return (

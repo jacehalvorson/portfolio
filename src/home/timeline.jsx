@@ -44,7 +44,6 @@ function TimelineEvent( props )
         <h2>{ props.title }</h2>
         <h3>{ props.employer }</h3>
         <ul>
-          { console.log( props.description )}
           { ( props.description instanceof Array )
               ? props.description.map( ( bulletPoint ) => (
                 ( <li>{ bulletPoint }</li> )

@@ -24,16 +24,16 @@ export const projectCardList = [
     "href": "https://github.com/jacehalvorson/snake"
   },
   {
-    "title": "Uthreads",
-    "description": "Written in C++, this interface provides support for multithreaded programming. Uthreads provides a standardized API (Application Programming Interface) for managing threads, including thread creation, synchronization, and communication.",
-    "image": "https://i.stack.imgur.com/49rOl.png",
-    "href": "https://github.umn.edu/joh18447/csci-5103/tree/main/projects"
+    "title": "OS Projects (C++)",
+    "description": "User thread library, mutual exclusion technique comparsion, and virtual memory page eviction algorithm demonstration.",
+    "image": "https://st4.depositphotos.com/1001599/40602/v/450/depositphotos_406024484-stock-illustration-cross-platform-development-abstract-concept.jpg",
+    "href": "https://github.com/jacehalvorson/csci5103projects"
   },
   {
-    "title": "Minitar",
-    "description": "File compression program based on the Linux tar (tape archive) command. Provides a subset of tar services, including creating/deleting archives and appending/extracting files to and from archives.",
-    "image": "https://images.unsplash.com/photo-1511721285502-9f81e79be874?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    "href": "https://github.umn.edu/joh18447/csci-5103/tree/main/projects"
+    "title": "Intro OS Projects (C)",
+    "description": "HTTP server capable of handling concurrent requests using system calls and threading, terminal shell with pipelining, and archiving tool similar to Linux's \"tar\" command.",
+    "image": "https://c4.wallpaperflare.com/wallpaper/248/404/919/digital-art-windows-7-simple-operating-systems-wallpaper-preview.jpg",
+    "href": "https://github.com/jacehalvorson/csci4061projects"
   }
 ];
 

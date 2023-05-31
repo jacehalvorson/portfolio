@@ -5,6 +5,7 @@
 #projects-wrapper {
    border: none;
    background-color: transparent;
+   width: 95%;
 }
 
 #projects-content {
@@ -18,15 +19,16 @@
 #menu-items {
    position: relative;
    max-width: 100%;
-   /* Offset the margin-top of the first card and center the cards */
-   margin: -1.5em auto 0 auto;
    z-index: 3;
+
+   /* Offset the margin-top of the first card and center the cards */
+   margin: 0 auto 0 auto;
    
    display: grid;
    grid-template-columns: repeat( auto-fit, minmax( calc( 22em + 20px ), 1fr ) );
    grid-template-rows: repeat( auto-fit, 1fr );
-   align-items: center;
-   justify-items: center;
+   gap: 1em;
+   align-content: center;
 }
 
 #menu-items:hover > .card-wrapper {
@@ -42,7 +44,7 @@
    display: inline-block;
    width: 21em;
    aspect-ratio: 5 / 7;
-   margin-top: 2.5em;
+   margin: 2.5em auto 0 auto;
 
    transition: transform var( --transition-time, 600ms ) ease;
 }
