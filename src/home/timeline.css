@@ -1,7 +1,10 @@
 #timeline-wrapper {
    box-sizing: border-box;
    padding: 0 3em;
-   border: 1px solid white;
+   border: 1px solid black;
+   background: rgb(0,105,217);
+   background: radial-gradient(circle, rgba(0,105,217,1) 0%, rgba(6,83,213,1) 20%, rgba(15,51,207,1) 61%, rgba(25,16,201,1) 100%);
+   backdrop-filter: blur( 10px );
 }
 
 #timeline-content {
@@ -18,7 +21,7 @@
    position: absolute;
    width: 2px;
    height: 100%;
-   background-color: #0069d9;
+   background-color: white;
    top: 0;
    left: calc( 50% - 1px );
    z-index: 0;
@@ -35,7 +38,7 @@
    position: absolute;
    width: 20px;
    height: 20px;
-   background-color: #0069d9;
+   background-color: white;
    border-radius: 50%;
    z-index: 1;
    top: 2em;
@@ -43,13 +46,14 @@
 }
 
 .timeline-date-range {
-   color: #0069d9;
+   color: white;
 }
 
 .timeline-event-content {
    align-self: flex-end;
    justify-self: flex-end;
    width: 46%;
+   color: white;
 }
 
 .timeline-event-content > h3 {

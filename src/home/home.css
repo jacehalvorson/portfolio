@@ -51,8 +51,6 @@ main#home {
    border: 1px solid black;
 
    font-size: clamp( 14px, 1.2vw, 28px );
-
-   background-color: rgb( 20, 20, 20 );
    border-radius: 1em;
 }
 
