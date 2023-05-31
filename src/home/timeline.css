@@ -3,8 +3,7 @@
    padding: 0 3em;
    border: 1px solid black;
    background: rgb(0,105,217);
-   background: radial-gradient(circle, rgba(0,105,217,1) 0%, rgba(6,83,213,1) 20%, rgba(15,51,207,1) 61%, rgba(25,16,201,1) 100%);
-   backdrop-filter: blur( 10px );
+   background: linear-gradient(22deg, rgba(0,105,217,1) 0%, rgba(6,83,213,1) 20%, rgba(15,51,207,1) 61%, rgba(25,16,201,1) 100%);
 }
 
 #timeline-content {
@@ -41,7 +40,7 @@
    background-color: white;
    border-radius: 50%;
    z-index: 1;
-   top: 2em;
+   top: 2.2em;
    left: calc( 50% - 10px );
 }
 
@@ -70,7 +69,7 @@
    }
    
    .timeline-event.left > .timeline-event-content {
-      text-align: right;
+      text-align: left;
    }
    .timeline-event.right > .timeline-event-content {
       text-align: left;
