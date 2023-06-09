@@ -32,7 +32,7 @@ function MenuBackground( props )
 
 function HomeHeader( props )
 {
-  const titleArray = [ "About", "Projects", "Experience" ];
+  const titleArray = [ "About", "Projects", "Timeline" ];
   const [ sectionIndex, setSectionIndex ] = [ props.sectionIndex, props.setSectionIndex ];
 
   return (

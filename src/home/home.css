@@ -9,10 +9,10 @@ main#home {
 #home-header {
    font-size: clamp( 20px, 2vw, 28px );
    position: relative;
-   margin-top: 0.2em;
+   margin-top: 1em;
    left: 50%;
    transform: translateX( -50% );
-   z-index: 3;
+   z-index: 4;
 
    display: flex;
    align-items: center;
@@ -22,49 +22,51 @@ main#home {
 }
 
 #home-title {
-   font-family: "Comic sans ms"
+   font-family: "Comic sans ms";
+   z-index: 5;
 }
 
 .home-slider-button {
-   color: black;
-   fill: black;
+   color: white;
+   fill: white;
    opacity: 0.8;
    font-size: .5em;
    cursor: pointer;
    
    position: fixed;
-   top: 50vh;
-   z-index: 99;
+   z-index: 3;
    display: flex;
    align-items: center;
-   justify-content: flex-start;
+   justify-content: center;
+   gap: 1em;
    padding: 1em 0;
 
-   background: linear-gradient( 45deg, rgba( 255, 255, 255, 0.2 ), rgba( 255, 255, 255, 0.4 ) );
+   width: 12em;
+   text-align: center;
+
+   background: rgba( 0, 105, 217, 1 );
    border: 1px solid black;
    border-radius: 0.5em;
    
    transition: opacity 200ms ease-in-out,
-               transform 200ms ease-in-out,
-               box-shadow 200ms ease-in-out;
+   transform 200ms ease-in-out,
+   box-shadow 200ms ease-in-out;
 }
 .home-slider-button > svg {
-   margin: 0 1em;
+   margin: 0 0 0 0;
    font-size: 1.5em;
 }
-.home-slider-button:hover {
-   opacity: 1;
-   box-shadow: 0 0 20px rgba( 0, 0, 0, 0.5 );
-}
 #home-slider-button-left {
-   left: -0.5em;
+   left: -0.3em;
    border-left-width: 0;
-   padding-right: 1em;
+   padding-right: 0;
+   background: linear-gradient( to top left, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 #home-slider-button-right {
    right: -0.5em;
    border-right-width: 0;
-   padding-left: 1em;
+   padding-left: 0;
+   background: linear-gradient( to top right, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 
 .unclickable {
@@ -82,14 +84,14 @@ main#home {
    display: flex;
    align-items: flex-start;
    justify-content: center;
-   gap: 15%;
+   gap: 10%;
 
    transition: left var( --transition-time, 600ms ) ease-in-out;
 }
 
 .section-wrapper {
    position: relative;
-   min-width: 85%;
+   min-width: 90%;
    top: 0;
    padding: 0;
    margin-bottom: 2em;
@@ -130,7 +132,7 @@ main#home {
    top: 0px;
    z-index: -2;
    
-   background-image: url( https://images.unsplash.com/photo-1500534623283-312aade485b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80 );
+   background-image: url( '../../public/goldengatebridge.jpg' );
    background-size: 105vmax;
    opacity: 0.3;
 
@@ -144,5 +146,12 @@ main#home {
    #background-picture {
       background-image: url( https://images.unsplash.com/photo-1534103362078-d07e750bd0c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80 );
       background-size: cover;
+   }
+}
+
+@media screen and ( min-width: 769px ) {
+   .home-slider-button:hover {
+      opacity: 1;
+      box-shadow: 0 0 10px rgba( 255, 255, 255, 0.5 );
    }
 }

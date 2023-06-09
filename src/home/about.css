@@ -46,8 +46,8 @@
 
 #about-body {
    position: relative;
-   background: rgb(0,105,217);
-   background: radial-gradient(circle, rgba(0,105,217,1) 0%, rgba(25,16,201,1) 100%);
+   background: rgb( 0, 105, 217 );
+   background: radial-gradient( circle, rgba( 0, 105, 217, 1 ) 0%, rgba( 25, 16, 201, 1 ) 100% );
    color: white;
 
    display: flex;
