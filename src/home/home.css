@@ -9,7 +9,7 @@ main#home {
 #home-header {
    font-size: clamp( 20px, 2vw, 28px );
    position: relative;
-   margin-top: 1em;
+   margin-top: 0.2em;
    left: 50%;
    transform: translateX( -50% );
    z-index: 3;
@@ -21,11 +21,56 @@ main#home {
    gap: 1em;
 }
 
-.home-arrow-icon {
-   color: white;
-   font-size: 1.5em;
-   fill: white;
+#home-title {
+   font-family: "Comic sans ms"
+}
+
+.home-slider-button {
+   color: black;
+   fill: black;
+   opacity: 0.8;
+   font-size: .5em;
    cursor: pointer;
+   
+   position: fixed;
+   top: 50vh;
+   z-index: 99;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   padding: 1em 0;
+
+   background: linear-gradient( 45deg, rgba( 255, 255, 255, 0.2 ), rgba( 255, 255, 255, 0.4 ) );
+   border: 1px solid black;
+   border-radius: 0.5em;
+   
+   transition: opacity 200ms ease-in-out,
+               transform 200ms ease-in-out,
+               box-shadow 200ms ease-in-out;
+}
+.home-slider-button > svg {
+   margin: 0 1em;
+   font-size: 1.5em;
+}
+.home-slider-button:hover {
+   opacity: 1;
+   box-shadow: 0 0 20px rgba( 0, 0, 0, 0.5 );
+}
+#home-slider-button-left {
+   left: -0.5em;
+   border-left-width: 0;
+   padding-right: 1em;
+}
+#home-slider-button-right {
+   right: -0.5em;
+   border-right-width: 0;
+   padding-left: 1em;
+}
+
+.unclickable {
+   pointer-events: none;
+   cursor: default;
+   opacity: 0;
 }
 
 #home-content {
@@ -37,14 +82,14 @@ main#home {
    display: flex;
    align-items: flex-start;
    justify-content: center;
-   gap: 10%;
+   gap: 15%;
 
    transition: left var( --transition-time, 600ms ) ease-in-out;
 }
 
 .section-wrapper {
    position: relative;
-   min-width: 90%;
+   min-width: 85%;
    top: 0;
    padding: 0;
    margin-bottom: 2em;
@@ -54,11 +99,6 @@ main#home {
    border-radius: 1em;
 }
 
-.unclickable {
-   pointer-events: none;
-   cursor: default;
-   fill:rgba( 255, 255, 255, 0.2 );
-}
 
 /* Background */
 #background-pattern {

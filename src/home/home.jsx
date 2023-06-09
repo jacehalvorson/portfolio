@@ -37,36 +37,56 @@ function HomeHeader( props )
 
   return (
     <div id="home-header">
-      {/* Left arrow icon */}
-      <svg
-        id="home-arrow-left"
-        className="home-arrow-icon"
-        onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "prev", numSections ); }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
-        viewBox="0 0 24 24"
-        >
-        <path d="m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"/>
-      </svg>
+      <div id="home-slider-button-left"
+          className="home-slider-button"
+          onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "prev", numSections ); }}
+      >
+        {/* Left arrow icon */}
+        <svg
+          id="home-arrow-left"
+          className="home-arrow-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          viewBox="0 0 24 24"
+          >
+          <path d="m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"/>
+        </svg>
+
+        <h2>
+          {( props.sectionIndex > 0 )
+              ? titleArray[ props.sectionIndex - 1 ]
+              : titleArray[ props.sectionIndex ]
+          }
+        </h2>
+      </div>
 
       {/* Title */}
       <h1 id="home-title">
         { titleArray[ sectionIndex ] }
       </h1>
 
-      {/* Right arrow icon */}
-      <svg
-        id="home-arrow-right"
-        className="home-arrow-icon"
-        onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "next", numSections ); }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
-        viewBox="0 0 24 24"
+      <div id="home-slider-button-right"
+          className="home-slider-button"
+          onClick={ ( ) => { changeSectionIndex( sectionIndex, setSectionIndex, "next", numSections ); }}
       >
-        <path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"/>
-      </svg>
+        <h2>
+          {( props.sectionIndex < ( numSections - 1 ) )
+              ? titleArray[ props.sectionIndex + 1 ]
+              : titleArray[ props.sectionIndex ]
+          }
+        </h2>
+        {/* Right arrow icon */}
+        <svg
+          className="home-arrow-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          viewBox="0 0 24 24"
+        >
+          <path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"/>
+        </svg>
+      </div>
     </div>
   )
 }

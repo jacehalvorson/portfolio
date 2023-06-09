@@ -22,13 +22,14 @@
    z-index: 3;
 
    /* Offset the margin-top of the first card and center the cards */
-   margin: 0 auto 0 auto;
+   margin: -1.5em auto 0 auto;
    
    display: grid;
    grid-template-columns: repeat( auto-fit, minmax( calc( 22em + 20px ), 1fr ) );
    grid-template-rows: repeat( auto-fit, 1fr );
    gap: 1em;
-   align-content: center;
+   align-items: center;
+   justify-content: center;
 }
 
 #menu-items:hover > .card-wrapper {
