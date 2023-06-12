@@ -13,7 +13,7 @@ main#home {
    left: 50%;
    transform: translateX( -50% );
    z-index: 4;
-
+   
    display: flex;
    align-items: center;
    justify-content: center;
@@ -40,10 +40,10 @@ main#home {
    justify-content: center;
    gap: 1em;
    padding: 1em 0;
-
+   
    width: 12em;
    text-align: center;
-
+   
    background: rgba( 0, 105, 217, 1 );
    border: 1px solid black;
    border-radius: 0.5em;
@@ -55,6 +55,10 @@ main#home {
 .home-slider-button > svg {
    margin: 0 0 0 0;
    font-size: 1.5em;
+}
+.home-slider-button > h2 {
+   font-family: "Comic sans ms";
+   user-select: none;
 }
 #home-slider-button-left {
    left: -0.3em;
@@ -94,13 +98,12 @@ main#home {
    min-width: 90%;
    top: 0;
    padding: 0;
-   margin-bottom: 2em;
+   margin: 1em 0 2em 0;
    border: 1px solid black;
 
    font-size: clamp( 14px, 1.2vw, 28px );
    border-radius: 1em;
 }
-
 
 /* Background */
 #background-pattern {
