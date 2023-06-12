@@ -40,7 +40,7 @@ function About( props )
             adaptations with ease. My well-rounded skills and passion for excellence make me a valuable asset to any organization seeking a
             dedicated and innovative software engineer.</p>
           </div>
-          <a id="resume-download" href="/JaceHalvorsonResume.pdf" download="JaceHalvorsonResume.pdf">
+          <a id="resume-download" href="/JaceHalvorsonResume.pdf" download="JaceHalvorsonResume">
             <img src="/ResumeScreenshot.png" alt="Resume" width="300em"/>
             <div id="resume-download-icon">
               <svg

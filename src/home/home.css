@@ -64,12 +64,14 @@ main#home {
    left: -0.3em;
    border-left-width: 0;
    padding-right: 0;
+   background: '#0069d9';
    background: linear-gradient( to top left, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 #home-slider-button-right {
    right: -0.5em;
    border-right-width: 0;
    padding-left: 0;
+   background: '#0069d9';
    background: linear-gradient( to top right, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 
@@ -111,7 +113,7 @@ main#home {
    width: calc( 100vw - ( 100vw - 100% ) );
 
    background-image: radial-gradient(
-      rgba( 255, 255, 255, 0.1 ) 5%,
+      rgba( 255, 255, 255, 0.3 ) 5%,
       transparent 7%
    );
    background-position: 0% 0%;
@@ -135,7 +137,9 @@ main#home {
    top: 0px;
    z-index: -2;
    
-   background-image: url( '../../public/goldengatebridge.jpg' );
+   background: rgba( 255, 255, 255, 0.1 );
+   background: linear-gradient( to top, rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 0.4 ) );
+   /* background-image: url( '../../public/goldengatebridge.jpg' ); */
    background-size: 105vmax;
    opacity: 0.3;
 
