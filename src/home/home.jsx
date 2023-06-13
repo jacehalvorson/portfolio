@@ -9,6 +9,7 @@ export const numSections = 3;
 export const ABOUT_INDEX = 0;
 export const PROJECTS_INDEX = 1;
 export const TIMELINE_INDEX = 2;
+const letters = 'abcdefghijklmnopqrstuvwxyz';
 
 function MenuBackground( props )
 {
@@ -23,8 +24,8 @@ function MenuBackground( props )
 
       <div
         id="background-picture"
-        style={{ backgroundPosition: `${ ( props.sectionIndex * 33 ) }% center`,
-                 opacity: `${ ( props.projectsHovered ) ? 0.35 : 0.3 }`, }}  
+        style={{ backgroundPosition: `${ ( props.sectionIndex * 50 ) }% center`,
+                 opacity: `${ ( props.projectsHovered ) ? 0.15 : 0.2 }`, }}  
       />
     </>
   )
@@ -63,7 +64,9 @@ function HomeHeader( props )
 
       {/* Title */}
       <h1 id="home-title">
-        { titleArray[ sectionIndex ] }
+        { titleArray[ sectionIndex ].split( '' )
+            .map( letter => letters[ Math.floor( Math.random( ) * 26 ) ] )
+            .join( '' ) }
       </h1>
 
       <div id="home-slider-button-right"
