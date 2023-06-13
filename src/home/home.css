@@ -22,7 +22,7 @@ main#home {
 }
 
 #home-title {
-   font-family: "Comic sans ms";
+   font-family: "Cera Round Pro";
    z-index: 5;
 }
 
@@ -57,7 +57,7 @@ main#home {
    font-size: 1.5em;
 }
 .home-slider-button > h2 {
-   font-family: "Comic sans ms";
+   font-family: "Cera Round Pro";
    user-select: none;
 }
 #home-slider-button-left {
@@ -110,13 +110,12 @@ main#home {
 /* Background */
 #background-pattern {
    height: 100%;
-   width: calc( 100vw - ( 100vw - 100% ) );
+   width: 100%;
 
    background-image: radial-gradient(
-      rgba( 255, 255, 255, 0.3 ) 5%,
-      transparent 7%
+      rgba( 255, 255, 255, 0.6 ) 2%,
+      transparent 3%
    );
-   background-position: 0% 0%;
 
    position: fixed;
    left: 0px;
@@ -138,22 +137,13 @@ main#home {
    z-index: -2;
    
    background: rgba( 255, 255, 255, 0.1 );
-   background: linear-gradient( to top, rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 0.4 ) );
+   /* background: linear-gradient( to top, rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 0.4 ) ); */
    /* background-image: url( '../../public/goldengatebridge.jpg' ); */
    background-size: 105vmax;
-   opacity: 0.3;
 
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
                background-size var( --transition-time, 600ms ) ease-in-out,
                background-position var( --transition-time, 600ms ) ease-in-out;
-}
-
-@media screen and ( max-width: 768px ) {
-   /* Change picture to portrait */
-   #background-picture {
-      background-image: url( https://images.unsplash.com/photo-1534103362078-d07e750bd0c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80 );
-      background-size: cover;
-   }
 }
 
 @media screen and ( min-width: 769px ) {
