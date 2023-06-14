@@ -34,7 +34,7 @@
 }
 
 #menu-items:hover > .card-wrapper {
-   opacity: 0.8;
+   opacity: 0.7;
 }
 
 #menu-items:hover > .card-wrapper:hover {
@@ -45,14 +45,18 @@
    position: relative;
    display: inline-block;
    width: 21em;
-   aspect-ratio: 5 / 7;
+   height: 29.4em;
    margin-inline: auto;
 
-   transition: transform var( --transition-time, 600ms ) ease;
+   transition: transform var( --transition-time, 600ms ) ease-in-out,
+               opacity var( --transition-time, 600ms ) ease-in-out;
 }
 .card-wrapper:hover {
    transform: scale( 1.05 );
    opacity: 0.9;
+}
+.card-wrapper:hover > .card {
+   box-shadow: 0px 0px 20px rgba( 255, 255, 255, 0.6 );
 }
 
 .card {
@@ -63,9 +67,10 @@
    width: 100%;
    z-index: 3;
    align-items: center;
-   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.6 );
+   box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.4 );
    border-radius: 1em;
    font-size: 1em;
+   font-family: "Cera Round Pro";
 
    display: flex;
    flex-direction: column;
@@ -81,11 +86,12 @@
       rgb( 70, 70, 70 )
       );
    opacity: 1;
+
+   transition: box-shadow var( --transition-time, 600ms ) ease-in-out,
 }
 
 .card-title {
    color: white;
-   font-family: "Comic sans ms";
    font-size: 2em;
    font-weight: bold;
 
@@ -132,7 +138,8 @@
    text-align: center;
    color: white;
    font-size: 1.2em;
-   background-color: #007bff;
+   background: rgba( 0, 70, 217, 1 );
+   /* background: radial-gradient( circle, rgba( 0, 70, 217, 1 ), rgba( 25, 16, 201, 1 ) ); */
    border-radius: 0.5em;
    border: none;
 
@@ -141,10 +148,10 @@
 }
 
 .card-button:hover {
-   background-color: #0056b3;
+   background-color: rgba( 10, 60, 210, 1 );
 }
 .card-button:active {
-   background-color: #003380;
+   background-color: rgba( 25, 16, 201, 1 );
 }
 
 .card:hover .card-button {

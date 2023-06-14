@@ -3,6 +3,7 @@ import About from "./about.jsx";
 import Timeline from "./timeline.jsx";
 import Projects from "./projects.jsx";
 import { changeSectionIndex } from "../utils/sectionIndexUtils.js";
+import { getSectionTitle } from "../utils/sectionTitles.js";
 import './home.css';
 
 export const numSections = 3;
@@ -18,14 +19,15 @@ function MenuBackground( props )
       <div
         id="background-pattern"
         style={{ backgroundPosition: `${ ( props.sectionIndex * -25 ) }% 0%`,
-                 opacity: `${ ( props.projectHoverIndex > 0 ) ? 0.5 : 1 }`,
+                 opacity: `${ ( props.projectsHovered ) ? 0.5 : 1 }`,
                  backgroundSize: `${ ( props.projectsHovered ) ? "10.5vmin 10.5vmin" : "11vmin 11vmin" }` }}
       />
 
       <div
         id="background-picture"
         style={{ backgroundPosition: `${ ( props.sectionIndex * 50 ) }% center`,
-                 opacity: `${ ( props.projectsHovered ) ? 0.15 : 0.2 }`, }}  
+                 opacity: `${ ( props.projectsHovered ) ? 0.1 : 0.15 }`,
+                 backgroundSize: `${ ( props.projectsHovered ) ? "100vmax" : "105vmax" }` }}
       />
     </>
   )
@@ -39,10 +41,11 @@ function HomeHeader( props )
 
   useEffect( ( ) => {
     let iterations = 0;
+    const endString = titleArray[ sectionIndex ];
 
     const interval = setInterval( ( ) => {
         setTitleString(
-          titleArray[ sectionIndex ]
+          endString
             .split( '' )
             .map( ( letter, index ) =>
               ( index*2 > iterations )
@@ -58,7 +61,7 @@ function HomeHeader( props )
 
         iterations++;
     }, 30 );
-  }, [ sectionIndex, titleArray ] );
+  }, [ sectionIndex ] );
 
   return (
     <div id="home-header">

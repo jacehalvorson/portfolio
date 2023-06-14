@@ -1,7 +1,8 @@
 #about-wrapper {
-   background-color: rgba( 255, 255, 255, 0.9 );
-   color: black;
+   background-color: transparent;
+   color: white;
    padding: 0;
+   overflow-y: hidden;
 }
 
 #about-content {
@@ -18,8 +19,8 @@
 }
 
 #about-header {
-   display: flex;
-   margin: 6em 2em;
+   padding: 6em 2em;
+   background-color: rgba( 0, 0, 0, 0.8 );
 }
 
 #about-titles {
@@ -27,9 +28,9 @@
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   margin: 0 auto;
+   margin-inline: auto;
    
-   font-family: 'Lato', Helvetica, sans-serif;
+   font-family: 'Space Mono', monospace, 'Lato', Helvetica, sans-serif;
    font-size: 1.5em;
    font-weight: 700;
 }
@@ -37,31 +38,27 @@
    font-size: 3em;
 }
 #about-titles > h2 {
-   padding-bottom: 1em;
+   padding-bottom: 0.5em;
 }
 #about-titles > a {
-   color: #0069d9;
+   color: white;
    text-decoration: none;
 }
 
 #about-body {
    position: relative;
-   background: rgb( 0, 105, 217 );
-   background: rgba( 0, 0, 0, 0.9 );
-   /* background: radial-gradient( circle, rgba( 0, 105, 217, 1 ) 0%, rgba( 25, 16, 201, 1 ) 100% ); */
-   color: white;
+   background: rgba( 255, 255, 255, 0.8 );
+   color: black;
 
    display: flex;
    align-items: center;
    justify-content: center;
-
-   width: calc( 100% + 2px );
-   left: -1px;
 }
 
 #about-picture {
    position: relative;
    width: 20em;
+   border: 1px solid black;
    border-radius: 50%;
 
    margin: 2em;
@@ -72,7 +69,7 @@
    height: 100%;
    text-align: left;
    font-size: 1.2em;
-   line-height: 1.6;
+   line-height: 1.5;
 
    display: flex;
    flex-direction: column;
@@ -92,9 +89,8 @@
 }
 
 #about-resume {
-   background-color: rgba( 255, 255, 255, 0.9 );
-   color: black;
-   border-radius: inherit;
+   background-color: rgba( 0, 0, 0, 0.8 );
+   color: white;
 
    display: flex;
    align-items: center;
@@ -107,7 +103,7 @@
 
 #resume-download {
    margin: 2em;
-   border: 1px solid #0069d9;
+   border: 1px solid black;
    border-radius: 1em;
 
    position: relative;
@@ -124,7 +120,7 @@
 }
 #resume-download:hover > #resume-download-icon {
    /* Make the icon visible */
-   fill: #0069d9;
+   fill: black;
    /* Create a white backdrop for the partly transparent icon */
    background-color: white;
 }

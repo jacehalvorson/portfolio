@@ -22,7 +22,8 @@ main#home {
 }
 
 #home-title {
-   font-family: "Space Mono", "Cera Round Pro";
+   font-family: "Space Mono", monospace, "Cera Round Pro";
+   user-select: none;
    z-index: 5;
 }
 
@@ -57,7 +58,7 @@ main#home {
    font-size: 1.5em;
 }
 .home-slider-button > h2 {
-   font-family: "Cera Round Pro";
+   font-family: "Space Mono", monospace, "Cera Round Pro";
    user-select: none;
 }
 #home-slider-button-left {
@@ -65,14 +66,14 @@ main#home {
    border-left-width: 0;
    padding-right: 0;
    background: '#0069d9';
-   background: linear-gradient( to top left, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
+   background: linear-gradient( to top left, rgba( 0, 70, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 #home-slider-button-right {
    right: -0.5em;
    border-right-width: 0;
    padding-left: 0;
    background: '#0069d9';
-   background: linear-gradient( to top right, rgba( 0, 105, 217, 1 ), rgba( 25, 16, 201, 1 ) );
+   background: linear-gradient( to top right, rgba( 0, 70, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 
 .unclickable {
@@ -113,8 +114,8 @@ main#home {
    width: 100%;
 
    background-image: radial-gradient(
-      rgba( 255, 255, 255, 0.6 ) 2%,
-      transparent 3%
+      rgba( 255, 255, 255, 0.6 ) 3%,
+      transparent 4%
    );
 
    position: fixed;
@@ -137,9 +138,7 @@ main#home {
    z-index: -2;
    
    background: rgba( 255, 255, 255, 0.1 );
-   /* background: linear-gradient( to top, rgba( 255, 255, 255, 0 ) 60%, rgba( 255, 255, 255, 0.4 ) ); */
    background-image: url( '../../public/goldengatebridge.jpg' );
-   background-size: 105vmax;
 
    transition: opacity var( --transition-time, 600ms ) ease-in-out,
                background-size var( --transition-time, 600ms ) ease-in-out,
