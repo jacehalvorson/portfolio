@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import About from "./about.jsx";
 import Timeline from "./timeline.jsx";
 import Projects from "./projects.jsx";
@@ -35,6 +35,30 @@ function HomeHeader( props )
 {
   const titleArray = [ "About", "Projects", "Timeline" ];
   const [ sectionIndex, setSectionIndex ] = [ props.sectionIndex, props.setSectionIndex ];
+  const [ titleString, setTitleString ] = useState( titleArray[ sectionIndex ] );
+
+  useEffect( ( ) => {
+    let iterations = 0;
+
+    const interval = setInterval( ( ) => {
+        setTitleString(
+          titleArray[ sectionIndex ]
+            .split( '' )
+            .map( ( letter, index ) =>
+              ( index*2 > iterations )
+                ? letters[ Math.floor( Math.random( ) * 26 ) ]
+                : letter
+            )
+            .join( '' )
+        );
+
+        if ( iterations > 20 ) {
+          clearInterval( interval );
+        }
+
+        iterations++;
+    }, 30 );
+  }, [ sectionIndex ] );
 
   return (
     <div id="home-header">
@@ -64,9 +88,7 @@ function HomeHeader( props )
 
       {/* Title */}
       <h1 id="home-title">
-        { titleArray[ sectionIndex ].split( '' )
-            .map( letter => letters[ Math.floor( Math.random( ) * 26 ) ] )
-            .join( '' ) }
+        { titleString }
       </h1>
 
       <div id="home-slider-button-right"
