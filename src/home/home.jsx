@@ -58,7 +58,7 @@ function HomeHeader( props )
 
         iterations++;
     }, 30 );
-  }, [ sectionIndex ] );
+  }, [ sectionIndex, titleArray ] );
 
   return (
     <div id="home-header">
