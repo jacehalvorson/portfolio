@@ -120,9 +120,10 @@
 }
 #resume-download:hover > #resume-download-icon {
    /* Make the icon visible */
-   fill: black;
+   fill: white;
    /* Create a white backdrop for the partly transparent icon */
-   background-color: white;
+   background-color: black;
+   border-color: transparent;
 }
 
 #resume-download-icon {
@@ -131,9 +132,12 @@
    opacity: 1;
    
    background-color: transparent;
+   padding: 0.1em;
+   width: 1em;
+   height: 1em;
+
+   border: 1px solid white;
    border-radius: 50%;
-   width: 0.9em;
-   height: 0.9em;
    
    display: flex;
    align-items: center;
@@ -144,7 +148,8 @@
    left: 50%;
    transform: translate( -50%, -50% );
    transition: fill 200ms ease-in-out,
-               background-color 200ms ease-in-out;
+               background-color 200ms ease-in-out,
+               border-color 200ms ease-in-out;
 }
 
 #resume-download:active {
