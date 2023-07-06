@@ -1,5 +1,11 @@
 export const projectCardList = [
   {
+    "title": "Hamming Codes",
+    "description": "C Program used to encode files to be more resistant to single bit errors. Uses (15, 11) Hamming Codes to correct single bit errors and detect double bit errors. With 3 bit errors or more, this program cannot reliably detect or correct errors. Of a 16-bit chunk, the parity bits are as follows, the data bits occuping the remaining 11 bits.",
+    "image": "https://pbs.twimg.com/media/EhFhtJHX0AA9qBg.jpg",
+    "href": "https://github.com/jacehalvorson/hamming_code"
+  },
+  {
     "title": "Stat Huddle",
     "description": "A comprehensive NFL statistics application that provides extensive access to historical data from 1938 to the present day. Built on the React framework, this app delivers a highly responsive and user-friendly browsing experience for both casual viewers and sports analysts.",
     "image": "https://images.unsplash.com/photo-1611000273610-f4fb9c7fd0be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW1lcmljYW4lMjBmb290YmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
