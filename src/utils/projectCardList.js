@@ -1,7 +1,7 @@
 export const projectCardList = [
   {
     "title": "Hamming Codes",
-    "description": "C Program used to encode files to be more resistant to single bit errors. Uses (15, 11) Hamming Codes to correct single bit errors and detect double bit errors. With 3 bit errors or more, this program cannot reliably detect or correct errors. Of a 16-bit chunk, the parity bits are as follows, the data bits occuping the remaining 11 bits.",
+    "description": "C Program used to encode files to be more resistant to single bit errors. Uses (15, 11) Hamming Codes to correct single bit errors and detect double bit errors. With 3 bit errors or more, this program cannot reliably detect or correct errors.",
     "image": "https://pbs.twimg.com/media/EhFhtJHX0AA9qBg.jpg",
     "href": "https://github.com/jacehalvorson/hamming_code"
   },
