@@ -11,9 +11,9 @@ main#conway {
    left: 50%;
    transform: translateX(-50%);
    z-index: 1; /* Ensures the FAB is overlayed on top of the PixiJS stage */
- }
- 
- .fab {
+}
+
+.fab {
    padding: 0.5em 1em;
    background-color: #0073e6; /* Button background color */
    color: white;
@@ -22,4 +22,4 @@ main#conway {
    font-size: 24px;
    cursor: pointer;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
- }
+}

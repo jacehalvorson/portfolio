@@ -17,7 +17,7 @@ function About( props )
         </div>
 
         <div id="about-body">
-          <img id="about-picture" src="/jacehalvorson.jpg" alt="Jace Halvorson's face" />
+          <img id="about-picture" src="/images/jacehalvorson.jpg" alt="Jace Halvorson's face" />
 
           <div id="about-body-text">
             <p>Welcome to my professional website! Please don't hesitate to reach out if you have any questions or would like to discuss
@@ -41,7 +41,7 @@ function About( props )
             dedicated and innovative software engineer.</p>
           </div>
           <a id="resume-download" href="/JaceHalvorsonResume.pdf" download>
-            <img src="/ResumeScreenshot.png" alt="Resume" width="300em"/>
+            <img src="/images/ResumeScreenshot.png" alt="Resume" width="300em"/>
             <div id="resume-download-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

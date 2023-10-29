@@ -2,7 +2,7 @@ export const projectCardList = [
   {
     "title": "Conway's Game of Life",
     "description": "A cellular automaton simulation that follows the rules of Conway's Game of Life. This simulation features a variety of preset patterns, a random pattern generator, and a customizable grid size.",
-    "image": "/conway-game-of-life.jpg",
+    "image": "/images/conway-game-of-life.jpg",
     "href": "/conway"
   },
   {
@@ -26,13 +26,13 @@ export const projectCardList = [
   {
     "title": "Checkers",
     "description": "Checkers engine featuring an AI that utilizes a minimax algorithm with alpha-beta pruning to make optimal moves against the player.",
-    "image": "checkers.png",
+    "image": "/images/checkers.png",
     "href": "https://github.com/gpatt45/checkers_bot"
   },
   {
     "title": "Snake",
     "description": "The classic arcade game \"Snake\" made with Python. The game, while intended for local play, features a top 10 leaderboard and a speedy replay mechanic.",
-    "image": "/snake.jpg",
+    "image": "/images/snake.jpg",
     "href": "https://github.com/jacehalvorson/snake"
   },
   {
