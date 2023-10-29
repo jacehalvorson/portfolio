@@ -4,4 +4,6 @@ const sectionTitles = {
    experience: 'Experience',
 };
 
-export default ( key ) => sectionTitles[ key ];
+const getSectionTitle = ( key ) => sectionTitles[ key ];
+
+export default getSectionTitle;

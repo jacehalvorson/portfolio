@@ -3,7 +3,7 @@ import About from "./about.jsx";
 import Timeline from "./timeline.jsx";
 import Projects from "./projects.jsx";
 import { changeSectionIndex } from "../utils/sectionIndexUtils.js";
-import { getSectionTitle } from "../utils/sectionTitles.js";
+import getSectionTitle from "../utils/sectionTitles.js";
 import './home.css';
 
 export const numSections = 3;
@@ -35,13 +35,12 @@ function MenuBackground( props )
 
 function HomeHeader( props )
 {
-  const titleArray = [ "About", "Projects", "Timeline" ];
   const [ sectionIndex, setSectionIndex ] = [ props.sectionIndex, props.setSectionIndex ];
-  const [ titleString, setTitleString ] = useState( titleArray[ sectionIndex ] );
+  const [ titleString, setTitleString ] = useState( getSectionTitle( sectionIndex ) );
 
   useEffect( ( ) => {
     let iterations = 0;
-    const endString = titleArray[ sectionIndex ];
+    const endString = getSectionTitle( sectionIndex );
 
     const interval = setInterval( ( ) => {
         setTitleString(
@@ -83,8 +82,8 @@ function HomeHeader( props )
 
         <h2>
           {( props.sectionIndex > 0 )
-              ? titleArray[ props.sectionIndex - 1 ]
-              : titleArray[ props.sectionIndex ]
+              ? getSectionTitle( props.sectionIndex - 1 )
+              : getSectionTitle( props.sectionIndex )
           }
         </h2>
       </div>
@@ -100,8 +99,8 @@ function HomeHeader( props )
       >
         <h2>
           {( props.sectionIndex < ( numSections - 1 ) )
-              ? titleArray[ props.sectionIndex + 1 ]
-              : titleArray[ props.sectionIndex ]
+              ? getSectionTitle( props.sectionIndex + 1 )
+              : getSectionTitle( props.sectionIndex )
           }
         </h2>
         {/* Right arrow icon */}

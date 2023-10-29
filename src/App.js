@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './home/home.jsx';
+import Conway from './conway/conway.jsx';
 import Ecommerce from './ecommerce/ecommerce.jsx';
 import Product from './ecommerce/product.jsx';
 import Checkout from './ecommerce/checkout.jsx';
@@ -12,6 +13,7 @@ function App( )
     <Router>
       <Routes>
         <Route path="/" element={ <Home /> } />
+        <Route path="/conway" element={ <Conway /> } />
         <Route path="/ecommerce" element={ <Ecommerce /> } />
         <Route path="/ecommerce/product/:productId" element={ <Product /> } />
         <Route path="/ecommerce/checkout" element={ <Checkout /> } />
