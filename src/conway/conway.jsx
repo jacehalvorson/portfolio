@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Stage, Layer, Rect } from 'react-konva';
 import './conway.css'
-import { Stage, Graphics, Container } from '@pixi/react';
+import { getNextIteration } from './next_iteration';
 
 const CELL_WIDTH = 50;
 const CELL_HEIGHT = 50;
-const NUM_ROWS = 10;
-const NUM_COLS = 10;
-const X_OFFSET = 2;
-const Y_OFFSET = 6;
+const NUM_ROWS = 20;
+const NUM_COLS = 40;
+const CELL_BORDER_WIDTH = 1;
 
 function getRandomBoard( )
 {
@@ -20,26 +20,53 @@ function Conway( )
 {
    const [ gameBoard, setGameBoard ] = useState( [] );
 
+   useEffect( ( ) =>
+   {
+      let interval = setInterval( ( ) =>
+      {
+         setGameBoard( getNextIteration( gameBoard ) );
+      }, 500 );
+
+      return ( ) =>
+      {
+         clearInterval( interval );
+      }
+   }, [ ] );
+
    return (
       <main id="conway">
          <Stage
             width={ NUM_COLS * CELL_WIDTH }
             height={ NUM_ROWS * CELL_HEIGHT }
-            interactive={true}
-            interactivechildren='true'
          >
-            <GameBoard
-               gameBoard={ gameBoard }
-               setGameBoard={ setGameBoard }
-               handleCellClick={ handleCellClick }/>
+            <Layer>
+               <GameBoard
+                  gameBoard={ gameBoard }
+                  setGameBoard={ setGameBoard }
+               />
+            </Layer>
          </Stage>
 
          <div className="fab-container">
             <button
                className="fab"
-               onClick={ () => 
+               onClick={ ( ) => 
                {
-                  setGameBoard( getRandomBoard( ) );
+                  setGameBoard( getRandomBoard( gameBoard ) );
+               }}
+            >
+               Randomize
+            </button>
+         </div>
+         <div className="fab-container"
+         // TODO add key press handle
+            //   onKeyDown={handleKeyPress}>
+         >
+            <button
+               className="fab"
+               onClick={ ( ) => 
+               {
+                  setGameBoard( getRandomBoard( gameBoard ) );
                }}
             >
                Randomize
@@ -48,16 +75,6 @@ function Conway( )
       </main>
    );
 }
-
-function handleCellClick(pointerX, pointerY, gameBoard, setGameBoard)
-{
-   let rowIndex = Math.floor( pointerY / CELL_HEIGHT );
-   let colIndex = Math.floor( pointerX / CELL_WIDTH );
-   
-   let updatedGameBoard = [ ...gameBoard ];
-   updatedGameBoard[ rowIndex ][ colIndex ] = !updatedGameBoard[ rowIndex ][ colIndex ];
-   setGameBoard( updatedGameBoard );
-};
 
 function GameBoard( props )
 {
@@ -78,34 +95,31 @@ function GameBoard( props )
          if ( props.gameBoard[rowIndex][colIndex] === undefined )
          {
             // On error, show red cell
-            console.log(`undefined ${rowIndex} ${colIndex}`);
             cellColor = 0xff0000;
          }
          else
          {
              // Black for true, white for false
-            cellColor = cell ? 0x000000 : 0xffffff;
+            cellColor = cell ? 'black' : 'white';
          }
 
-         return <Container
-            key={`cell-${rowIndex}-${colIndex}`}
-            x={x}
-            y={y}
-            interactive={true}
-            pointerdown={() => {props.handleCellClick(x, y, props.gameBoard, props.setGameBoard)}}
-         >
-            <Graphics
-               draw={graphics => {
-                  graphics.clear( );
-                  graphics.beginFill( cellColor );
-                  graphics.drawRect( 0, 0, CELL_WIDTH, CELL_HEIGHT );
-                  graphics.endFill( );
-               }}
-            />
-         </Container>
+         return <Rect
+            fill={ cellColor }
+            x={ x }
+            y={ y }
+            height={ CELL_HEIGHT - ( CELL_BORDER_WIDTH * 2 ) }
+            width={ CELL_WIDTH - ( CELL_BORDER_WIDTH * 2 ) }
+            onMouseDown={ ( ) => { handleCellClick( rowIndex, colIndex, props.gameBoard, props.setGameBoard ) } }
+         />
       });
    });
-         
 }
+
+function handleCellClick(rowIndex, colIndex, gameBoard, setGameBoard)
+{
+   var updatedGameBoard = [ ...gameBoard ];
+   updatedGameBoard[ rowIndex ][ colIndex ] = !updatedGameBoard[ rowIndex ][ colIndex ];
+   setGameBoard( updatedGameBoard );
+};
 
 export default Conway;

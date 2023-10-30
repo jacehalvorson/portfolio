@@ -1,5 +1,6 @@
 main#conway {
-   padding: 10%;
+   padding: 2em;
+   margin-bottom: 16em;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -7,7 +8,7 @@ main#conway {
 
 .fab-container {
    position: fixed;
-   bottom: 8em; /* Adjust the value to control the vertical position */
+   bottom: 4em; /* Adjust the value to control the vertical position */
    left: 50%;
    transform: translateX(-50%);
    z-index: 1; /* Ensures the FAB is overlayed on top of the PixiJS stage */
@@ -21,5 +22,9 @@ main#conway {
    border-radius: 2em;
    font-size: 24px;
    cursor: pointer;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+}
+
+.fab:hover {
+   background-color: #0066cc;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 1); /* Optional shadow effect */
 }
