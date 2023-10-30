@@ -19,13 +19,31 @@ function getRandomBoard( )
 function Conway( )
 {
    const [ gameBoard, setGameBoard ] = useState( [] );
+   const [ isPaused, setIsPaused ] = useState( false );
+
+   function handleKeyPress( e )
+   {
+      if ( e.key === ' ' || e.key === 'Spacebar' )
+      {
+         setIsPaused( previousValue => !previousValue );
+      }
+   }
 
    useEffect( ( ) =>
    {
       let interval = setInterval( ( ) =>
       {
-         setGameBoard( getNextIteration( gameBoard ) );
-      }, 500 );
+         setGameBoard( getRandomBoard( ) );
+         if ( !isPaused )
+         {
+            setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
+            console.log( 'Play' );
+         } 
+         else
+         {
+            console.log( 'Paused' );
+         }
+      }, 1000 );
 
       return ( ) =>
       {
@@ -34,7 +52,7 @@ function Conway( )
    }, [ ] );
 
    return (
-      <main id="conway">
+      <main id="conway" onKeyDown={handleKeyPress} tabIndex={ 0 }>
          <Stage
             width={ NUM_COLS * CELL_WIDTH }
             height={ NUM_ROWS * CELL_HEIGHT }
@@ -48,20 +66,6 @@ function Conway( )
          </Stage>
 
          <div className="fab-container">
-            <button
-               className="fab"
-               onClick={ ( ) => 
-               {
-                  setGameBoard( getRandomBoard( gameBoard ) );
-               }}
-            >
-               Randomize
-            </button>
-         </div>
-         <div className="fab-container"
-         // TODO add key press handle
-            //   onKeyDown={handleKeyPress}>
-         >
             <button
                className="fab"
                onClick={ ( ) => 
@@ -115,7 +119,7 @@ function GameBoard( props )
    });
 }
 
-function handleCellClick(rowIndex, colIndex, gameBoard, setGameBoard)
+function handleCellClick( rowIndex, colIndex, gameBoard, setGameBoard )
 {
    var updatedGameBoard = [ ...gameBoard ];
    updatedGameBoard[ rowIndex ][ colIndex ] = !updatedGameBoard[ rowIndex ][ colIndex ];
