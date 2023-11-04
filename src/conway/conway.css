@@ -1,0 +1,40 @@
+main#conway {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
+   position: fixed;
+}
+
+#game-stage {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   background-color: #101010;
+   overflow: hidden;
+}
+
+#button-group {
+   display: flex;
+   position: fixed;
+   column-gap: 4em;
+   bottom: 6em;
+   z-index: 2;
+}
+
+.fab {
+   padding: 0.5em 1em;
+   background-color: #0073e6; /* Button background color */
+   color: white;
+   border: none;
+   border-radius: 2em;
+   font-size: 30px;
+
+   transition: ease-in-out 0.1s background-color,
+               ease-in-out 0.1s box-shadow;
+}
+
+.fab:hover {
+   background-color: #0066cc;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 1); /* Optional shadow effect */
+}

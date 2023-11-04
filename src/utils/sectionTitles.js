@@ -1,7 +1,9 @@
 const sectionTitles = {
-   about: 'About',
-   projects: 'Projects',
-   experience: 'Experience',
+   0: 'About',
+   1: 'Projects',
+   2: 'Experience',
 };
 
-export default ( key ) => sectionTitles[ key ];
+const getSectionTitle = ( key ) => sectionTitles[ key ];
+
+export default getSectionTitle;
