@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
 import './conway.css'
 import { getNextIteration } from './next_iteration';
@@ -9,72 +9,112 @@ const NUM_ROWS = 20;
 const NUM_COLS = 40;
 const CELL_BORDER_WIDTH = 1;
 
+const PLAY_BUTTON_INDEX = 1;
+
 function getRandomBoard( )
 {
    return Array.from({ length: NUM_ROWS }, ( ) =>
       Array.from({ length: NUM_COLS }, ( ) => ( Math.random() > 0.5 ) )
    );
 }
+function getBlankBoard( isBoardWhite )
+{
+   return Array.from({ length: NUM_ROWS }, ( ) =>
+      Array.from({ length: NUM_COLS }, ( ) => ( isBoardWhite ) )
+   );
+}
 
 function Conway( )
 {
    const [ gameBoard, setGameBoard ] = useState( [] );
-   const [ isPaused, setIsPaused ] = useState( false );
-
-   function handleKeyPress( e )
+   const [ isPaused, setIsPaused ] = useState( true );
+   const togglePause = useCallback( ( ) =>
    {
-      if ( e.key === ' ' || e.key === 'Spacebar' )
+      console.log( 'Toggle pause' );
+      // If switching to 'play,' force one iteration
+      if ( isPaused )
       {
-         setIsPaused( previousValue => !previousValue );
+         console.log( 'Forcing one iteration' );
+         setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
       }
+
+      setIsPaused( previousValue => !previousValue );
+   }, [ setGameBoard, setIsPaused, isPaused ] );
+
+   const buttons = [ [ 'Reset', resetBoard ],
+                     [ 'Play', togglePause ],
+                     [ 'Randomize', randomizeBoard ], ];
+
+   function resetBoard( )
+   {
+      setGameBoard( getBlankBoard( false ) );
+      console.log( `isPaused = ${isPaused}` );
    }
 
+   function randomizeBoard( )
+   {
+      setGameBoard( getRandomBoard( ) );
+   }
+   
+   // Initialize the game board
+   useEffect( ( ) =>
+   {
+      resetBoard( );
+   }, [ ] );
+
+   // start the game
    useEffect( ( ) =>
    {
       let interval = setInterval( ( ) =>
       {
-         setGameBoard( getRandomBoard( ) );
          if ( !isPaused )
          {
+            console.log( 'Next iteration' );
             setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
-            console.log( 'Play' );
-         } 
-         else
-         {
-            console.log( 'Paused' );
          }
-      }, 1000 );
+         else console.log( 'Paused' );
+      }, 1000);
 
       return ( ) =>
       {
          clearInterval( interval );
       }
-   }, [ ] );
+   }, [ isPaused, setGameBoard ] );
 
    return (
-      <main id="conway" onKeyDown={handleKeyPress} tabIndex={ 0 }>
+      <main id="conway">
          <Stage
             width={ NUM_COLS * CELL_WIDTH }
             height={ NUM_ROWS * CELL_HEIGHT }
+            id="game-stage"
          >
             <Layer>
                <GameBoard
                   gameBoard={ gameBoard }
                   setGameBoard={ setGameBoard }
+                  isPaused={ isPaused }
                />
             </Layer>
          </Stage>
 
-         <div className="fab-container">
-            <button
-               className="fab"
-               onClick={ ( ) => 
+         <div id="button-group">
+            {buttons.map( ( buttonInfo, buttonIndex ) =>
+            {
+               let buttonText = buttonInfo[ 0 ];
+               let buttonCallback = buttonInfo[ 1 ];
+
+               if ( buttonIndex === PLAY_BUTTON_INDEX )
                {
-                  setGameBoard( getRandomBoard( gameBoard ) );
-               }}
-            >
-               Randomize
-            </button>
+                  buttonText = isPaused ? 'Play' : 'Pause';
+               } 
+
+               return <button
+                  className="fab"
+                  onClick={ buttonCallback }
+               >
+                  {buttonText}
+               </button>
+})}
          </div>
       </main>
    );
@@ -104,7 +144,7 @@ function GameBoard( props )
          else
          {
              // Black for true, white for false
-            cellColor = cell ? 'black' : 'white';
+            cellColor = cell ? 'white' : 'black';
          }
 
          return <Rect
@@ -113,7 +153,13 @@ function GameBoard( props )
             y={ y }
             height={ CELL_HEIGHT - ( CELL_BORDER_WIDTH * 2 ) }
             width={ CELL_WIDTH - ( CELL_BORDER_WIDTH * 2 ) }
-            onMouseDown={ ( ) => { handleCellClick( rowIndex, colIndex, props.gameBoard, props.setGameBoard ) } }
+            onMouseDown={ ( ) =>
+            {
+               if ( props.isPaused )
+               {
+                  handleCellClick( rowIndex, colIndex, props.gameBoard, props.setGameBoard )
+               }
+            }}
          />
       });
    });
