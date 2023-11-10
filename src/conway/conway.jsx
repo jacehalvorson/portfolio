@@ -1,15 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Stage, Layer, Rect } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import './conway.css'
 import { getNextIteration } from './next_iteration';
+import { GameBoard, CELL_HEIGHT, CELL_WIDTH } from './game_board';
 
-const CELL_WIDTH = 50;
-const CELL_HEIGHT = 50;
-const NUM_ROWS = 20;
+const MILLISECONDS_PER_SECOND = 1000;
+
+const NUM_ROWS = 40;
 const NUM_COLS = 40;
-const CELL_BORDER_WIDTH = 1;
-
+const GAME_BOARD_WIDTH = NUM_COLS * CELL_WIDTH;
+const GAME_BOARD_HEIGHT = NUM_ROWS * CELL_HEIGHT;
 const PLAY_BUTTON_INDEX = 1;
+
+const TICKS_PER_SECOND = 1;
+const GAME_ITERATIONS_PER_SECOND = 2;
 
 function getRandomBoard( )
 {
@@ -17,6 +21,7 @@ function getRandomBoard( )
       Array.from({ length: NUM_COLS }, ( ) => ( Math.random() > 0.5 ) )
    );
 }
+
 function getBlankBoard( isBoardWhite )
 {
    return Array.from({ length: NUM_ROWS }, ( ) =>
@@ -28,52 +33,150 @@ function Conway( )
 {
    const [ gameBoard, setGameBoard ] = useState( [] );
    const [ isPaused, setIsPaused ] = useState( true );
+   const [ offsetX, setOffsetX ] = useState( 0 );
+   const [ offsetY, setOffsetY ] = useState( 0 );
+
    const togglePause = useCallback( ( ) =>
    {
-      console.log( 'Toggle pause' );
-      // If switching to 'play,' force one iteration
-      if ( isPaused )
+      setIsPaused( previousValue => 
       {
-         console.log( 'Forcing one iteration' );
-         setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
-      }
+         // If switching to 'play,' force one iteration
+         if ( previousValue )
+         {  
+            setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
+         }
 
-      setIsPaused( previousValue => !previousValue );
-   }, [ setGameBoard, setIsPaused, isPaused ] );
+         // Toggle the pause state
+         return !previousValue
+      });
+   }, [ setGameBoard, setIsPaused ] );
+   
+   const resetBoard = useCallback( ( ) =>
+   {
+      setGameBoard( getBlankBoard( false ) );
+   }, [ setGameBoard ] );
+
+   const randomizeBoard = useCallback( ( ) =>
+   {
+      setGameBoard( getRandomBoard( ) );
+   }, [ setGameBoard ] );
 
    const buttons = [ [ 'Reset', resetBoard ],
                      [ 'Play', togglePause ],
                      [ 'Randomize', randomizeBoard ], ];
-
-   function resetBoard( )
-   {
-      setGameBoard( getBlankBoard( false ) );
-      console.log( `isPaused = ${isPaused}` );
-   }
-
-   function randomizeBoard( )
-   {
-      setGameBoard( getRandomBoard( ) );
-   }
    
+
+   const handleKeyPress = useCallback( ( event ) =>
+   {
+      const stepSize = ( event.ctrlKey ) ? 100 : 20;
+      const maxOffsetX = GAME_BOARD_WIDTH - window.innerWidth;
+      const maxOffsetY = GAME_BOARD_HEIGHT - window.innerHeight;
+
+      switch ( event.keyCode )
+      {
+      // Right Arrow
+      case 39:
+         console.log( 'right arrow' );
+         setOffsetX( previousValue => 
+         {
+            let nextValue = previousValue + stepSize;
+            if ( nextValue > maxOffsetX )
+            {
+               nextValue = maxOffsetX;
+            }
+            return nextValue;
+         });
+
+         break;
+      
+      // Left Arrow
+      case 37:
+         console.log( 'left arrow' );
+         setOffsetX( previousValue =>
+         {
+            let nextValue = previousValue - stepSize;
+            if ( nextValue < 0 )
+            {
+               nextValue = 0;
+            }
+            return nextValue;
+         });
+
+         break;
+      
+      // Up Arrow
+      case 38:
+         console.log( 'up arrow' );
+         setOffsetY( previousValue =>
+         {
+            let nextValue = previousValue - stepSize;
+            if ( nextValue < 0 )
+            {
+               nextValue = 0;
+            }
+            return nextValue;
+         });
+
+         break;
+
+      // Down Arrow
+      case 40:
+         console.log( 'down arrow' );
+         setOffsetY( previousValue =>
+         {
+            let nextValue = previousValue + stepSize;
+            if ( nextValue > maxOffsetY )
+            {
+               nextValue = maxOffsetY;
+            }
+            return nextValue;
+         });
+         
+         break;
+
+      // Spacebar
+      case 32:
+         console.log( 'spacebar' );
+         togglePause( );
+         break;
+      
+      default:
+         // do nothing
+      }
+   }, [ setOffsetX, setOffsetY, togglePause ] );
+
+
    // Initialize the game board
    useEffect( ( ) =>
    {
       resetBoard( );
-   }, [ ] );
+   }, [ resetBoard ] );
 
-   // start the game
+   // NOT CURRENTLY USED, save for later
+   // Frequency loop of TICKS_PER_SECOND
+   // useEffect( ( ) =>
+   // {
+      // let interval = setInterval( ( ) =>
+      // {
+      // }, MILLISECONDS_PER_SECOND / TICKS_PER_SECOND );
+
+      // return ( ) =>
+      // {
+      //    clearInterval( interval );
+      // }
+   // }, [ ] );
+
+
+   // Frequency loop of GAME_ITERATIONS_PER_SECOND
    useEffect( ( ) =>
    {
       let interval = setInterval( ( ) =>
       {
          if ( !isPaused )
          {
-            console.log( 'Next iteration' );
             setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
          }
-         else console.log( 'Paused' );
-      }, 1000);
+      }, MILLISECONDS_PER_SECOND / GAME_ITERATIONS_PER_SECOND );
 
       return ( ) =>
       {
@@ -83,19 +186,23 @@ function Conway( )
 
    return (
       <main id="conway">
-         <Stage
-            width={ NUM_COLS * CELL_WIDTH }
-            height={ NUM_ROWS * CELL_HEIGHT }
-            id="game-stage"
-         >
-            <Layer>
-               <GameBoard
-                  gameBoard={ gameBoard }
-                  setGameBoard={ setGameBoard }
-                  isPaused={ isPaused }
-               />
-            </Layer>
-         </Stage>
+         <div tabIndex={ 1 } onKeyDown={ handleKeyPress } autofocus>
+            <Stage
+               width={ NUM_COLS * CELL_WIDTH }
+               height={ NUM_ROWS * CELL_HEIGHT }
+               id="game-stage"
+            >
+               <Layer>
+                  <GameBoard
+                     gameBoard={ gameBoard }
+                     setGameBoard={ setGameBoard }
+                     isPaused={ isPaused }
+                     offsetX={ offsetX }
+                     offsetY={ offsetY }
+                  />
+               </Layer>
+            </Stage>
+         </div>
 
          <div id="button-group">
             {buttons.map( ( buttonInfo, buttonIndex ) =>
@@ -120,56 +227,6 @@ function Conway( )
    );
 }
 
-function GameBoard( props )
-{
-   if ( !props.gameBoard ||
-         props.gameBoard.length === 0 )
-   {
-      return <></>;
-   }
 
-   return props.gameBoard.map( ( row, rowIndex ) =>
-   {
-      return row.map( ( cell, colIndex ) =>
-      {
-         const x = colIndex * CELL_WIDTH;
-         const y = rowIndex * CELL_HEIGHT;
-         let cellColor;
-
-         if ( props.gameBoard[rowIndex][colIndex] === undefined )
-         {
-            // On error, show red cell
-            cellColor = 0xff0000;
-         }
-         else
-         {
-             // Black for true, white for false
-            cellColor = cell ? 'white' : 'black';
-         }
-
-         return <Rect
-            fill={ cellColor }
-            x={ x }
-            y={ y }
-            height={ CELL_HEIGHT - ( CELL_BORDER_WIDTH * 2 ) }
-            width={ CELL_WIDTH - ( CELL_BORDER_WIDTH * 2 ) }
-            onMouseDown={ ( ) =>
-            {
-               if ( props.isPaused )
-               {
-                  handleCellClick( rowIndex, colIndex, props.gameBoard, props.setGameBoard )
-               }
-            }}
-         />
-      });
-   });
-}
-
-function handleCellClick( rowIndex, colIndex, gameBoard, setGameBoard )
-{
-   var updatedGameBoard = [ ...gameBoard ];
-   updatedGameBoard[ rowIndex ][ colIndex ] = !updatedGameBoard[ rowIndex ][ colIndex ];
-   setGameBoard( updatedGameBoard );
-};
 
 export default Conway;
