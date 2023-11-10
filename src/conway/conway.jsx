@@ -38,14 +38,18 @@ function Conway( )
 
    const togglePause = useCallback( ( ) =>
    {
-      // If switching to 'play,' force one iteration
-      if ( isPaused )
+      setIsPaused( previousValue => 
       {
-         setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
-      }
+         // If switching to 'play,' force one iteration
+         if ( previousValue )
+         {  
+            setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
+         }
 
-      setIsPaused( previousValue => !previousValue );
-   }, [ setGameBoard, setIsPaused, isPaused ] );
+         // Toggle the pause state
+         return !previousValue
+      });
+   }, [ setGameBoard, setIsPaused ] );
    
    const resetBoard = useCallback( ( ) =>
    {
