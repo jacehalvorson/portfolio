@@ -4,7 +4,7 @@ import './conway.css'
 import { getNextIteration } from './next_iteration';
 import { GameBoard, CELL_HEIGHT, CELL_WIDTH } from './game_board';
 
-const NUM_ROWS = 20;
+const NUM_ROWS = 40;
 const NUM_COLS = 40;
 const PLAY_BUTTON_INDEX = 1;
 
@@ -26,14 +26,14 @@ function Conway( )
 {
    const [ gameBoard, setGameBoard ] = useState( [] );
    const [ isPaused, setIsPaused ] = useState( true );
+   const [ offsetX, setOffsetX ] = useState( 0 );
+   const [ offsetY, setOffsetY ] = useState( 0 );
 
    const togglePause = useCallback( ( ) =>
    {
-      console.log( 'Toggle pause' );
       // If switching to 'play,' force one iteration
       if ( isPaused )
       {
-         console.log( 'Forcing one iteration' );
          setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
       }
 
@@ -43,8 +43,7 @@ function Conway( )
    const resetBoard = useCallback( ( ) =>
    {
       setGameBoard( getBlankBoard( false ) );
-      console.log( `isPaused = ${isPaused}` );
-   }, [ setGameBoard, isPaused ] );
+   }, [ setGameBoard ] );
 
    const randomizeBoard = useCallback( ( ) =>
    {
@@ -68,10 +67,13 @@ function Conway( )
       {
          if ( !isPaused )
          {
-            console.log( 'Next iteration' );
             setGameBoard( previousGameBoard => getNextIteration( previousGameBoard ) );
+
+            // TEMPORARY - Move the board around
+            setOffsetX( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
+            setOffsetY( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
+            console.log( `offsetX: ${offsetX}, offsetY: ${offsetY}` );
          }
-         else console.log( 'Paused' );
       }, 1000);
 
       return ( ) =>
@@ -92,6 +94,8 @@ function Conway( )
                   gameBoard={ gameBoard }
                   setGameBoard={ setGameBoard }
                   isPaused={ isPaused }
+                  offsetX={ offsetX }
+                  offsetY={ offsetY }
                />
             </Layer>
          </Stage>
