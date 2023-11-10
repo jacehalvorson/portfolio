@@ -10,9 +10,10 @@ export function GameBoard( props )
    const isGameBoardInvalid = props.gameBoard === null || props.gameBoard.length === 0;
    const isSetGameBoardInvalid = props.setGameBoard === null;
    const isIsPausedInvalid = props.isPaused === null;
-   const isOffsetXInvalid = props.offsetX === null;
-   const isOffsetYInvalid = props.offsetY === null;
+   const isOffsetXInvalid = props.offsetX === null || props.offsetX < 0;
+   const isOffsetYInvalid = props.offsetY === null || props.offsetY < 0;
    
+   // Don't render if any of the required props are invalid
    if ( isGameBoardInvalid ||
         isSetGameBoardInvalid ||
         isIsPausedInvalid ||
@@ -27,19 +28,13 @@ export function GameBoard( props )
    const gameBoardHeight = props.gameBoard.length * CELL_HEIGHT;
    const maxOffsetX = gameBoardWidth - window.innerWidth;
    const maxOffsetY = gameBoardHeight - window.innerHeight;
-   const minOffsetX = 0;
-   const minOffsetY = 0;
    
-   const offsetX = ( props.offsetX > maxOffsetX )
-      ? maxOffsetX
-      : ( props.offsetX < minOffsetX )
-         ? minOffsetX
-         : props.offsetX;
-   const offsetY = ( props.offsetY > maxOffsetY )
-      ? maxOffsetY
-      : ( props.offsetY < minOffsetY )
-         ? minOffsetY
-         : props.offsetY;
+   // Don't render if the offset is out of range
+   if ( props.offsetX > maxOffsetX ||
+        props.offsetY > maxOffsetY )
+   {
+      return <></>;
+   }
 
    return props.gameBoard.map( ( row, rowIndex ) =>
    {
@@ -62,8 +57,8 @@ export function GameBoard( props )
 
          return <Rect
             fill={ cellColor }
-            x={ x - offsetX }
-            y={ y - offsetY }
+            x={ x - props.offsetX }
+            y={ y - props.offsetY }
             height={ CELL_HEIGHT - ( CELL_BORDER_WIDTH * 2 ) }
             width={ CELL_WIDTH - ( CELL_BORDER_WIDTH * 2 ) }
             onMouseDown={ ( ) =>

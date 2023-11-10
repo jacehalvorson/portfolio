@@ -8,6 +8,8 @@ const MILLISECONDS_PER_SECOND = 1000;
 
 const NUM_ROWS = 40;
 const NUM_COLS = 40;
+const GAME_BOARD_WIDTH = NUM_COLS * CELL_WIDTH;
+const GAME_BOARD_HEIGHT = NUM_ROWS * CELL_HEIGHT;
 const PLAY_BUTTON_INDEX = 1;
 
 const TICKS_PER_SECOND = 1;
@@ -59,6 +61,87 @@ function Conway( )
                      [ 'Play', togglePause ],
                      [ 'Randomize', randomizeBoard ], ];
    
+
+   const handleKeyPress = useCallback( ( event ) =>
+   {
+      const stepSize = ( event.ctrlKey ) ? 100 : 20;
+      const maxOffsetX = GAME_BOARD_WIDTH - window.innerWidth;
+      const maxOffsetY = GAME_BOARD_HEIGHT - window.innerHeight;
+
+      switch ( event.keyCode )
+      {
+      // Right Arrow
+      case 39:
+         console.log( 'right arrow' );
+         setOffsetX( previousValue => 
+         {
+            let nextValue = previousValue + stepSize;
+            if ( nextValue > maxOffsetX )
+            {
+               nextValue = maxOffsetX;
+            }
+            return nextValue;
+         });
+
+         break;
+      
+      // Left Arrow
+      case 37:
+         console.log( 'left arrow' );
+         setOffsetX( previousValue =>
+         {
+            let nextValue = previousValue - stepSize;
+            if ( nextValue < 0 )
+            {
+               nextValue = 0;
+            }
+            return nextValue;
+         });
+
+         break;
+      
+      // Up Arrow
+      case 38:
+         console.log( 'up arrow' );
+         setOffsetY( previousValue =>
+         {
+            let nextValue = previousValue - stepSize;
+            if ( nextValue < 0 )
+            {
+               nextValue = 0;
+            }
+            return nextValue;
+         });
+
+         break;
+
+      // Down Arrow
+      case 40:
+         console.log( 'down arrow' );
+         setOffsetY( previousValue =>
+         {
+            let nextValue = previousValue + stepSize;
+            if ( nextValue > maxOffsetY )
+            {
+               nextValue = maxOffsetY;
+            }
+            return nextValue;
+         });
+         
+         break;
+
+      // Spacebar
+      case 32:
+         console.log( 'spacebar' );
+         togglePause( );
+         break;
+      
+      default:
+         // do nothing
+      }
+   }, [ setOffsetX, setOffsetY, togglePause ] );
+
+
    // Initialize the game board
    useEffect( ( ) =>
    {
@@ -71,17 +154,17 @@ function Conway( )
       let interval = setInterval( ( ) =>
       {
             // TEMPORARY - Move the board around
-            setOffsetX( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
-            setOffsetY( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
+            // setOffsetX( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
+            // setOffsetY( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
 
-            // Every once in a while, reset offsets
-            if ( Math.random() > 0.95 )
-            {
-               setOffsetX( 200 );
-               setOffsetY( 200 );
-            }
+            // // Every once in a while, reset offsets
+            // if ( Math.random() > 0.95 )
+            // {
+            //    setOffsetX( 200 );
+            //    setOffsetY( 200 );
+            // }
 
-            console.log( `offsetX: ${offsetX}, offsetY: ${offsetY}` );
+            // console.log( `offsetX: ${offsetX}, offsetY: ${offsetY}` );
       }, MILLISECONDS_PER_SECOND / TICKS_PER_SECOND );
 
       return ( ) =>
@@ -110,21 +193,25 @@ function Conway( )
 
    return (
       <main id="conway">
-         <Stage
-            width={ NUM_COLS * CELL_WIDTH }
-            height={ NUM_ROWS * CELL_HEIGHT }
-            id="game-stage"
-         >
-            <Layer>
-               <GameBoard
-                  gameBoard={ gameBoard }
-                  setGameBoard={ setGameBoard }
-                  isPaused={ isPaused }
-                  offsetX={ offsetX }
-                  offsetY={ offsetY }
-               />
-            </Layer>
-         </Stage>
+         <div tabIndex={ 1 } onKeyDown={ handleKeyPress } autofocus >
+            <Stage
+               width={ NUM_COLS * CELL_WIDTH }
+               height={ NUM_ROWS * CELL_HEIGHT }
+               id="game-stage"
+               tabIndex={ 0 }
+               autofocus
+            >
+               <Layer>
+                  <GameBoard
+                     gameBoard={ gameBoard }
+                     setGameBoard={ setGameBoard }
+                     isPaused={ isPaused }
+                     offsetX={ offsetX }
+                     offsetY={ offsetY }
+                  />
+               </Layer>
+            </Stage>
+         </div>
 
          <div id="button-group">
             {buttons.map( ( buttonInfo, buttonIndex ) =>
@@ -148,5 +235,7 @@ function Conway( )
       </main>
    );
 }
+
+
 
 export default Conway;
