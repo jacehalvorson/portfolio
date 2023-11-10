@@ -148,30 +148,19 @@ function Conway( )
       resetBoard( );
    }, [ resetBoard ] );
 
+   // NOT CURRENTLY USED, save for later
    // Frequency loop of TICKS_PER_SECOND
-   useEffect( ( ) =>
-   {
-      let interval = setInterval( ( ) =>
-      {
-            // TEMPORARY - Move the board around
-            // setOffsetX( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
-            // setOffsetY( previousValue => previousValue + ( Math.floor( Math.random() * 50 ) - 25 ) );
+   // useEffect( ( ) =>
+   // {
+      // let interval = setInterval( ( ) =>
+      // {
+      // }, MILLISECONDS_PER_SECOND / TICKS_PER_SECOND );
 
-            // // Every once in a while, reset offsets
-            // if ( Math.random() > 0.95 )
-            // {
-            //    setOffsetX( 200 );
-            //    setOffsetY( 200 );
-            // }
-
-            // console.log( `offsetX: ${offsetX}, offsetY: ${offsetY}` );
-      }, MILLISECONDS_PER_SECOND / TICKS_PER_SECOND );
-
-      return ( ) =>
-      {
-         clearInterval( interval );
-      }
-   }, [ isPaused, setOffsetX, setOffsetY, offsetX, offsetY ] );
+      // return ( ) =>
+      // {
+      //    clearInterval( interval );
+      // }
+   // }, [ ] );
 
 
    // Frequency loop of GAME_ITERATIONS_PER_SECOND
@@ -193,13 +182,11 @@ function Conway( )
 
    return (
       <main id="conway">
-         <div tabIndex={ 1 } onKeyDown={ handleKeyPress } autofocus >
+         <div tabIndex={ 1 } onKeyDown={ handleKeyPress } autofocus>
             <Stage
                width={ NUM_COLS * CELL_WIDTH }
                height={ NUM_ROWS * CELL_HEIGHT }
                id="game-stage"
-               tabIndex={ 0 }
-               autofocus
             >
                <Layer>
                   <GameBoard
