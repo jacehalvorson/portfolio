@@ -15,6 +15,8 @@ const PLAY_BUTTON_INDEX = 1;
 const TICKS_PER_SECOND = 1;
 const GAME_ITERATIONS_PER_SECOND = 2;
 
+const FLIP_COOLDOWN = 100;
+
 function getRandomBoard( )
 {
    return Array.from({ length: NUM_ROWS }, ( ) =>
@@ -35,6 +37,8 @@ function Conway( )
    const [ isPaused, setIsPaused ] = useState( true );
    const [ offsetX, setOffsetX ] = useState( 0 );
    const [ offsetY, setOffsetY ] = useState( 0 );
+   const [ isMousedown, setIsMouseDown ] = useState( false );
+   const [ previouslyFlippedCell, setPreviouslyFlippedCell ] = useState( { colIndex: -1, rowIndex: -1 } );
 
    const togglePause = useCallback( ( ) =>
    {
@@ -192,7 +196,36 @@ function Conway( )
                height={ NUM_ROWS * CELL_HEIGHT }
                id="game-stage"
             >
-               <Layer>
+               <Layer
+                  onMouseDown={ ( ) => { setIsMouseDown( true ); }}
+                  onMouseUp={ ( ) => { setIsMouseDown( false ); }}
+                  onMouseMove={ ( event ) =>
+                  {
+                     if ( isMousedown )
+                     {
+                        let boardX = event.evt.x + offsetX;
+                        let boardY = event.evt.y + offsetY;
+                        let colIndex = Math.floor( boardX / CELL_WIDTH );
+                        let rowIndex = Math.floor( boardY / CELL_HEIGHT );
+
+                        console.log( `col: ${colIndex}, row: ${rowIndex}` );
+
+                        if ( previouslyFlippedCell.rowIndex !== rowIndex ||
+                             previouslyFlippedCell.colIndex !== colIndex
+                           )
+                        {
+                           console.log( 'flipping cell' );
+                           setGameBoard( previousGameBoard =>
+                           {
+                              previousGameBoard[ rowIndex ][ colIndex ] = event.evt.ctrlKey ? false : true;
+                              return previousGameBoard;
+                           });
+                           
+                           setPreviouslyFlippedCell( { colIndex: colIndex, rowIndex: rowIndex } );
+                        }
+                     }
+                  }}
+               >
                   <GameBoard
                      gameBoard={ gameBoard }
                      setGameBoard={ setGameBoard }
@@ -221,12 +254,10 @@ function Conway( )
                >
                   {buttonText}
                </button>
-})}
+            })}
          </div>
       </main>
-   );
+         );
 }
-
-
 
 export default Conway;
