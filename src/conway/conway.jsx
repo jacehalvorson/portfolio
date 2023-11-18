@@ -12,10 +12,7 @@ const GAME_BOARD_WIDTH = NUM_COLS * CELL_WIDTH;
 const GAME_BOARD_HEIGHT = NUM_ROWS * CELL_HEIGHT;
 const PLAY_BUTTON_INDEX = 1;
 
-const TICKS_PER_SECOND = 1;
-const GAME_ITERATIONS_PER_SECOND = 2;
-
-const FLIP_COOLDOWN = 100;
+const GAME_ITERATIONS_PER_SECOND = 10;
 
 function getRandomBoard( )
 {
@@ -215,11 +212,7 @@ function Conway( )
                            )
                         {
                            console.log( 'flipping cell' );
-                           setGameBoard( previousGameBoard =>
-                           {
-                              previousGameBoard[ rowIndex ][ colIndex ] = event.evt.ctrlKey ? false : true;
-                              return previousGameBoard;
-                           });
+                           handleCellClick( rowIndex, colIndex, setGameBoard, event.evt.ctrlKey );
                            
                            setPreviouslyFlippedCell( { colIndex: colIndex, rowIndex: rowIndex } );
                         }
@@ -258,6 +251,15 @@ function Conway( )
          </div>
       </main>
          );
+}
+
+function handleCellClick( rowIndex, colIndex, setGameBoard, isCtrlPressed )
+{
+   setGameBoard( previousGameBoard =>
+   {
+      previousGameBoard[ rowIndex ][ colIndex ] = isCtrlPressed ? false : true;
+      return previousGameBoard;
+   });
 }
 
 export default Conway;
