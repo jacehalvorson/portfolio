@@ -1,0 +1,44 @@
+main#playoff-bracket {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   background-color: rgb(20, 20, 20);
+   color: white;
+   font-family: helvetica;
+}
+
+#playoff-bracket > h1 {
+   margin: 1em;
+}
+
+.leaderboard {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 0.4em;
+}
+
+.player {
+   width: clamp(25em, 90vw, 60em);
+   border: 1px solid rgba(0, 0, 0, 0.3);
+   border-radius: 0.8em;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   overflow: hidden;
+   padding-left: 1em;
+   padding-right: 1em;
+}
+
+.player > h1,h2,a {
+   margin: 0.3em;
+   text-decoration: none;
+}
+
+.player > a {
+   color: #66B2FF;
+}
