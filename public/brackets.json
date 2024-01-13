@@ -1,0 +1,12 @@
+{
+   "brackets": [
+      {"name": "Trent", "path": "1211211112111", "tiebreaker": 55}, 
+      {"name": "Dave", "path": "1211211111112", "tiebreaker": 45}, 
+      {"name": "Cami", "path": "1211111212212", "tiebreaker": 51},
+      {"name": "Paul", "path": "1211211111121", "tiebreaker": 48},
+      {"name": "Kade1", "path": "1211111111211", "tiebreaker": 41},
+      {"name": "Kade2", "path": "1211111111111", "tiebreaker": 41},
+      {"name": "Zack", "path": "2211211211111", "tiebreaker": 40},
+      {"name": "Jace", "path": "1112211221111", "tiebreaker": 58}
+   ]
+}

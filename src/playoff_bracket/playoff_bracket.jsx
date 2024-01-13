@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getBracket from "./script.js";
+import getBrackets from "./script.js";
 import "./playoff_bracket.css";
 import "../index.css";
 
@@ -8,7 +8,12 @@ function PlayoffBracket( )
    const [ scores, setScores ] = useState( [] );
    
    useEffect( ( ) => {
-      setScores( getBracket( ).sort( ( a, b ) => b.pointsWon - a.pointsWon ) );
+      fetch( "/brackets.json" )
+         .then( response => response.json( ) )
+         .then( json => json.brackets )
+         .then( ShortPath => getBrackets( ShortPath ) )
+         .then( brackets => setScores( brackets.sort( ( a, b ) => b.pointsWon - a.pointsWon ) ) )
+         .catch( err => console.error( err ) );
    }, [ ] );
 
    return (
@@ -17,7 +22,8 @@ function PlayoffBracket( )
          
          <div className="leaderboard">
          {
-            scores.map( ( player, index ) => {
+            ( scores.length === 0 ) ? ( <h2>Loading...</h2> )
+            : scores.map( ( player, index ) => {
                return (
                   <a href={"https://next.playoffpredictors.com/football/nfl/playoffpicture/37033920-C0E1-4EF4-8F0D-DA53DA41E3A0?L=" + player.shortPath + "&sbhomescore=0&sbawayscore=0"}>
                      <div className="player" key={index}>

@@ -1,15 +1,3 @@
-//List users and the path they pulled from the website.
-const ShortPath = [
-		{name: "Trent", path: "1211211112111", tiebreaker: 55}, 
-		{name: "Dave", path: "1211211111112", tiebreaker: 45}, 
-		{name: "Cami", path: "1211111212212", tiebreaker: 51},
-		{name: "Paul", path: "1211211111121", tiebreaker: 48},
-		{name: "Kade1", path: "1211111111211", tiebreaket: 41},
-		{name: "Kade2", path: "1211111111111", tiebreaket: 41},
-		{name: "Zack", path: "2211211211111", tiebreaket: 40},
-		{name: "Jace", path: "1112211221111", tiebreaket: 58}
-	];
-
 // Update values of 1 (win) and 2 (lost) by winWeek1.  Future you will have to change winWeek2, winWeek3 and winWeek4.
 const WinningGames = [
 		{team: "49ers",  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
@@ -131,7 +119,7 @@ function secondLargest(arr) {
    return [...arr].sort((a, b) => b - a)[1];
 }
 
-function getBracket()
+function getBrackets(ShortPath)
 {
 	// Check if our items where checked for all users.
 	ShortPath.forEach(function (arrayPaths) {
@@ -476,4 +464,4 @@ function getBracket()
 	return bracket;
 }
 
-export default getBracket;
+export default getBrackets;
