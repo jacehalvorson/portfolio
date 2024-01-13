@@ -7,7 +7,7 @@ main#home {
 }
 
 #home-header {
-   font-size: clamp( 20px, 2vw, 28px );
+   font-size: clamp( 16px, 2vw, 42px );
    position: relative;
    margin-top: 1em;
    left: 50%;
@@ -38,20 +38,18 @@ main#home {
    z-index: 3;
    display: flex;
    align-items: center;
-   justify-content: center;
    gap: 1em;
-   padding: 1em 0;
+   padding: 1em 1em;
    
    width: 12em;
    text-align: center;
    
-   background: rgba( 0, 105, 217, 1 );
-   border: 1px solid black;
+   border: 1px solid rgba( 255, 255, 255, 0 );
    border-radius: 0.5em;
    
    transition: opacity 200ms ease-in-out,
-   transform 200ms ease-in-out,
-   box-shadow 200ms ease-in-out;
+               border-color 200ms ease-in-out,
+               box-shadow 200ms ease-in-out;
 }
 .home-slider-button > svg {
    margin: 0 0 0 0;
@@ -63,17 +61,14 @@ main#home {
 }
 #home-slider-button-left {
    left: -0.3em;
+   justify-content: start;
    border-left-width: 0;
    padding-right: 0;
-   background: '#0069d9';
-   background: linear-gradient( to top left, rgba( 0, 70, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 #home-slider-button-right {
-   right: -0.5em;
+   right: -0.3em;
+   justify-content: end;
    border-right-width: 0;
-   padding-left: 0;
-   background: '#0069d9';
-   background: linear-gradient( to top right, rgba( 0, 70, 217, 1 ), rgba( 25, 16, 201, 1 ) );
 }
 
 .unclickable {
@@ -149,5 +144,6 @@ main#home {
    .home-slider-button:hover {
       opacity: 1;
       box-shadow: 0 0 10px rgba( 255, 255, 255, 0.5 );
+      border-color: rgba( 255, 255, 255, 0.5 );
    }
 }
