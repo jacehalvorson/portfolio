@@ -1,17 +1,17 @@
 // Update values of 1 (win) and 2 (lost) by winWeek1.  Future you will have to change winWeek2, winWeek3 and winWeek4.
 const WinningGames = [
 		{team: "49ers",  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Cowboys", conference: "N", prediction: 2, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Cowboys", conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Lions", conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Buccaneers", conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Eagles", conference: "N", prediction: 5, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Rams", conference: "N", prediction: 6, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Eagles", conference: "N", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Rams", conference: "N", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Packers", conference: "N", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Ravens", conference: "A", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Bills", conference: "A", prediction: 2, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Chiefs", conference: "A", prediction: 3, winWeek1: 1, winWeek2: 0, winWeek3: 1, winWeek4: 0},
+		{team: "Bills", conference: "A", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Chiefs", conference: "A", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Texans", conference: "A", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Browns", conference: "A", prediction: 5, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Browns", conference: "A", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Dolphins", conference: "A", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Steelers", conference: "A", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0}]; 
 
