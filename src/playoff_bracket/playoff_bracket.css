@@ -6,7 +6,7 @@ main#playoff-bracket {
    display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: start;
+   justify-content: flex-start;
 
    color: white;
    font-family: helvetica;
@@ -35,7 +35,7 @@ main#playoff-bracket {
    border: 1px solid rbga(100, 100, 100, 0.8);
    border-radius: 0.8em;
    background-color: black;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+   box-shadow: 0 0px 15px rgba(0, 0, 0, 0.3);
 
    display: flex;
    align-items: center;
@@ -44,7 +44,8 @@ main#playoff-bracket {
    padding-left: 1em;
    padding-right: 1em;
 
-   transition: ease-in-out 0.2s background-color, ease-in-out 0.2s box-shadow;
+   transition: background-color ease-in-out 150ms,
+               box-shadow ease-in-out 150ms;
 }
 
 .player:hover {

@@ -16,13 +16,19 @@
         "fetchAndReturnStats": {
           "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
           "s3Key": "amplify-builds/fetchAndReturnStats-364851376e484457634d-build.zip"
+        },
+        "readWritePlayoffBrackets": {
+          "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
+          "s3Key": "amplify-builds/readWritePlayoffBrackets-484d6358727345556d56-build.zip"
         }
       },
       "api": {
-        "apinflstats": {}
+        "apinflstats": {},
+        "apiplayoffbrackets": {}
       },
       "storage": {
-        "NFLStats": {}
+        "NFLStats": {},
+        "playoffBrackets": {}
       }
     }
   }

@@ -31,11 +31,36 @@
         "RootUrl": "https://zs8qi2592b.execute-api.us-east-2.amazonaws.com/main",
         "ApiId": "zs8qi2592b"
       },
-      "lastPushTimeStamp": "2023-04-26T18:27:06.645Z",
+      "lastPushTimeStamp": "2024-01-15T23:22:36.600Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apinflstats-cloudformation-template.json",
         "logicalId": "apiapinflstats"
       }
+    },
+    "apiplayoffbrackets": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "readWritePlayoffBrackets",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apiplayoffbrackets-cloudformation-template.json",
+        "logicalId": "apiapiplayoffbrackets"
+      },
+      "lastPushTimeStamp": "2024-01-15T23:22:36.617Z",
+      "output": {
+        "ApiName": "apiplayoffbrackets",
+        "RootUrl": "https://4nwlzhj2vf.execute-api.us-east-2.amazonaws.com/main",
+        "ApiId": "4nwlzhj2vf"
+      },
+      "lastPushDirHash": "rFwwcPMTJGYjOgVxn8lPfb+IR8A="
     }
   },
   "auth": {},
@@ -62,7 +87,7 @@
         "Name": "fetchAndReturnStats-main",
         "LambdaExecutionRole": "portfolioLambdaRoleb50e216b-main"
       },
-      "lastPushTimeStamp": "2023-04-26T18:27:06.662Z",
+      "lastPushTimeStamp": "2024-01-15T23:22:36.632Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/fetchAndReturnStats-cloudformation-template.json",
         "logicalId": "functionfetchAndReturnStats"
@@ -77,6 +102,56 @@
       "lastPackageTimeStamp": "2023-04-24T15:15:34.261Z",
       "distZipFilename": "fetchAndReturnStats-364851376e484457634d-build.zip",
       "lastPushDirHash": "hUR/CHeF12fFcFmaxAVrPR9uQKM="
+    },
+    "readWritePlayoffBrackets": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "playoffBrackets",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        },
+        {
+          "category": "storage",
+          "resourceName": "playoffBrackets",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ],
+      "lastDevBuildTimeStamp": "2024-01-15T23:18:23.447Z",
+      "lastBuildType": "PROD",
+      "lastBuildTimeStamp": "2024-01-15T23:21:20.903Z",
+      "lastPackageTimeStamp": "2024-01-15T23:21:29.390Z",
+      "distZipFilename": "readWritePlayoffBrackets-484d6358727345556d56-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
+        "s3Key": "amplify-builds/readWritePlayoffBrackets-484d6358727345556d56-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/readWritePlayoffBrackets-cloudformation-template.json",
+        "logicalId": "functionreadWritePlayoffBrackets"
+      },
+      "lastPushTimeStamp": "2024-01-15T23:22:37.029Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::977933747533:role/portfolioLambdaRoled648faf9-main",
+        "Region": "us-east-2",
+        "Arn": "arn:aws:lambda:us-east-2:977933747533:function:readWritePlayoffBrackets-main",
+        "Name": "readWritePlayoffBrackets-main",
+        "LambdaExecutionRole": "portfolioLambdaRoled648faf9-main"
+      },
+      "lastPushDirHash": "J4cz6Ko5yRkxNt6G/PyAu9KBHrU="
     }
   },
   "storage": {
@@ -91,11 +166,29 @@
         "PartitionKeyType": "S",
         "Name": "NFLStats-main"
       },
-      "lastPushTimeStamp": "2023-04-26T18:27:06.674Z",
+      "lastPushTimeStamp": "2024-01-15T23:22:36.660Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/NFLStats-cloudformation-template.json",
         "logicalId": "storageNFLStats"
       }
+    },
+    "playoffBrackets": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/playoffBrackets-cloudformation-template.json",
+        "logicalId": "storageplayoffBrackets"
+      },
+      "lastPushTimeStamp": "2024-01-15T23:22:36.673Z",
+      "output": {
+        "PartitionKeyName": "name",
+        "Region": "us-east-2",
+        "Arn": "arn:aws:dynamodb:us-east-2:977933747533:table/playoffBrackets-main",
+        "StreamArn": "arn:aws:dynamodb:us-east-2:977933747533:table/playoffBrackets-main/stream/2024-01-15T19:27:17.509",
+        "PartitionKeyType": "S",
+        "Name": "playoffBrackets-main"
+      },
+      "lastPushDirHash": "oz7rNUF39vV4tumr6arNfgBJ+Pg="
     }
   }
 }
