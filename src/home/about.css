@@ -20,7 +20,7 @@
 
 #about-header {
    padding: 6em 2em;
-   background-color: rgba( 0, 0, 0, 0.8 );
+   background-color: rgba( 0, 0, 0, 0.9 );
 }
 
 #about-titles {
@@ -47,7 +47,7 @@
 
 #about-body {
    position: relative;
-   background: rgba( 255, 255, 255, 0.8 );
+   background: rgba( 255, 255, 255, 0.9 );
    color: black;
 
    display: flex;
@@ -89,7 +89,7 @@
 }
 
 #about-resume {
-   background-color: rgba( 0, 0, 0, 0.8 );
+   background-color: rgba( 0, 0, 0, 0.9 );
    color: white;
 
    display: flex;

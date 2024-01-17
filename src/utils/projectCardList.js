@@ -1,5 +1,11 @@
 export const projectCardList = [
   {
+    "title": "Playoff Bracket",
+    "description": "Leaderboard for Kade's 2023 NFL playoff bracket challenge.",
+    "image": "https://static.profootballnetwork.com/wp-content/uploads/2024/01/07231723/image-6-819x1024.png",
+    "href": "/playoffbracket"
+  },
+  {
     "title": "Conway's Game of Life",
     "description": "A cellular automaton simulation that follows the rules of Conway's Game of Life. This simulation features a variety of preset patterns, a random pattern generator, and a customizable grid size.",
     "image": "/images/conway-game-of-life.jpg",
@@ -37,13 +43,13 @@ export const projectCardList = [
   },
   {
     "title": "OS Projects (C++)",
-    "description": "User thread library, mutual exclusion technique comparsion, and virtual memory page eviction algorithm demonstration.",
+    "description": "User thread library (<pthread.h> replica), mutual exclusion technique comparsion, and virtual memory page eviction algorithm demonstration.",
     "image": "https://st4.depositphotos.com/1001599/40602/v/450/depositphotos_406024484-stock-illustration-cross-platform-development-abstract-concept.jpg",
     "href": "https://github.com/jacehalvorson/csci5103projects"
   },
   {
     "title": "Intro OS Projects (C)",
-    "description": "HTTP server capable of handling concurrent requests using system calls and threading, terminal shell with pipelining, and archiving tool similar to Linux's \"tar\" command.",
+    "description": "Multithreaded HTTP server capable of handling concurrent requests, terminal shell with support for piping input/output, and archiving tool similar to Linux's \"tar\" command.",
     "image": "https://c4.wallpaperflare.com/wallpaper/248/404/919/digital-art-windows-7-simple-operating-systems-wallpaper-preview.jpg",
     "href": "https://github.com/jacehalvorson/csci4061projects"
   }

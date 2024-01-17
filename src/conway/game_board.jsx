@@ -44,14 +44,14 @@ export function GameBoard( props )
          const y = rowIndex * CELL_HEIGHT;
          let cellColor;
 
-         if ( props.gameBoard[rowIndex][colIndex] === undefined )
+         if ( props.gameBoard[ rowIndex ][ colIndex ] === undefined )
          {
             // On error, show red cell
             cellColor = 0xff0000;
          }
          else
          {
-             // Black for true, white for false
+             // White for true, black for false
             cellColor = cell ? 'white' : 'black';
          }
 
@@ -61,21 +61,7 @@ export function GameBoard( props )
             y={ y - props.offsetY }
             height={ CELL_HEIGHT - ( CELL_BORDER_WIDTH * 2 ) }
             width={ CELL_WIDTH - ( CELL_BORDER_WIDTH * 2 ) }
-            onMouseDown={ ( ) =>
-            {
-               if ( props.isPaused )
-               {
-                  handleCellClick( rowIndex, colIndex, props.gameBoard, props.setGameBoard )
-               }
-            }}
          />
       });
    });
-}
-
-function handleCellClick( rowIndex, colIndex, gameBoard, setGameBoard )
-{
-   var updatedGameBoard = [ ...gameBoard ];
-   updatedGameBoard[ rowIndex ][ colIndex ] = !updatedGameBoard[ rowIndex ][ colIndex ];
-   setGameBoard( updatedGameBoard );
 }

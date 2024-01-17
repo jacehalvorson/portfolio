@@ -13,6 +13,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "apiplayoffbrackets": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "readWritePlayoffBrackets"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {},
@@ -28,6 +42,34 @@
           ],
           "category": "storage",
           "resourceName": "NFLStats"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "readWritePlayoffBrackets": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "playoffBrackets"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "playoffBrackets"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -50,10 +92,30 @@
           "resourceName": "fetchAndReturnStats"
         }
       ]
+    },
+    "AMPLIFY_function_readWritePlayoffBrackets_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readWritePlayoffBrackets"
+        }
+      ]
+    },
+    "AMPLIFY_function_readWritePlayoffBrackets_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "readWritePlayoffBrackets"
+        }
+      ]
     }
   },
   "storage": {
     "NFLStats": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "playoffBrackets": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     }
