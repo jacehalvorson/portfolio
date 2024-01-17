@@ -9,7 +9,6 @@ main#playoff-bracket {
    justify-content: flex-start;
 
    color: white;
-   font-family: helvetica;
 }
 
 #playoff-bracket > h1 {
@@ -65,10 +64,14 @@ main#playoff-bracket {
    }
 }
 
-.player > h2,h2,h3,a {
+.player > h2,h3,a {
    margin: 0.3em;
    text-decoration: none;
    user-select: none;
+}
+
+.player > h3 {
+   font-size: 1.5em;
 }
 
 .player > a {
