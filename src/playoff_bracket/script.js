@@ -2,15 +2,15 @@
 const WinningGames = [
 		{team: "49ers",  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Cowboys", conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Lions", conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Buccaneers", conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Lions", conference: "N", prediction: 3, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Buccaneers", conference: "N", prediction: 4, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Eagles", conference: "N", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Rams", conference: "N", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Packers", conference: "N", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Packers", conference: "N", prediction: 7, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Ravens", conference: "A", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Bills", conference: "A", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Chiefs", conference: "A", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Texans", conference: "A", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Bills", conference: "A", prediction: 2, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Chiefs", conference: "A", prediction: 3, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: "Texans", conference: "A", prediction: 4, winWeek1: 1, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Browns", conference: "A", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Dolphins", conference: "A", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Steelers", conference: "A", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0}]; 
@@ -39,11 +39,12 @@ function gameOpponent(weekDivision, conference, prediction) {
 			return 1;
 
 		console.log("An invalid prediction was sent: conference " + conference  + " prediction " + prediction);
-		process.exit();
+		return [];
 	}
 	else if (weekDivision.slice(0, 1) == "D" || weekDivision.slice(0, 1) == "d") {
 		// In the second week, team 1 plays the winners from 1st week with the largest number.  The other 2 play.
 		let wonTeams = [];
+		var game;
 		WinningGames.forEach(winningPoints => 
 		{
 			if (winningPoints.conference == conference && winningPoints.winWeek1 == 1) {
@@ -56,12 +57,12 @@ function gameOpponent(weekDivision, conference, prediction) {
 		};
 		if (prediction == Math.min.apply(Math, wonTeams))
 		{
-			var game = secondSmallest(wonTeams);
+			game = secondSmallest(wonTeams);
 			return game;
 		};
 		if (prediction == secondSmallest(wonTeams))
 		{
-			var game = Math.min.apply(Math, wonTeams);
+			game = Math.min.apply(Math, wonTeams);
 			return game;
 		};
 		if (prediction == Math.max.apply(Math, wonTeams))
@@ -108,7 +109,7 @@ function gameOpponent(weekDivision, conference, prediction) {
 		return oppositeWin.prediction;
 	}
 	console.log("Unknown weekDivision (" + weekDivision + ") just happened!");
-	process.exit();
+	return [];
 }
 
 function secondSmallest(arr) {
@@ -121,9 +122,11 @@ function secondLargest(arr) {
 
 function getBrackets(ShortPath)
 {
+	var error = false;
+
 	// Check if our items where checked for all users.
 	ShortPath.forEach(function (arrayPaths) {
-		var footballChecks = arrayPaths.path;
+		var footballChecks = String(arrayPaths.picks);
 		const footballPick = footballChecks.split("");
 		
 		let count = 0;
@@ -134,57 +137,60 @@ function getBrackets(ShortPath)
 		if (count != 13)
 		{
 			console.log("Wrong number of items chosen: " + footballChecks);
-			process.exit();
+			error = true;
 		}
 	});
+	if (error) return [];
 
 	var bracket = [];
 
 	// Grab all teams from the first week.
 	ShortPath.forEach(function (arrayPaths) {
+		var footballChecks = String(arrayPaths.picks);
 		var predWildAFC = [0, 0, 0];
-		if (arrayPaths.path.slice(0, 1) == "1")
+
+		if (footballChecks.slice(0, 1) == "1")
 			predWildAFC[0] = 3; 
-		else if (arrayPaths.path.slice(0, 1) == "2")
+		else if (footballChecks.slice(0, 1) == "2")
 			predWildAFC[0] = 6; 
-		if (arrayPaths.path.slice(1, 2) == "1")
+		if (footballChecks.slice(1, 2) == "1")
 			predWildAFC[1] = 4;
-		else if (arrayPaths.path.slice(1, 2) == "2")
+		else if (footballChecks.slice(1, 2) == "2")
 			predWildAFC[1] = 5;
-		if (arrayPaths.path.slice(2, 3) == "1")
+		if (footballChecks.slice(2, 3) == "1")
 			predWildAFC[2] = 2;
-		else if (arrayPaths.path.slice(2, 3) == "2")
+		else if (footballChecks.slice(2, 3) == "2")
 			predWildAFC[2] = 7;
 
 		var predWildNFC = [0, 0, 0];
-		if (arrayPaths.path.slice(3, 4) == "1")
+		if (footballChecks.slice(3, 4) == "1")
 			predWildNFC[0] = 3; 
-		else if (arrayPaths.path.slice(3, 4) == "2")
+		else if (footballChecks.slice(3, 4) == "2")
 			predWildNFC[0] = 6; 
-		if (arrayPaths.path.slice(4, 5) == "1")
+		if (footballChecks.slice(4, 5) == "1")
 			predWildNFC[1] = 4;
-		else if (arrayPaths.path.slice(4, 5) == "2")
+		else if (footballChecks.slice(4, 5) == "2")
 			predWildNFC[1] = 5;
-		if (arrayPaths.path.slice(5, 6) == "1")
+		if (footballChecks.slice(5, 6) == "1")
 			predWildNFC[2] = 2;
-		else if (arrayPaths.path.slice(5, 6) == "2")
+		else if (footballChecks.slice(5, 6) == "2")
 			predWildNFC[2] = 7;
 
 		var predDivAFC = [0, 0];
 		var divAFCSecondLargest = secondLargest(predWildAFC);
 		var divAFCSecondSmallest = secondSmallest(predWildAFC);
-		if (arrayPaths.path.slice(6, 7) == "1") {
+		if (footballChecks.slice(6, 7) == "1") {
 			predDivAFC[0] = 1;
 		}
-		else if (arrayPaths.path.slice(6, 7) == "2") {
+		else if (footballChecks.slice(6, 7) == "2") {
 			// Catch is highest in last week.
 			predDivAFC[0] = Math.max.apply(Math, predWildAFC);
 		};
-		if (arrayPaths.path.slice(7, 8) == "1") {
+		if (footballChecks.slice(7, 8) == "1") {
 			// Catch is second largest in last week.
 			predDivAFC[1] = Math.min.apply(Math, predWildAFC);
 		}
-		else if (arrayPaths.path.slice(7, 8) == "2") {
+		else if (footballChecks.slice(7, 8) == "2") {
 			// Catch is second smallest in last week.
 			predDivAFC[1] = divAFCSecondSmallest;
 		};
@@ -192,57 +198,57 @@ function getBrackets(ShortPath)
 		var predDivNFC = [0, 0];
 		var divNFCSecondLargest = secondLargest(predWildNFC);
 		var divNFCSecondSmallest = secondSmallest(predWildNFC);
-		if (arrayPaths.path.slice(8, 9) == "1") {
+		if (footballChecks.slice(8, 9) == "1") {
 			predDivNFC[0] = 1;
 		}
-		else if (arrayPaths.path.slice(8, 9) == "2") {
+		else if (footballChecks.slice(8, 9) == "2") {
 			// Catch is highest in last week.
 			predDivNFC[0] = Math.max.apply(Math, predWildNFC);
 		};
-		if (arrayPaths.path.slice(9, 10) == "1") {
+		if (footballChecks.slice(9, 10) == "1") {
 			// Catch is second largest in last week.
 			predDivNFC[1] = Math.min.apply(Math, predWildNFC);
 		}
-		else if (arrayPaths.path.slice(9, 10) == "2") {
+		else if (footballChecks.slice(9, 10) == "2") {
 			// Catch is third smallest in last week.
 			predDivNFC[1] = divNFCSecondSmallest;
 		};
 		
 		var predChampionshipGameAFC = 0;
-		if (arrayPaths.path.slice(10, 11) == "1") {
+		if (footballChecks.slice(10, 11) == "1") {
 			// Catch is highest in champion week.
 			predChampionshipGameAFC = Math.min.apply(Math, predDivAFC);
 		}
-		else if (arrayPaths.path.slice(10, 11) == "2") {
+		else if (footballChecks.slice(10, 11) == "2") {
 			// Catch is lowest in champion week.
 			predChampionshipGameAFC = Math.max.apply(Math, predDivAFC);
 		};
 
 		var predChampionshipGameNFC = 0;
-		if (arrayPaths.path.slice(11, 12) == "1") {
+		if (footballChecks.slice(11, 12) == "1") {
 			// Catch is highest in champion week.
 			predChampionshipGameNFC = Math.min.apply(Math, predDivNFC);
 		}
-		else if (arrayPaths.path.slice(11, 12) == "2") {
+		else if (footballChecks.slice(11, 12) == "2") {
 			// Catch is lowest in champion week.
 			predChampionshipGameNFC = Math.max.apply(Math, predDivNFC);
 		};
 
 		var predSuperBowl = 0;
 		var conferencePicked = "";
-		if (arrayPaths.path.slice(12, 13) == "1") {
+		if (footballChecks.slice(12, 13) == "1") {
 			// Catch is highest in superbowl week.
 			predSuperBowl = predChampionshipGameAFC;
 			conferencePicked = "A";
 		}
-		else if (arrayPaths.path.slice(12, 13) == "2") {
+		else if (footballChecks.slice(12, 13) == "2") {
 			// Catch is highest in superbowl week.
 			predSuperBowl = predChampionshipGameNFC;
 			conferencePicked = "N";
 		}
 
 		var user = arrayPaths.name;
-		bracket.push({name: user, shortPath: arrayPaths.path, tiebreaker: arrayPaths.tiebreaker, pointsWon: 0, pointsAvailable: 0,
+		bracket.push({name: user, picks: footballChecks, tiebreaker: arrayPaths.tiebreaker, pointsWon: 0, pointsAvailable: 0,
 				superBowl: [ { conference: conferencePicked, teams: [predChampionshipGameNFC, predChampionshipGameAFC], prediction: predSuperBowl }], 
 				championshipGameNFC: [ { teams: [Math.max.apply(Math, predDivNFC), Math.min.apply(Math, predDivNFC)], prediction: predChampionshipGameNFC }], 
 				championshipGameAFC: [ { teams: [Math.max.apply(Math, predDivAFC), Math.min.apply(Math, predDivAFC)], prediction: predChampionshipGameAFC }],

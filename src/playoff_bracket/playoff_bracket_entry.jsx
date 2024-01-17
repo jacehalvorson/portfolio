@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { API } from "aws-amplify";
 import "./playoff_bracket_entry.css";
 import "../index.css";
 
-const BRACKETS_FILE = "/brackets.json";
+const apiName = "apiplayoffbrackets";
 
 async function addBracketToFile( setPostStatus )
 {
@@ -11,28 +12,42 @@ async function addBracketToFile( setPostStatus )
    let tiebreaker = document.getElementById("tiebreaker-input").value;
    tiebreaker = Number(tiebreaker);
 
-   if ( name === "" || picks === "" || tiebreaker === NaN || tiebreaker < 0)
+   if ( name === "" ||
+        picks === "" ||
+        isNaN(Number(picks)) ||
+        picks.length != 13 ||
+        isNaN(tiebreaker) ||
+        tiebreaker < 0
+        )
    {
       console.log( "Invalid input: name: " + name + ", picks: " + picks + ", tiebreaker: " + tiebreaker + " }" );
       setPostStatus( "Invalid input" );
       return;
    }
 
-   let brackets = await fetch( BRACKETS_FILE )
-    .then( response => response.json( ) )
-    .then( json => json.brackets )
-    .catch( err => console.error( err ) );
+   setPostStatus( "Adding bracket to leaderboard..." );
 
-   brackets.push( {
+   let bracketData = {
       name: name,
       picks: picks,
       tiebreaker: tiebreaker
-   } );
+   };
 
-   let json = JSON.stringify( brackets );
-   console.log( json );
-
-   setPostStatus( "Failed" );
+   API.post( apiName, "/", {
+      headers: {
+         "Content-Type": "application/json"
+      },
+      // Send bracket data
+      body: bracketData
+   })
+      .then( response => {
+         console.log( response );
+         setPostStatus( "Success" );
+      })
+      .catch( err => {
+         console.error( err );
+         setPostStatus( "Error adding bracket to API" );
+      });
 }
 
 function PlayoffBracketEntry( )

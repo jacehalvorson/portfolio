@@ -173,6 +173,27 @@
         }
       }
     },
+    "apiapiplayoffbrackets": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/api/apiplayoffbrackets-cloudformation-template.json",
+        "Parameters": {
+          "functionreadWritePlayoffBracketsName": {
+            "Fn::GetAtt": [
+              "functionreadWritePlayoffBrackets",
+              "Outputs.Name"
+            ]
+          },
+          "functionreadWritePlayoffBracketsArn": {
+            "Fn::GetAtt": [
+              "functionreadWritePlayoffBrackets",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "main"
+        }
+      }
+    },
     "functionfetchAndReturnStats": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -202,6 +223,35 @@
         }
       }
     },
+    "functionreadWritePlayoffBrackets": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/function/readWritePlayoffBrackets-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-portfolio-main-173405-deployment",
+          "s3Key": "amplify-builds/readWritePlayoffBrackets-484d6358727345556d56-build.zip",
+          "storageplayoffBracketsName": {
+            "Fn::GetAtt": [
+              "storageplayoffBrackets",
+              "Outputs.Name"
+            ]
+          },
+          "storageplayoffBracketsArn": {
+            "Fn::GetAtt": [
+              "storageplayoffBrackets",
+              "Outputs.Arn"
+            ]
+          },
+          "storageplayoffBracketsStreamArn": {
+            "Fn::GetAtt": [
+              "storageplayoffBrackets",
+              "Outputs.StreamArn"
+            ]
+          },
+          "env": "main"
+        }
+      }
+    },
     "storageNFLStats": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -209,6 +259,18 @@
         "Parameters": {
           "tableName": "NFLStats",
           "partitionKeyName": "id",
+          "partitionKeyType": "S",
+          "env": "main"
+        }
+      }
+    },
+    "storageplayoffBrackets": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-portfolio-main-173405-deployment/amplify-cfn-templates/storage/playoffBrackets-cloudformation-template.json",
+        "Parameters": {
+          "tableName": "playoffBrackets",
+          "partitionKeyName": "name",
           "partitionKeyType": "S",
           "env": "main"
         }
