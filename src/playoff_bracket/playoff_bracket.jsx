@@ -14,9 +14,15 @@ function PlayoffBracket( )
    useEffect( ( ) => {
       API.get( apiName, "/" )
          .then( response => {
-            console.log(response);
+            // Extract the winning bracket from the response
+
+            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            // Take out the winning entry from the response
+            response.splice(response.indexOf(winningEntry), 1);
+            console.log(winningEntry);
+
             // Get the points, max points, and bracket for each player
-            let brackets = getBrackets( response );
+            let brackets = getBrackets( response, winningEntry.picks );
 
             // Sort first on points won, then on points available
             let sortedBrackets = brackets.sort( ( a, b ) => 
