@@ -244,8 +244,7 @@ function getWinningGames(picks)
 		winningGames[superBowlTeams[0] - 1].winWeek4 = 1;
 	}
 
-	console.log(winningGames);
-	return winningGames; 
+	return winningGames;
 }
 
 function getPlayerBracket(player)

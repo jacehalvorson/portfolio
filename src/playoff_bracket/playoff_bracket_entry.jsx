@@ -15,7 +15,7 @@ async function addBracketToFile( setPostStatus )
    if ( name === "" ||
         picks === "" ||
         isNaN(Number(picks)) ||
-        picks.length != 13 ||
+        picks.length !== 13 ||
         isNaN(tiebreaker) ||
         tiebreaker < 0
         )
@@ -41,7 +41,6 @@ async function addBracketToFile( setPostStatus )
       body: bracketData
    })
       .then( response => {
-         console.log( response );
          setPostStatus( "Success" );
       })
       .catch( err => {

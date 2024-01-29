@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
 import getBrackets from "./script.js";
+import logoFilenameDict from "./playoff_bracket_constants.js";
 import "./playoff_bracket.css";
 import "../index.css";
 
 const apiName = "apiplayoffbrackets";
-
-const logoFilenameDict = {
-   "49ers": "images/49ers-logo.png",
-   "Chiefs": "images/chiefs-logo.png",
-   "Lions": "images/lions-logo.png",
-   "Ravens": "images/ravens-logo.png"
-}
 
 function PlayoffBracket( )
 {
@@ -50,6 +44,7 @@ function PlayoffBracket( )
             // Set scores variable to display list of players
             setScores( sortedBrackets );
             setScoresStatus( "" );
+            console.log(sortedBrackets[0]);
          })
          .catch( err => {
             console.error( err );
@@ -76,27 +71,38 @@ function PlayoffBracket( )
                         <h2 className="name">{ player.name }</h2>
 
                         {/* Score */}
-                        <h2 className="score">{ player.pointsWon }</h2>
+                        <h2 className="score" style={{marginTop: 3}}>{ player.pointsWon }</h2>
 
                         {/* Possible score */}
                         <h3 className="possible-score">{ player.pointsAvailable } possible</h3>
 
                         {/* Teams playing this week that this player picked*/}
-                        <div className="games-playing">
-                           <p>This week's picks:</p>
                         { 
                            player.gamePlaying.map( ( team, index ) => {
                               return (
                                  <img src={ logoFilenameDict[ team ] }
                                     alt={ team }
                                     key={ index }
-                                    height="50"
-                                    width="50"
+                                    className="games-playing team-logo"
                                  />
                               );
                            })
                         }
-                        </div>
+                        {
+                           // X if the super bowl winner is out
+                           ( player.gamePlaying.length === 0 )
+                              ? <>
+                                    <img src={ getLogoFromSeed( player.superBowl[ 0 ].conference, player.superBowl[ 0 ].prediction ) }
+                                       alt="Eliminated"
+                                       className="games-playing team-logo"
+                                    />
+                                    <img src="images/x.png"
+                                       alt="Eliminated"
+                                       className="games-playing eliminated-logo"
+                                    />
+                                 </>
+                              : <></>
+                        }
 
                         {/* Link icon */}
                         {/* <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
@@ -115,3 +121,54 @@ function PlayoffBracket( )
 }
 
 export default PlayoffBracket;
+
+function getLogoFromSeed( conference, seed )
+{
+   if ( conference === "N" )
+   {
+      switch ( seed )
+      {
+         case 1:
+            return "images/teams/49ers-logo.png";
+         case 2:
+            return "images/teams/cowboys-logo.png";
+         case 3:
+            return "images/teams/lions-logo.png";
+         case 4:
+            return "images/teams/buccanneers-logo.png";
+         case 5:
+            return "images/teams/eagles-logo.png";
+         case 6:
+            return "images/teams/rams-logo.png";
+         case 7:
+            return "images/teams/packers-logo.png";
+         default:
+            return "";
+      }
+   }
+   else if (conference === "A")
+   {
+      switch (seed)
+      {
+         case 1:
+            return "images/teams/ravens-logo.png";
+         case 2:
+            return "images/teams/bills-logo.png";
+         case 3:
+            return "images/teams/chiefs-logo.png";
+         case 4:
+            return "images/teams/texans-logo.png";
+         case 5:
+            return "images/teams/browns-logo.png";
+         case 6:
+            return "images/teams/dolphins-logo.png";
+         case 7:
+            return "images/teams/steelers-logo.png";
+         default:
+            return "";
+      }
+   }
+
+   console.error( "Unable to find logo for team with seed " + seed + " in conference " + conference );
+   return "";
+}

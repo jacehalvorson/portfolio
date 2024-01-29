@@ -105,7 +105,17 @@ main#playoff-bracket {
    grid-row: 1 / span 2;
    grid-column: 1;
    text-align: center;
-   align-self: last baseline;
+}
+
+.player > .team-logo {
+   width: 3em;
+   height: 3em;
+}
+
+.player > .eliminated-logo {
+   width: 2em;
+   height: 2em;
+   opacity: 0.7;
 }
 
 @media screen and ( max-width: 768px ) {
