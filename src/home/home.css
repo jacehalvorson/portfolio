@@ -28,8 +28,6 @@ main#home {
 }
 
 .home-slider-button {
-   color: white;
-   fill: white;
    opacity: 0.8;
    font-size: .5em;
    cursor: pointer;
