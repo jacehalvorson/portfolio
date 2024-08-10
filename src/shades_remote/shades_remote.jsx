@@ -1,5 +1,10 @@
-import {useState, useEffect} from "react";
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import ToggleButton from '@mui/material/ToggleButton';
+import CheckIcon from '@mui/icons-material/Check';
 import "./shades_remote.css";
+import { whistle } from 'fontawesome';
 
 const ip_address = '10.0.0.219';
 
@@ -18,26 +23,47 @@ function sendPostRequest( parameter )
 
 function ShadesRemote( )
 {
-    const [shadesState, setShadesState] = useState('Loading...');
+    const [shadesState, setShadesState] = React.useState('Loading...');
+    const [selected, setSelected] = React.useState(false);
 
-    useEffect( ( ) => {
-        fetch('http://' + ip_address)
-            .then(response => {console.log(response); return response.json();})
-            .then(data => {
-                setShadesState(data.state);
-            })
-            .catch(err => {
-                console.error('Error reading shades state from ' + ip_address + '\n\n' + err);
-            });
-    }, [ ] );
+    // useEffect( ( ) => {
+    //     fetch('http://' + ip_address)
+    //         .then(response => {console.log(response); return response.json();})
+    //         .then(data => {
+    //             setShadesState(data.state);
+    //         })
+    //         .catch(err => {
+    //             console.error('Error reading shades state from ' + ip_address + '\n\n' + err);
+    //         });
+    // }, [ ] );
 
     return (
         <main id="shades-remote">
             <h1>Shades Remote</h1>
-            <button onClick={(e) => {sendPostRequest('open')}}>Open</button>
-            <button onClick={(e) => {sendPostRequest('close')}}>Close</button>
-            <button onClick={(e) => {sendPostRequest('important_mode_on')}}>Enable important mode</button>
-            <button onClick={(e) => {sendPostRequest('important_mode_ff')}}>Disable important mode</button>
+            <Stack spacing={2} direction="column">
+                <Button variant="contained" onClick={(e) => {sendPostRequest('open')}}>Open</Button>
+                <Button variant="contained" onClick={(e) => {sendPostRequest('close')}}>Close</Button>
+                <h2>Important Mode:</h2>
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    onChange={(e) => {setSelected(!selected)}}
+                    sx={{
+                        bgcolor: "black",
+                        color: "white",
+                        "&.Mui-selected": {
+                            bgcolor: "white",
+                            color: "black",
+                        },
+                        "&.Mui-selected:hover": {
+                            bgcolor: "black",
+                            color: "white",
+                        }
+                    }}
+                >
+                    <CheckIcon />
+                </ToggleButton>
+            </Stack>
             <h2>{shadesState}</h2>
         </main>
     );
