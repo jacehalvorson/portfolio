@@ -16,11 +16,17 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin: 0;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
+  
 body {
   margin: 0;
   padding: 0;
+
+  font-family: 'Lato', 'Cera Round Pro', sans-serif;
+  font-weight: 400;
+  color: white;
+  background-color: rgb( 20, 20, 20 );
+
+  /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
