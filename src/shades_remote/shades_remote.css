@@ -1,7 +1,11 @@
 main#shades-remote {
+   position: relative;
    display: flex;
    flex-direction: column;
-   padding: 20px;
-   justify-content: center;
-   align-items: center;
+}
+
+main h1 {
+   font-size: 1.5em;
+   margin: 0;
+   padding: 0;
 }
