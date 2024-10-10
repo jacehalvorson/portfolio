@@ -15,11 +15,72 @@ const WinningGames_OLD = [
 		{team: "Dolphins", conference: "A", prediction: 6, winWeek1: 2, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: "Steelers", conference: "A", prediction: 7, winWeek1: 2, winWeek2: 0, winWeek3: 0, winWeek4: 0}];
 
-function gameName(conference, prediction, winningGames) {
-	const winningPoints = winningGames.find(team => team.conference.slice(0, 1) == conference.slice(0, 1) && team.prediction == prediction);
-	return winningPoints.team;
+// This list needs to keep the data in AWS so this codeline be removed.
+// Every year the teams can then be modified based on how they did.
+function getTeamName(year, conference, seed)
+{
+   if ( conference === "N" )
+   {
+      switch ( seed )
+      {
+         case 1:
+            return "49ers";
+         case 2:
+            return "Cowboys";
+         case 3:
+            return "Lions";
+         case 4:
+            return "Buccaneers";
+         case 5:
+            return "Eagles";
+         case 6:
+            return "Rams";
+         case 7:
+            return "Packers";
+         default:
+            return "";
+      }
+   }
+   else if (conference === "A")
+   {
+      switch (seed)
+      {
+         case 1:
+            return "Ravens";
+         case 2:
+            return "Bills";
+         case 3:
+            return "Chiefs";
+         case 4:
+            return "Texans";
+         case 5:
+            return "Browns";
+         case 6:
+            return "Dolphins";
+         case 7:
+            return "Steelers";
+	  }
+   }
+
+   console.error( "Unable to find logo for team with seed " + seed + " in conference " + conference );
+   return "";
 }
 
+function CurrentYear()
+{
+	var year = new Date().getFullYear();
+// Temporary change of year.
+var d = new Date();
+d.setFullYear(d.getFullYear(), d.getMonth() + 6);
+year = d.getFullYear();
+	return year;
+}
+
+function logoFilename(teamName)
+{
+	return "images/teams/" + teamName + "-logo.png";
+}
+	
 function gameOpponent(weekDivision, conference, prediction, winningGames) {
 	if (weekDivision.slice(0, 1) == "W" || weekDivision.slice(0, 1) == "w") {
 		// This is all the teams handle in the first week.
@@ -120,28 +181,27 @@ function secondLargest(arr) {
    return [...arr].sort((a, b) => b - a)[1];
 }
 
-function getWinningGames(picks)
+function getWinningGames(pickList)
 {
+	var year = CurrentYear();
+	
 	// Start with all 0s (unpicked)
 	var winningGames = [
-		{team: "49ers",  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Cowboys", conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Lions", conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Buccaneers", conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Eagles", conference: "N", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Rams", conference: "N", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Packers", conference: "N", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Ravens", conference: "A", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Bills", conference: "A", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Chiefs", conference: "A", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Texans", conference: "A", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Browns", conference: "A", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Dolphins", conference: "A", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
-		{team: "Steelers", conference: "A", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0}
+		{team: getTeamName(year, "N", 1),  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 2), conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 3), conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 4), conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 5), conference: "N", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 6), conference: "N", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 7), conference: "N", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 1), conference: "A", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 2), conference: "A", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 3), conference: "A", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 4), conference: "A", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 5), conference: "A", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 6), conference: "A", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "A", 7), conference: "A", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0}
 	];
-
-	// Turn "1111111111111" into ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]
-	const pickList = String(picks).split("");
 
 	var NFCWeek1 = [0, 0, 0];
 	var holdWeek = 0;
@@ -368,12 +428,24 @@ function getPlayerBracket(player)
 	};
 }
 
-function getBrackets(ShortPath, winningPicks)
+function getBrackets(ShortPath, winningPicks, userChoosePicks = "")
 {
 	var error = false;	
 	var bracket = [];
 
-	const WinningGames = getWinningGames(winningPicks);
+	// Turn "1111111111111" into ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]
+	const pickList = String(winningPicks).split("");
+	
+	var userPickNumber = 0;
+	for (let userPickItem of userChoosePicks) 
+	{
+		if (winningPicks[userPickNumber] === "0") 
+		{
+			pickList[userPickNumber] = userPickItem;
+		}
+		userPickNumber = userPickNumber + 1;
+	}
+	const WinningGames = getWinningGames(pickList);
 	
 	// Grab all teams from the first week.
 	ShortPath.forEach(function (player) {
@@ -440,7 +512,7 @@ function getBrackets(ShortPath, winningPicks)
 					if (winningPoints.conference == changeLoser.conference 
 							&& winningPoints.prediction == gameOpponent("Divisional", changeLoser.conference, changeLoser.prediction, WinningGames)) { 
 						if (changeLoser.winWeek2 == 1) {
-							console.log("Seems wrong for " + winningPoints.conference + " " + gameName(changeLoser.conference, changeLoser.prediction.winningGames), " " + winningPoints.prediction);
+							console.log("Seems wrong for " + winningPoints.conference + " " + getTeamName(CurrentYear(), changeLoser.conference, changeLoser.prediction.winningGames) + " " + winningPoints.prediction);
 						};
 						changeLoser.winWeek2 = 2;
 						changeLoser.winWeek3 = 2;
@@ -693,4 +765,5 @@ function getBrackets(ShortPath, winningPicks)
 	return bracket;
 }
 
-export default getBrackets;
+export {getBrackets, CurrentYear, getTeamName, logoFilename};
+
