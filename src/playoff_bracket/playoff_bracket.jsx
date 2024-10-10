@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
-import getBrackets from "./script.js";
-import logoFilenameDict from "./playoff_bracket_constants.js";
+import {getBrackets, CurrentYear, getTeamName, logoFilename} from "./script.js";
+//import logoFilenameDict from "./playoff_bracket_constants.js";
 import "./playoff_bracket.css";
 import "../index.css";
 
 const apiName = "apiplayoffbrackets";
+
+function getOrCreateDeviceId() 
+{
+  let deviceId = localStorage.getItem('deviceId');
+  if (!deviceId) {
+      deviceId = Math.random().toString(36).substr(2, 9); // Generate a random string
+      localStorage.setItem('deviceId', deviceId);
+  }
+  return deviceId;
+}
 
 function PlayoffBracket( )
 {
@@ -15,16 +25,27 @@ function PlayoffBracket( )
    useEffect( ( ) => {
       API.get( apiName, "/" )
          .then( response => {
-            // Extract the winning bracket from the response
 
+            // Extract the winning bracket from the response
             const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
             // Take out the winning entry from the response
             response.splice(response.indexOf(winningEntry), 1);
 
-            // Get the points, max points, and bracket for each player
-            let brackets = getBrackets( response, winningEntry.picks );
+			// Get the device ID which is comman for a single person.
+			const deviceId = getOrCreateDeviceId();
+console.log("Device: " + deviceId);	
+// 3jqsmufo9
 
-            // Sort first on points won, then points available, then by name
+			// Use the deviceId to look up the pick that the may have changed.
+			// response2.split ... to receive the data from API.
+
+            // Get the points, max points, and bracket for each player
+            let brackets = getBrackets( response, winningEntry.picks/*, response2*/ );
+//let brackets = getBrackets( response, "0000000000000",
+//									  "0100000000000" );
+
+
+			// Sort first on points won, then points available, then by name
             let sortedBrackets = brackets.sort( ( a, b ) => 
             {
                if ( b.pointsWon !== a.pointsWon )
@@ -54,7 +75,7 @@ function PlayoffBracket( )
 
    return (
       <main id="playoff-bracket">
-         <h1>2024 Playoff Bracket Leaderboard</h1>
+         <h1>{ CurrentYear() } Playoff Bracket Leaderboard</h1>
          
          <div className="leaderboard">
          {
@@ -79,8 +100,8 @@ function PlayoffBracket( )
                         {/* Teams playing this week that this player picked*/}
                         { 
                            player.gamePlaying.map( ( team, index ) => {
-                              return (
-                                 <img src={ logoFilenameDict[ team ] }
+                              return (							 
+                                 <img src={ logoFilename(team) }
                                     alt={ team }
                                     key={ index }
                                     className="games-playing team-logo"
@@ -92,7 +113,7 @@ function PlayoffBracket( )
                            // X if the super bowl winner is out
                            ( player.gamePlaying.length === 0 )
                               ? <>
-                                    <img src={ getLogoFromSeed( player.superBowl[ 0 ].conference, player.superBowl[ 0 ].prediction ) }
+                                    <img src={ logoFilename(getTeamName(CurrentYear(), player.superBowl[ 0 ].conference, player.superBowl[ 0 ].prediction )) }
                                        alt="Eliminated"
                                        className="games-playing team-logo"
                                     />
@@ -121,54 +142,3 @@ function PlayoffBracket( )
 }
 
 export default PlayoffBracket;
-
-function getLogoFromSeed( conference, seed )
-{
-   if ( conference === "N" )
-   {
-      switch ( seed )
-      {
-         case 1:
-            return "images/teams/49ers-logo.png";
-         case 2:
-            return "images/teams/cowboys-logo.png";
-         case 3:
-            return "images/teams/lions-logo.png";
-         case 4:
-            return "images/teams/buccanneers-logo.png";
-         case 5:
-            return "images/teams/eagles-logo.png";
-         case 6:
-            return "images/teams/rams-logo.png";
-         case 7:
-            return "images/teams/packers-logo.png";
-         default:
-            return "";
-      }
-   }
-   else if (conference === "A")
-   {
-      switch (seed)
-      {
-         case 1:
-            return "images/teams/ravens-logo.png";
-         case 2:
-            return "images/teams/bills-logo.png";
-         case 3:
-            return "images/teams/chiefs-logo.png";
-         case 4:
-            return "images/teams/texans-logo.png";
-         case 5:
-            return "images/teams/browns-logo.png";
-         case 6:
-            return "images/teams/dolphins-logo.png";
-         case 7:
-            return "images/teams/steelers-logo.png";
-         default:
-            return "";
-      }
-   }
-
-   console.error( "Unable to find logo for team with seed " + seed + " in conference " + conference );
-   return "";
-}
