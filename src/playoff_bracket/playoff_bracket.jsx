@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
 import {getBrackets, CurrentYear, getTeamName, logoFilename} from "./script.js";
-//import logoFilenameDict from "./playoff_bracket_constants.js";
 import "./playoff_bracket.css";
 import "../index.css";
 
@@ -11,7 +10,7 @@ function getOrCreateDeviceId()
 {
   let deviceId = localStorage.getItem('deviceId');
   if (!deviceId) {
-      deviceId = Math.random().toString(36).substr(2, 9); // Generate a random string
+      deviceId = Math.random().toString(36).substring(2, 9); // Generate a random string
       localStorage.setItem('deviceId', deviceId);
   }
   return deviceId;
@@ -27,7 +26,7 @@ function PlayoffBracket( )
          .then( response => {
 
             // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            const winningEntry = response.find(entry => entry.name === "WINNING_BRACKET");
             // Take out the winning entry from the response
             response.splice(response.indexOf(winningEntry), 1);
 
