@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API } from "aws-amplify";
 import {getBrackets, CurrentYear, getTeamName, logoFilename} from "./script.js";
-//import logoFilenameDict from "./playoff_bracket_constants.js";
 import "./playoff_bracket.css";
 import "../index.css";
 
@@ -11,7 +10,7 @@ function getOrCreateDeviceId()
 {
   let deviceId = localStorage.getItem('deviceId');
   if (!deviceId) {
-      deviceId = Math.random().toString(36).substr(2, 9); // Generate a random string
+      deviceId = Math.random().toString(36).substring(2, 9); // Generate a random string
       localStorage.setItem('deviceId', deviceId);
   }
   return deviceId;
@@ -27,7 +26,7 @@ function PlayoffBracket( )
          .then( response => {
 
             // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            const winningEntry = response.find(entry => entry.name === "WINNING_BRACKET");
             // Take out the winning entry from the response
             response.splice(response.indexOf(winningEntry), 1);
 
@@ -75,6 +74,25 @@ console.log("Device: " + deviceId);
 
    return (
       <main id="playoff-bracket">
+         <a href={"/playoffbracket/entry?deviceID=" + getOrCreateDeviceId() } 
+		 >
+            <div id="back-button">
+               {/* Left arrow icon */}
+               <svg
+                  id="home-arrow-right"
+                  className="home-arrow-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                  >
+                  <path d="m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"/>
+               </svg>
+               <h2>Picks</h2>
+
+            </div>
+         </a>
+
          <h1>{ CurrentYear() } Playoff Bracket Leaderboard</h1>
          
          <div className="leaderboard">

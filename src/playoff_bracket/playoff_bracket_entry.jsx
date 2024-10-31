@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { API } from "aws-amplify";
 import "./playoff_bracket_entry.css";
 import "../index.css";
+import { CurrentYear } from "./script.js";
 
 const apiName = "apiplayoffbrackets";
 
@@ -49,12 +50,27 @@ async function addBracketToFile( setPostStatus )
       });
 }
 
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
 function PlayoffBracketEntry( )
 {
    const [ postStatus, setPostStatus ] = useState( "" );
 
    return (
       <main id="playoff-bracket-entry">
+		 <h2> { GetURLParameter('deviceID') } </h2>
          <a href="/playoffbracket">
             <div id="back-button">
                {/* Left arrow icon */}
@@ -72,8 +88,8 @@ function PlayoffBracketEntry( )
                <h2>Leaderboard</h2>
             </div>
          </a>
-
-         <h1 className="title">Enter data for 2024 playoff bracket:</h1>
+		
+         <h1 className="title">Enter data for { CurrentYear() } playoff bracket:</h1>
          <h2>Name</h2>
          <input type="text" placeholder="Jace" id="name-input"/>
          <h2>Picks (number found in URL)</h2>
