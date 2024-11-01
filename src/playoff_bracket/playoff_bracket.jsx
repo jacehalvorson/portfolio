@@ -26,7 +26,7 @@ function PlayoffBracket( )
          .then( response => {
 
             // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "WINNING_BRACKET");
+            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
             // Take out the winning entry from the response
             response.splice(response.indexOf(winningEntry), 1);
 
