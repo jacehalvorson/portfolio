@@ -1,8 +1,6 @@
 #playoff-bracket-picks {
    display: grid;
    grid-template-columns: 3fr 3fr 3fr 4fr 3fr 3fr 3fr;
-   /* grid-template-rows: ; */
-   border: 1px solid white;
 }
 
 .playoff-bracket-game {
@@ -17,7 +15,7 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: center;
+   justify-content: space-evenly;
 }
 
 .playoff-bracket-team {
@@ -33,4 +31,47 @@
 .playoff-bracket-team > img {
    height: 100%;
    padding-right: 0.5em;
+}
+
+#super-bowl {
+   grid-row: 2 / span 4;
+   grid-column: 4;
+   
+   height: 22em;
+   border-radius: 1em;
+   background: white;
+   color: black;
+   
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+#super-bowl-teams-wrapper {
+   height: 40%;
+   width: 100%;
+   border-radius: inherit;
+
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.super-bowl-team {
+   height: 100%;
+   border-radius: inherit;
+   
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   border: 1px solid black;
+}
+
+.super-bowl-team > img {
+   height: 100%;
+   padding-right: 0.5em;
+}
+
+#super-bowl > input {
+   z-index: 5;
 }

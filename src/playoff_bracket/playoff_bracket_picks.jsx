@@ -23,6 +23,18 @@ function PlayoffBracketPicks( )
          <PlayoffBracketGame gridRow="3 / span 2" gridColumn="5" />
          {/* AFC Wild Card */}
          <PlayoffBracketGame gridRow="3 / span 2" gridColumn="3" />
+         {/* Super Bowl */}
+         <div id="super-bowl">
+            <div id="super-bowl-teams-wrapper">
+               <div class="super-bowl-team">
+                  <img src="/images/teams/Bills-logo.png" alt="Team 1" />
+               </div>
+               <div class="super-bowl-team">
+                  <img src="/images/teams/Bills-logo.png" alt="Team 2" />
+               </div>
+            </div>
+            <input id="super-bowl-tiebreaker" type="text" placeholder="0"/>
+         </div>
       </div>
    );
 }
@@ -32,11 +44,11 @@ function PlayoffBracketGame( props )
    return (
       <div class="playoff-bracket-game" style={{gridRow: props.gridRow, gridColumn: props.gridColumn }}>
          <div class="playoff-bracket-team">
-            <img src="/images/teams/Bills-logo.png" alt="Team 1"/>
+            <img src="/images/teams/Bills-logo.png" alt="Team 1" />
             <h3>Team</h3>
          </div>
          <div class="playoff-bracket-team">
-            <img src="/images/teams/Bills-logo.png" alt="Team 2"/>
+            <img src="/images/teams/Bills-logo.png" alt="Team 2" />
             <h3>Team</h3>
          </div>
       </div>
