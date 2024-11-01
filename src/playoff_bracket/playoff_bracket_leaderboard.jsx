@@ -64,7 +64,6 @@ function PlayoffBracketLeaderboard( )
             : scores.map( ( entry, index ) => {
             return (
                <a href={"https://next.playoffpredictors.com/football/nfl/playoffpicture/37033920-C0E1-4EF4-8F0D-DA53DA41E3A0?L=" + entry.picks + "&sbhomescore=0&sbawayscore=0"}
-                  target="_blank"
                   key={index}
                >
                   <div className="entry">

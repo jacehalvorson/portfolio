@@ -1,0 +1,36 @@
+#playoff-bracket-picks {
+   display: grid;
+   grid-template-columns: 3fr 3fr 3fr 4fr 3fr 3fr 3fr;
+   /* grid-template-rows: ; */
+   border: 1px solid white;
+}
+
+.playoff-bracket-game {
+   height: 10em;
+   width: 1fr;
+   border-radius: 1em;
+   margin: 0.5em;
+
+   background: white;
+   color: black;
+   
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.playoff-bracket-team {
+   height: 45%;
+   width: 96%;
+   border-radius: inherit;
+   
+   display: flex;
+   align-items: center;
+   border: 1px solid black;
+}
+
+.playoff-bracket-team > img {
+   height: 100%;
+   padding-right: 0.5em;
+}

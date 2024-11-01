@@ -1,5 +1,6 @@
 import {CurrentYear} from "./script.js";
-import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
+// import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
+import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
 import "./playoff_bracket.css";
 import "../index.css";
 
@@ -42,7 +43,7 @@ function PlayoffBracket( )
 
          <h1>{ CurrentYear() } Playoff Bracket</h1>
 
-         <PlayoffBracketLeaderboard />
+         <PlayoffBracketPicks />
          
          <div id="playoff-bracket-background-picture" />
       </main>
