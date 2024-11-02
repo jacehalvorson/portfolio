@@ -25,17 +25,9 @@ function App( )
         <Route path="/playoffbracket" element={
           <>
             <Helmet>
-              <title>Kade's 2024 Playoff Bracket</title>
+              <title>2025 Playoff Bracket</title>
             </Helmet>
               <PlayoffBracket />
-          </>
-        } />
-        <Route path="/playoffbracket/entry" element={
-          <>
-            <Helmet>
-              <title>Kade's 2024 Playoff Bracket</title>
-            </Helmet>
-            <PlayoffBracketEntry />
           </>
         } />
         <Route path="/shades" element={ <ShadesRemote /> } />
