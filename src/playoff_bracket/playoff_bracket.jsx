@@ -26,15 +26,15 @@ function PlayoffBracket( )
    // Values: 'leaderboard', 'picks', 'admin'
    const [focus, setFocus] = React.useState('picks');
    
-   // Get the device ID which is common for a single person.
-   const deviceId = getOrCreateDeviceId( );
-
    const switchFocus = (event, newFocus) => {
       if (newFocus !== null)
       {
          setFocus(newFocus);
       }
    }
+
+   // Get the device ID which is common for a single person.
+   const deviceId = getOrCreateDeviceId( );
 
    return (
       <main id="playoff-bracket">
@@ -70,7 +70,7 @@ function PlayoffBracket( )
          </div>
 
          {( focus == "picks" )
-            ? <PlayoffBracketPicks />
+            ? <PlayoffBracketPicks currentYear={CurrentYear()}/>
             : ( focus == "leaderboard" )
                ? <PlayoffBracketLeaderboard />
                : <PlayoffBracketEntry deviceId={deviceId}/>
