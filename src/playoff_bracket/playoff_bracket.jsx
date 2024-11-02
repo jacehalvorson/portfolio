@@ -26,9 +26,8 @@ function PlayoffBracket( )
    // Values: 'leaderboard', 'picks', 'admin'
    const [focus, setFocus] = React.useState('picks');
    
-   // Get the device ID which is comman for a single person.
+   // Get the device ID which is common for a single person.
    const deviceId = getOrCreateDeviceId( );
-   console.log("Device: " + deviceId);
 
    const switchFocus = (event, newFocus) => {
       if (newFocus !== null)

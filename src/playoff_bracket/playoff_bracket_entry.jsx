@@ -33,7 +33,7 @@ async function addBracketToTable( setPostStatus )
       tiebreaker: tiebreaker
    };
 
-   API.post( apiName, "/", {
+   API.post( apiName, "/?table=playoffBrackets2025", {
       headers: {
          "Content-Type": "application/json"
       },

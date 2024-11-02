@@ -26,10 +26,10 @@ function PlayoffBracketPicks( )
          {/* Super Bowl */}
          <div id="super-bowl">
             <div id="super-bowl-teams-wrapper">
-               <div class="super-bowl-team">
+               <div className="super-bowl-team">
                   <img src="/images/teams/Bills-logo.png" alt="Team 1" />
                </div>
-               <div class="super-bowl-team">
+               <div className="super-bowl-team">
                   <img src="/images/teams/Bills-logo.png" alt="Team 2" />
                </div>
             </div>
@@ -42,12 +42,12 @@ function PlayoffBracketPicks( )
 function PlayoffBracketGame( props )
 {
    return (
-      <div class="playoff-bracket-game" style={{gridRow: props.gridRow, gridColumn: props.gridColumn }}>
-         <div class="playoff-bracket-team">
+      <div className="playoff-bracket-game" style={{gridRow: props.gridRow, gridColumn: props.gridColumn }}>
+         <div className="playoff-bracket-team">
             <img src="/images/teams/Bills-logo.png" alt="Team 1" />
             <h3>Team</h3>
          </div>
-         <div class="playoff-bracket-team">
+         <div className="playoff-bracket-team">
             <img src="/images/teams/Bills-logo.png" alt="Team 2" />
             <h3>Team</h3>
          </div>

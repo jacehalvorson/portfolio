@@ -12,7 +12,7 @@ function PlayoffBracketLeaderboard( )
    const [ scoresStatus, setScoresStatus ] = useState( "Loading brackets..." );
    
    useEffect( ( ) => {
-      API.get( apiName, "/" )
+      API.get( apiName, "/?table=playoffBrackets2025" )
          .then( response => {
 
             // Extract the winning bracket from the response
