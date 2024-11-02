@@ -8,8 +8,6 @@ import Product from './ecommerce/product.jsx';
 import Checkout from './ecommerce/checkout.jsx';
 import NFLStats from './stat_huddle/stat_huddle.jsx';
 import PlayoffBracket from './playoff_bracket/playoff_bracket.jsx';
-import PlayoffBracketEntry from './playoff_bracket/playoff_bracket_entry.jsx';
-import ShadesRemote from './shades_remote/shades_remote.jsx';
 
 function App( )
 {
@@ -30,7 +28,6 @@ function App( )
               <PlayoffBracket />
           </>
         } />
-        <Route path="/shades" element={ <ShadesRemote /> } />
         <Route path="*" element={<h1>404: Not Found</h1>} />
       </Routes>
     </Router>
