@@ -10,7 +10,7 @@
    border-radius: 1em;
    margin: 0.5em;
 
-   background: rgba(255, 255, 255, 0.6);
+   background: rgb(180, 180, 180);
    border: 1px solid black;
    color: black;
    
@@ -31,13 +31,13 @@
 }
 
 .playoff-bracket-team > img {
-   width: 20%;
-   margin: 0.5em;
+   width: 25%;
+   margin-right: 0.5em;
 }
 
 .playoff-bracket-team > h4 {
    color: grey;
-   padding-right: 0.5em;
+   margin-right: 0.5em;
 }
 
 #super-bowl-grid-position {
