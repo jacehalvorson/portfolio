@@ -5,50 +5,6 @@ import "../index.css";
 
 const apiName = "apiplayoffbrackets";
 
-async function addBracketToTable( setPostStatus )
-{
-   let name = document.getElementById("name-input").value;
-   let picks = document.getElementById("picks-input").value;
-   let tiebreaker = document.getElementById("tiebreaker-input").value;
-   tiebreaker = Number(tiebreaker);
-
-   if ( name === "" ||
-        picks === "" ||
-        isNaN(Number(picks)) ||
-        picks.length !== 13 ||
-        isNaN(tiebreaker) ||
-        tiebreaker < 0
-        )
-   {
-      console.log( "Invalid input: name: " + name + ", picks: " + picks + ", tiebreaker: " + tiebreaker + " }" );
-      setPostStatus( "Invalid input" );
-      return;
-   }
-
-   setPostStatus( "Adding bracket to leaderboard..." );
-
-   let bracketData = {
-      name: name,
-      picks: picks,
-      tiebreaker: tiebreaker
-   };
-
-   API.post( apiName, "/?table=playoffBrackets2025", {
-      headers: {
-         "Content-Type": "application/json"
-      },
-      // Send bracket data
-      body: bracketData
-   })
-      .then( response => {
-         setPostStatus( "Success" );
-      })
-      .catch( err => {
-         console.error( err );
-         setPostStatus( "Error adding bracket to API" );
-      });
-}
-
 function PlayoffBracketEntry( props )
 {
    const [ postStatus, setPostStatus ] = useState( "" );
@@ -64,7 +20,7 @@ function PlayoffBracketEntry( props )
          <input type="text" placeholder="53" id="tiebreaker-input" />
          <button
             id="add-to-leaderboard"
-            onClick={ ( ) => addBracketToTable( setPostStatus ) }
+            onClick={ ( ) => addBracketToTable( setPostStatus, props.deviceId ) }
          >
             Add to Leaderboard
          </button>
@@ -72,6 +28,90 @@ function PlayoffBracketEntry( props )
          <h2>{ postStatus }</h2>
       </main>
    );
+}
+
+async function addBracketToTable( setPostStatus, deviceId )
+{
+   let name = document.getElementById( "name-input" ).value;
+   let bracket = {
+      picks: document.getElementById( "picks-input" ).value,
+      tiebreaker: Number( document.getElementById( "tiebreaker-input" ).value )
+   };
+
+   // Sanitize input
+   if ( !name || !bracket || !bracket.picks || !bracket.tiebreaker ||
+        name === "" ||
+        bracket.picks === "" || isNaN( Number( bracket.picks ) ) || bracket.picks.length !== 13 ||
+        isNaN( bracket.tiebreaker ) || bracket.tiebreaker < 0 )
+   {
+      console.log( "Invalid input: name: " + name + ", picks: " + bracket.picks + ", tiebreaker: " + bracket.tiebreaker + " }" );
+      setPostStatus( "Invalid input" );
+      return;
+   }
+
+   setPostStatus( "Adding bracket to leaderboard..." );
+
+   // Check if this player is already in the database
+   API.get( apiName, "/?table=playoffBrackets2025" )
+   .then( response => {
+      let player = response.find( entry => entry.name === name );
+
+      // Default case - new player, start a list of brackets and devices
+      let brackets = [ bracket ];
+      let devices = [ deviceId ];
+      
+      if ( player )
+      {
+         // If the player already has brackets but not this one, add this one to the list.
+         // Throw error if this was an attempt to re-submit the same bracket.
+         if ( player.brackets.length > 0 )
+         {
+            if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
+            {
+               throw Error("Bracket is already in database");
+            }
+            else
+            {
+               brackets = player.brackets.concat( brackets );
+            }
+         }
+               
+         // If the player already has devices but not this one, add this one to the list.
+         // No error if device already exists.
+         if ( player.devices.length > 0 && !player.devices.find( entry => entry === deviceId ) )
+         {
+            devices = player.devices.concat( devices );
+         }
+      }
+
+      let bracketData = {
+         name: name,
+         brackets: brackets,
+         devices: devices
+      };
+   
+      // Send POST request to database API with this data
+      API.post( apiName, "/?table=playoffBrackets2025", {
+         headers: {
+            "Content-Type": "application/json"
+         },
+         body: bracketData
+      })
+      .then( response => {
+         setPostStatus( "Success" );
+      })
+      .catch( err => {
+         console.error( err );
+         setPostStatus( "Error adding bracket to database" );
+      });
+   })
+   .catch( err => {
+      console.error( err );
+      setPostStatus( (err.message === "Bracket is already in database")
+         ? err.message
+         : "Error while fetching brackets from database"
+      );
+   });
 }
 
 export default PlayoffBracketEntry;

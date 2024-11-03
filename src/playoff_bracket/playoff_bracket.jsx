@@ -69,9 +69,9 @@ function PlayoffBracket( )
             </ToggleButtonGroup>
          </div>
 
-         {( focus == "picks" )
+         {( focus === "picks" )
             ? <PlayoffBracketPicks currentYear={CurrentYear()}/>
-            : ( focus == "leaderboard" )
+            : ( focus === "leaderboard" )
                ? <PlayoffBracketLeaderboard />
                : <PlayoffBracketEntry deviceId={deviceId}/>
          }
