@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
+
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import "./playoff_bracket_picks.css";
 import "../index.css";
 
@@ -175,30 +179,45 @@ function PlayoffBracketPicks( props )
 
 function PlayoffBracketGame( props )
 {
+   const [ winner, setWinner ] = useState( props.game.winner );
+   const changeHandler = ( event, newWinner ) => setWinner( newWinner );
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
    
    return (
-      <div className="playoff-bracket-game"
-           style={{ gridRow: props.gridRow, gridColumn: props.gridColumn }}
+      <ToggleButtonGroup className="playoff-bracket-game"
+                         onChange={changeHandler}
+                         exclusive
+                         value={winner}
+                         style={{ gridRow: props.gridRow, gridColumn: props.gridColumn, borderRadius: "1em" }}
       >
          {(props.game.homeTeam)
-            ? <div className="playoff-bracket-team">
+            ? <ToggleButton
+                  className="playoff-bracket-team"
+                  sx={{bgcolor: "white"}}
+                  style={{borderRadius: "1em"}}
+                  value={1}
+              >
                  <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
                  <h4>{ homeTeam.seed }</h4>
-                 <h3>{ homeTeam.name }</h3>
-              </div>
+                 <h3 style={{color: "black"}}>{ homeTeam.name }</h3>
+              </ToggleButton>
             : <div className="playoff-bracket-team" />
          }
          {(props.game.awayTeam)
-            ? <div className="playoff-bracket-team">
+            ? <ToggleButton
+                  className="playoff-bracket-team"
+                  sx={{bgcolor: "white", borderRadius: "inherit"}}
+                  style={{borderRadius: "1em"}}
+                  value={2}
+              >
                  <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
                  <h4>{ awayTeam.seed }</h4>
-                 <h3>{ awayTeam.name }</h3>
-              </div>
+                 <h3 style={{color: "black"}}>{ awayTeam.name }</h3>
+              </ToggleButton>
             : <div className="playoff-bracket-team" />
          }
-      </div>
+      </ToggleButtonGroup>
    )
 }
 
