@@ -30,44 +30,62 @@ function PlayoffBracketPicks( props )
 {
    const [nfcWildcardGames, setNfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
    const [afcWildcardGames, setAfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
-   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [emptyGame, emptyGame] );
-   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [emptyGame, emptyGame] );
+   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [ emptyGame, emptyGame ] );
+   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [ emptyGame, emptyGame ] );
    const [nfcChampionship, setNfcChampionship] = useState( emptyGame );
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
    const [superBowl, setSuperBowl] = useState( emptyGame );
+   const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
 
-   var teams = playoffTeams2025;
-
+   // Update teams when the page loads
    React.useEffect( ( ) => {
-      API.get( apiName, "/?table=playoffTeams" )
+      // If the teams are already loaded, save time by using those.
+      if ( !playoffTeams || Object.keys(playoffTeams).length === 0 )
+      {
+         API.get( apiName, "/?table=playoffTeams" )
          .then( response => {
+            var teams = {};
 
-            // If the teams are already loaded, save time by using those. Fetching teams
-            // from the database takes about 1 second.
-            if (!teams || Object.keys(teams).length === 0 )
+            response.forEach( team => 
             {
-               teams = parseTeamsFromApiResponse( response, props.currentYear );
-            }
-
-            // Make a list of Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-            setNfcWildcardGames( createWildcardGames( teams, "N" ) );
-            setAfcWildcardGames( createWildcardGames( teams, "A" ) );
-
-            // Initialize divisional games to only have the 1 seeds
-            setNfcDivisionalGames( [
-               { homeTeam: teams[ "N1" ], awayTeam: null, winner: 0 },
-               { homeTeam: null, awayTeam: null, winner: 0}
-            ]);
-            setAfcDivisionalGames( [
-               { homeTeam: teams[ "A1" ], awayTeam: null, winner: 0 },
-               { homeTeam: null, awayTeam: null, winner: 0}
-            ]);
+               // Only take teams from this year
+               if ( team.year === props.currentYear )
+               {
+                  teams[team.position] = {
+                     name: team.team,
+                     seed: Number(team.position[1])
+                  };
+               }
+            });
+         
+            setPlayoffTeams( teams );
          })
          .catch( err => {
             console.log( "Error fetching teams from API and parsing" );
             console.error( err );
          })
-   }, [ nfcWildcardGames, afcWildcardGames, nfcDivisionalGames, afcDivisionalGames ] );
+      }
+   }, [ ] );
+
+   // When the teams update, re-create wild card games
+   React.useEffect( ( ) => {
+      // Make a list of Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
+      setNfcWildcardGames( createWildcardGames( playoffTeams, "N" ) );
+      setAfcWildcardGames( createWildcardGames( playoffTeams, "A" ) );
+
+      // Default divisonal games to have just the 1 seed for each conference
+      setNfcDivisionalGames( [
+         { homeTeam: playoffTeams[ "N1" ], awayTeam: null, winner: 0 },
+         { homeTeam: null, awayTeam: null, winner: 0}
+      ]);
+      setAfcDivisionalGames ( [
+         { homeTeam: playoffTeams[ "A1" ], awayTeam: null, winner: 0 },
+         { homeTeam: null, awayTeam: null, winner: 0}
+      ]);
+
+      // TODO incorporate picks
+
+   }, [ playoffTeams ] );
 
    return (
       <div id="playoff-bracket-picks">
@@ -182,27 +200,6 @@ function PlayoffBracketGame( props )
          }
       </div>
    )
-}
-
-// Parse response to get teams as a dictionary that can be accessed
-// through conference and seed (e.g., "N1")
-function parseTeamsFromApiResponse( response, currentYear )
-{
-   var teams = {};
-
-   response.forEach( team => 
-   {
-      // Only take teams from this year
-      if ( team.year === currentYear )
-      {
-         teams[team.position] = {
-            name: team.team,
-            seed: Number(team.position[1])
-         };
-      }
-   });
-
-   return teams;
 }
 
 // Use dictionary of teams referenced by position (e.g., "N1")
