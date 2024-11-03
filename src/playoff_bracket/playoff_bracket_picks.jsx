@@ -16,16 +16,23 @@ const playoffTeams2025 = {
    "A1": { name: "Ravens", seed: 1 },
    "A2": { name: "Bills", seed: 2 },
    "A3": { name: "Chiefs", seed: 3 },
-   // "A4": { name: "Texans", seed: 4 },
+   "A4": { name: "Texans", seed: 4 },
    "A5": { name: "Browns", seed: 5 },
    "A6": { name: "Dolphins", seed: 6 },
-   "A7": { name: "Steelers", seed: 7 },
+   "A7": { name: "Steelers", seed: 7 }
 }
+
+const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
 
 function PlayoffBracketPicks( props )
 {
    const [nfcWildcardGames, setNfcWildcardGames] = useState( [ ] );
    const [afcWildcardGames, setAfcWildcardGames] = useState( [ ] );
+   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [ ] );
+   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [ ] );
+   const [nfcChampionship, setNfcChampionship] = useState( emptyGame );
+   const [afcChampionship, setAfcChampionship] = useState( emptyGame );
+
    var teams = playoffTeams2025;
 
    React.useEffect( ( ) => {
@@ -34,17 +41,26 @@ function PlayoffBracketPicks( props )
 
             // If the teams are already loaded, save time by using those. Fetching teams
             // from the database takes about 1 second.
-            if (!teams || teams.length === 0 )
+            if (!teams || Object.keys(teams).length === 0 )
             {
                teams = parseTeamsFromApiResponse( response, props.currentYear );
             }
 
             // Make a list of NFC teams that play each other (2 & 7, 3 & 6, 4 & 5)
-            setNfcWildcardGames ( createWildcardGames( teams, "N" ) );
+            setNfcWildcardGames( createWildcardGames( teams, "N" ) );
             
             // Make a list of AFC teams that play each other (2 & 7, 3 & 6, 4 & 5)
-            setAfcWildcardGames ( createWildcardGames( teams, "A" ) );
-            console.log(createWildcardGames( teams, "A" ));
+            setAfcWildcardGames( createWildcardGames( teams, "A" ) );
+
+            // Initialize divisional games to only have the 1 seeds
+            setNfcDivisionalGames( [
+               { homeTeam: teams[ "N1" ], awayTeam: null, winner: 0 },
+               { homeTeam: null, awayTeam: null, winner: 0}
+            ]);
+            setAfcDivisionalGames( [
+               { homeTeam: teams[ "A1" ], awayTeam: null, winner: 0 },
+               { homeTeam: null, awayTeam: null, winner: 0}
+            ]);
          })
          .catch( err => {
             console.log( "Error fetching teams from API and parsing" );
@@ -64,6 +80,7 @@ function PlayoffBracketPicks( props )
                />
             )
          }
+
          {/* AFC Wild Card */
             afcWildcardGames.map( ( game, index ) =>
                <PlayoffBracketGame
@@ -74,16 +91,43 @@ function PlayoffBracketPicks( props )
                />
             )
          }
-         {/* NFC Divisional */}
-         {/* <PlayoffBracketGame gridRow="2 / span 2" gridColumn="6" /> */}
-         {/* <PlayoffBracketGame gridRow="4 / span 2" gridColumn="6" /> */}
-         {/* AFC Wild Card */}
-         {/* <PlayoffBracketGame gridRow="2 / span 2" gridColumn="2" /> */}
-         {/* <PlayoffBracketGame gridRow="4 / span 2" gridColumn="2" /> */}
-         {/* NFC Divisional */}
-         {/* <PlayoffBracketGame gridRow="3 / span 2" gridColumn="5" /> */}
-         {/* AFC Wild Card */}
-         {/* <PlayoffBracketGame gridRow="3 / span 2" gridColumn="3" /> */}
+
+         {/* NFC Divisional */
+            nfcDivisionalGames.map( ( game, index ) =>
+               <PlayoffBracketGame
+                  gridRow={ ( 2 * index + 2) + " / span 2" }
+                  gridColumn="6"
+                  game={game}
+                  key={index}
+               />
+            )
+         }
+
+         {/* AFC Divisional */
+            afcDivisionalGames.map( ( game, index ) =>
+               <PlayoffBracketGame
+                  gridRow={ ( 2 * index + 2) + " / span 2" }
+                  gridColumn="2"
+                  game={game}
+                  key={index}
+               />
+            )
+         }
+
+         {/* NFC Championship */}
+         <PlayoffBracketGame
+            gridRow="3 / span 2"
+            gridColumn="5"
+            game={nfcChampionship}
+         />
+
+         {/* AFC Championship */}
+         <PlayoffBracketGame
+            gridRow="3 / span 2"
+            gridColumn="3"
+            game={afcChampionship}
+         />
+         
          {/* Super Bowl */}
          <div id="super-bowl">
             <div id="super-bowl-teams-wrapper">
@@ -102,27 +146,29 @@ function PlayoffBracketPicks( props )
 
 function PlayoffBracketGame( props )
 {
-   const homeTeam = (props.game.homeTeam)
-      ? props.game.homeTeam
-      : {name: "Empty", seed: ""};
-   const awayTeam = (props.game.awayTeam)
-      ? props.game.awayTeam
-      : {name: "Empty", seed: ""};
-
+   const homeTeam = props.game.homeTeam;
+   const awayTeam = props.game.awayTeam;
+   
    return (
       <div className="playoff-bracket-game"
            style={{ gridRow: props.gridRow, gridColumn: props.gridColumn }}
       >
-         <div className="playoff-bracket-team">
-            <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
-            <h4>{ homeTeam.seed }</h4>
-            <h3>{ homeTeam.name }</h3>
-         </div>
-         <div className="playoff-bracket-team">
-            <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={awayTeam.name} />
-            <h4>{ awayTeam.seed }</h4>
-            <h3>{ awayTeam.name }</h3>
-         </div>
+         {(props.game.homeTeam)
+            ? <div className="playoff-bracket-team">
+                 <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
+                 <h4>{ homeTeam.seed }</h4>
+                 <h3>{ homeTeam.name }</h3>
+              </div>
+            : <div className="playoff-bracket-team" />
+         }
+         {(props.game.awayTeam)
+            ? <div className="playoff-bracket-team">
+                 <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
+                 <h4>{ awayTeam.seed }</h4>
+                 <h3>{ awayTeam.name }</h3>
+              </div>
+            : <div className="playoff-bracket-team" />
+         }
       </div>
    )
 }
