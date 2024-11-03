@@ -33,6 +33,11 @@
    padding-right: 0.5em;
 }
 
+.playoff-bracket-team > h4 {
+   color: grey;
+   padding-right: 0.5em;
+}
+
 #super-bowl {
    grid-row: 2 / span 4;
    grid-column: 4;
