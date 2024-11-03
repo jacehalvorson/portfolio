@@ -22,16 +22,19 @@ const playoffTeams2025 = {
    "A7": { name: "Steelers", seed: 7 }
 }
 
+// const emptyGame = { homeTeam: null, awayTeam: { name: "Vikings", seed: 1 }, winner: 0 };
+// const emptyGame = { homeTeam: { name: "Chiefs", seed: 3 }, awayTeam: { name: "Vikings", seed: 1 }, winner: 0 };
 const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
 
 function PlayoffBracketPicks( props )
 {
-   const [nfcWildcardGames, setNfcWildcardGames] = useState( [ ] );
-   const [afcWildcardGames, setAfcWildcardGames] = useState( [ ] );
-   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [ ] );
-   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [ ] );
+   const [nfcWildcardGames, setNfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
+   const [afcWildcardGames, setAfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
+   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [emptyGame, emptyGame] );
+   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [emptyGame, emptyGame] );
    const [nfcChampionship, setNfcChampionship] = useState( emptyGame );
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
+   const [superBowl, setSuperBowl] = useState( emptyGame );
 
    var teams = playoffTeams2025;
 
@@ -46,10 +49,8 @@ function PlayoffBracketPicks( props )
                teams = parseTeamsFromApiResponse( response, props.currentYear );
             }
 
-            // Make a list of NFC teams that play each other (2 & 7, 3 & 6, 4 & 5)
+            // Make a list of Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
             setNfcWildcardGames( createWildcardGames( teams, "N" ) );
-            
-            // Make a list of AFC teams that play each other (2 & 7, 3 & 6, 4 & 5)
             setAfcWildcardGames( createWildcardGames( teams, "A" ) );
 
             // Initialize divisional games to only have the 1 seeds
@@ -66,52 +67,52 @@ function PlayoffBracketPicks( props )
             console.log( "Error fetching teams from API and parsing" );
             console.error( err );
          })
-   }, [ ] );
+   }, [ nfcWildcardGames, afcWildcardGames, nfcDivisionalGames, afcDivisionalGames ] );
 
    return (
       <div id="playoff-bracket-picks">
          {/* NFC Wild Card */
-            nfcWildcardGames.map( ( game, index ) =>
-               <PlayoffBracketGame
-                  gridRow={ ( 2 * index + 1) + " / span 2" }
-                  gridColumn="7"
-                  game={game}
-                  key={index}
-               />
-            )
+         nfcWildcardGames.map( ( game, index ) =>
+            <PlayoffBracketGame
+               gridRow={ ( 2 * index + 1) + " / span 2" }
+               gridColumn="7"
+               game={game}
+               key={index}
+            />
+         )
          }
 
          {/* AFC Wild Card */
-            afcWildcardGames.map( ( game, index ) =>
-               <PlayoffBracketGame
-                  gridRow={ ( 2 * index + 1) + " / span 2" }
-                  gridColumn="1"
-                  game={game}
-                  key={index}
-               />
-            )
+         afcWildcardGames.map( ( game, index ) =>
+            <PlayoffBracketGame
+               gridRow={ ( 2 * index + 1) + " / span 2" }
+               gridColumn="1"
+               game={game}
+               key={index}
+            />
+         )
          }
 
          {/* NFC Divisional */
-            nfcDivisionalGames.map( ( game, index ) =>
-               <PlayoffBracketGame
-                  gridRow={ ( 2 * index + 2) + " / span 2" }
-                  gridColumn="6"
-                  game={game}
-                  key={index}
-               />
-            )
+         nfcDivisionalGames.map( ( game, index ) =>
+            <PlayoffBracketGame
+               gridRow={ ( 2 * index + 2) + " / span 2" }
+               gridColumn="6"
+               game={game}
+               key={index}
+            />
+         )
          }
 
          {/* AFC Divisional */
-            afcDivisionalGames.map( ( game, index ) =>
-               <PlayoffBracketGame
-                  gridRow={ ( 2 * index + 2) + " / span 2" }
-                  gridColumn="2"
-                  game={game}
-                  key={index}
-               />
-            )
+         afcDivisionalGames.map( ( game, index ) =>
+            <PlayoffBracketGame
+               gridRow={ ( 2 * index + 2) + " / span 2" }
+               gridColumn="2"
+               game={game}
+               key={index}
+            />
+         )
          }
 
          {/* NFC Championship */}
@@ -128,17 +129,27 @@ function PlayoffBracketPicks( props )
             game={afcChampionship}
          />
          
-         {/* Super Bowl */}
-         <div id="super-bowl">
-            <div id="super-bowl-teams-wrapper">
-               <div className="super-bowl-team">
-                  <img src="/images/teams/Bills-logo.png" alt="Team 1" />
+         {/* Super Bowl */
+         /* In this special case, "homeTeam" is the AFC team
+            and "awayTeam" is the NFC team" */}
+         <div id="super-bowl-grid-position">
+            <div id="super-bowl">
+               <div id="super-bowl-teams-wrapper">
+                  {(superBowl.homeTeam)
+                     ? <div className="super-bowl-team">
+                          <img src={"/images/teams/" + superBowl.homeTeam.name + "-logo.png"} alt={ superBowl.homeTeam.name + " Logo" } />
+                          <h3>{ superBowl.homeTeam.name }</h3>
+                       </div>
+                     : <div className="super-bowl-team" />}
+                  {(superBowl.awayTeam)
+                     ? <div className="super-bowl-team">
+                          <img src={"/images/teams/" + superBowl.awayTeam.name + "-logo.png"} alt={ superBowl.awayTeam.name + " Logo" } />
+                          <h3>{ superBowl.awayTeam.name }</h3>
+                       </div>
+                     : <div className="super-bowl-team" />}
                </div>
-               <div className="super-bowl-team">
-                  <img src="/images/teams/Bills-logo.png" alt="Team 2" />
-               </div>
+               <input id="super-bowl-tiebreaker" type="text" placeholder="0"/>
             </div>
-            <input id="super-bowl-tiebreaker" type="text" placeholder="0"/>
          </div>
       </div>
    );
@@ -197,6 +208,7 @@ function parseTeamsFromApiResponse( response, currentYear )
 // Use dictionary of teams referenced by position (e.g., "N1")
 // within a conference "N" or "A" to create the structure of wildcard games.
 // 2 seed plays 7 seed, 3 seed plays 6 seed, 4 seed plays 5 seed.
+// "winner" value of 0 indicates no selection. 1 means home team won, 2 means away team won.
 function createWildcardGames( teams, conference )
 {
    return [

@@ -1,6 +1,7 @@
 #playoff-bracket-picks {
    display: grid;
-   grid-template-columns: 3fr 3fr 3fr 4fr 3fr 3fr 3fr;
+   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+   grid-template-columns: 4fr 4fr 4fr 5fr 4fr 4fr 4fr;
 }
 
 .playoff-bracket-game {
@@ -27,7 +28,6 @@
    
    display: flex;
    align-items: center;
-   /* border: 1px solid black; */
 }
 
 .playoff-bracket-team > img {
@@ -40,13 +40,20 @@
    padding-right: 0.5em;
 }
 
-#super-bowl {
-   grid-row: 2 / span 4;
+#super-bowl-grid-position {
+   grid-row: 2 / 6;
    grid-column: 4;
-   
-   height: 22em;
+
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   justify-content: center;
+}
+
+#super-bowl {
+   height: 14em;
    border-radius: 1em;
-   background: white;
+   background: rgba(255, 255, 255, 0.6);
    color: black;
    
    display: flex;
@@ -56,27 +63,32 @@
 }
 
 #super-bowl-teams-wrapper {
-   height: 40%;
    width: 100%;
+   height: 58%;
    border-radius: inherit;
-
+   
    display: flex;
+   align-items: center;
    justify-content: space-evenly;
 }
 
 .super-bowl-team {
+   width: 45%;
    height: 100%;
+   padding-top: 0.5em;
+   padding-bottom: 0.5em;
    border-radius: inherit;
+   background: white;
    
    display: flex;
    flex-direction: column;
    align-items: center;
-   border: 1px solid black;
 }
 
 .super-bowl-team > img {
-   height: 100%;
-   padding-right: 0.5em;
+   width: 50%;
+   margin-top: auto;
+   margin-bottom: auto;
 }
 
 #super-bowl > input {
