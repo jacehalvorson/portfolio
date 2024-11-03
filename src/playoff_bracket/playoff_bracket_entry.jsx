@@ -78,7 +78,7 @@ async function addBracketToTable( setPostStatus, deviceId )
                
          // If the player already has devices but not this one, add this one to the list.
          // No error if device already exists.
-         if ( player.devices.length > 0 && !player.devices.find( entry => entry === deviceId ) )
+         if ( player.devices.length > 0 && !player.includes( deviceId ) )
          {
             devices = player.devices.concat( devices );
          }

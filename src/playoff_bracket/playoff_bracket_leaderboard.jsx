@@ -6,7 +6,7 @@ import "../index.css";
 
 const apiName = "apiplayoffbrackets";
 
-function PlayoffBracketLeaderboard( )
+function PlayoffBracketLeaderboard( props )
 {
    const [ scores, setScores ] = React.useState( [] );
    const [ scoresStatus, setScoresStatus ] = React.useState( "Loading brackets..." );
@@ -16,16 +16,33 @@ function PlayoffBracketLeaderboard( )
          .then( response => {
 
             // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            const winningEntry = response.find( entry => entry.name === "NFL_BRACKET" );
             // Take out the winning entry from the response
-            response.splice(response.indexOf(winningEntry), 1);
+            response.splice( response.indexOf(winningEntry), 1 );
 
             // Use the deviceId to look up the pick that the may have changed.
             // response2.split ... to receive the data from API.
 
+            let allBrackets = [];
+            response.forEach( player =>
+            {
+               player.brackets.forEach( ( bracket, bracketIndex ) =>
+                  allBrackets.push({
+                     name: player.name + " (" + (bracketIndex+1) + ")",
+                     picks: bracket.picks,
+                     tiebreaker: bracket.tiebreaket
+                  })
+               );
+
+               if ( player.devices.includes( props.deviceId ) )
+               {
+                  console.log("This is player " + player.name + " with device ID " + props.deviceId );
+               }
+            })
+
             // Get the points, max points, and bracket for each entry
-            let brackets = getBrackets( response, winningEntry.picks/*, response2*/ );
-            //let brackets = getBrackets( response, "0000000000000",
+            let brackets = getBrackets( allBrackets, winningEntry.picks/*, response2*/ );
+            //let brackets = getBrackets( brackets, "0000000000000",
             //                                      "0100000000000" );
             
             // Sort first on points won, then points available, then by name
@@ -51,7 +68,7 @@ function PlayoffBracketLeaderboard( )
          })
          .catch( err => {
             console.error( err );
-            setScoresStatus( "Error fetching brackets from API" );
+            setScoresStatus( "Error fetching brackets from database" );
          });
    }, [ ] );
 
