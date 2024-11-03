@@ -9,7 +9,8 @@
    border-radius: 1em;
    margin: 0.5em;
 
-   background: white;
+   background: rgba(255, 255, 255, 0.6);
+   border: 1px solid black;
    color: black;
    
    display: flex;
@@ -22,15 +23,16 @@
    height: 45%;
    width: 96%;
    border-radius: inherit;
+   background: white;
    
    display: flex;
    align-items: center;
-   border: 1px solid black;
+   /* border: 1px solid black; */
 }
 
 .playoff-bracket-team > img {
-   height: 100%;
-   padding-right: 0.5em;
+   width: 20%;
+   margin: 0.5em;
 }
 
 .playoff-bracket-team > h4 {
