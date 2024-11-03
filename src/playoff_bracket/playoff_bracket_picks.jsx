@@ -9,6 +9,8 @@ import "../index.css";
 
 const apiName = "apiplayoffbrackets";
 
+// Temporarily use local teams instead of fetching from database
+const DISABLE_API_CALL = true;
 const playoffTeams2025 = {
    "N1": { name: "Vikings", seed: 1 },
    "N2": { name: "49ers", seed: 2 },
@@ -40,11 +42,19 @@ function PlayoffBracketPicks( props )
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
    const [superBowl, setSuperBowl] = useState( emptyGame );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
+   const [picks, setPicks] = useState( "1110000000000" );
+
+   const updatePick = ( index, value ) =>
+   {
+      let newPicks = picks;
+      newPicks = picks.substring(0, index) + value + picks.substring(index + 1);
+      setPicks( newPicks );
+   }
 
    // Update teams when the page loads
    React.useEffect( ( ) => {
       // If the teams are already loaded, save time by using those.
-      if ( !playoffTeams || Object.keys(playoffTeams).length === 0 )
+      if ( !DISABLE_API_CALL )
       {
          API.get( apiName, "/?table=playoffTeams" )
          .then( response => {
@@ -69,27 +79,58 @@ function PlayoffBracketPicks( props )
             console.error( err );
          })
       }
-   }, [ ] );
+   }, [ props.currentYear ] );
 
    // When the teams update, re-create wild card games
    React.useEffect( ( ) => {
-      // Make a list of Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setNfcWildcardGames( createWildcardGames( playoffTeams, "N" ) );
-      setAfcWildcardGames( createWildcardGames( playoffTeams, "A" ) );
+      // Make a list of NFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
+      setNfcWildcardGames( [
+         {
+            homeTeam: playoffTeams[ "N2" ],
+            awayTeam: playoffTeams[ "N7" ],
+            winner: Number(picks[0])
+         },
+         {
+            homeTeam: playoffTeams[ "N3" ],
+            awayTeam: playoffTeams[ "N6" ],
+            winner: Number(picks[1])
+         },
+         {
+            homeTeam: playoffTeams[ "N4" ],
+            awayTeam: playoffTeams[ "N5" ],
+            winner: Number(picks[2])
+         }
+      ]);
+
+      // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
+      setAfcWildcardGames( [
+         {
+            homeTeam: playoffTeams[ "A2" ],
+            awayTeam: playoffTeams[ "A7" ],
+            winner: Number(picks[3])
+         },
+         {
+            homeTeam: playoffTeams[ "A3" ],
+            awayTeam: playoffTeams[ "A6" ],
+            winner: Number(picks[4])
+         },
+         {
+            homeTeam: playoffTeams[ "A4" ],
+            awayTeam: playoffTeams[ "A5" ],
+            winner: Number(picks[5])
+         }
+      ]);
 
       // Default divisonal games to have just the 1 seed for each conference
       setNfcDivisionalGames( [
-         { homeTeam: playoffTeams[ "N1" ], awayTeam: null, winner: 0 },
-         { homeTeam: null, awayTeam: null, winner: 0}
+         { homeTeam: playoffTeams[ "N1" ], awayTeam: null, winner: Number(picks[6]) },
+         { homeTeam: null, awayTeam: null, winner: Number(picks[7])}
       ]);
       setAfcDivisionalGames ( [
-         { homeTeam: playoffTeams[ "A1" ], awayTeam: null, winner: 0 },
-         { homeTeam: null, awayTeam: null, winner: 0}
+         { homeTeam: playoffTeams[ "A1" ], awayTeam: null, winner: Number(picks[8]) },
+         { homeTeam: null, awayTeam: null, winner: Number(picks[9])}
       ]);
-
-      // TODO incorporate picks
-
-   }, [ playoffTeams ] );
+   }, [ playoffTeams, picks ] );
 
    return (
       <div id="playoff-bracket-picks">
@@ -100,9 +141,10 @@ function PlayoffBracketPicks( props )
                gridColumn="7"
                game={game}
                key={index}
+               pickIndex={index}
+               updatePick={updatePick}
             />
-         )
-         }
+         )}
 
          {/* AFC Wild Card */
          afcWildcardGames.map( ( game, index ) =>
@@ -111,9 +153,10 @@ function PlayoffBracketPicks( props )
                gridColumn="1"
                game={game}
                key={index}
+               pickIndex={index + 3}
+               updatePick={updatePick}
             />
-         )
-         }
+         )}
 
          {/* NFC Divisional */
          nfcDivisionalGames.map( ( game, index ) =>
@@ -122,9 +165,10 @@ function PlayoffBracketPicks( props )
                gridColumn="6"
                game={game}
                key={index}
+               pickIndex={index + 6}
+               updatePick={updatePick}
             />
-         )
-         }
+         )}
 
          {/* AFC Divisional */
          afcDivisionalGames.map( ( game, index ) =>
@@ -133,15 +177,18 @@ function PlayoffBracketPicks( props )
                gridColumn="2"
                game={game}
                key={index}
+               pickIndex={index + 8}
+               updatePick={updatePick}
             />
-         )
-         }
+         )}
 
          {/* NFC Championship */}
          <PlayoffBracketGame
             gridRow="3 / span 2"
             gridColumn="5"
             game={nfcChampionship}
+            pickIndex={10}
+            updatePick={updatePick}
          />
 
          {/* AFC Championship */}
@@ -149,6 +196,8 @@ function PlayoffBracketPicks( props )
             gridRow="3 / span 2"
             gridColumn="3"
             game={afcChampionship}
+            pickIndex={11}
+            updatePick={updatePick}
          />
          
          {/* Super Bowl */
@@ -179,10 +228,23 @@ function PlayoffBracketPicks( props )
 
 function PlayoffBracketGame( props )
 {
-   const [ winner, setWinner ] = useState( props.game.winner );
-   const changeHandler = ( event, newWinner ) => setWinner( newWinner );
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
+   const winner = props.game.winner;
+
+   const changeHandler = ( event, newWinner ) =>
+   {
+      if ( newWinner === null )
+      {
+         // Deselecting a winner, replace pick with 0
+         props.updatePick( props.pickIndex, 0 );   
+      }
+      else
+      {
+         // Selecting a winner, replace pick with 1 or 2
+         props.updatePick( props.pickIndex, newWinner );
+      }
+   }
    
    return (
       <ToggleButtonGroup className="playoff-bracket-game"
@@ -195,7 +257,7 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
                   value={1}
               >
                  <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
@@ -207,8 +269,8 @@ function PlayoffBracketGame( props )
          {(props.game.awayTeam)
             ? <ToggleButton
                   className="playoff-bracket-team"
-                  sx={{bgcolor: "white", borderRadius: "inherit"}}
-                  style={{borderRadius: "1em"}}
+                  sx={{bgcolor: "white"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
                   value={2}
               >
                  <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
@@ -219,31 +281,6 @@ function PlayoffBracketGame( props )
          }
       </ToggleButtonGroup>
    )
-}
-
-// Use dictionary of teams referenced by position (e.g., "N1")
-// within a conference "N" or "A" to create the structure of wildcard games.
-// 2 seed plays 7 seed, 3 seed plays 6 seed, 4 seed plays 5 seed.
-// "winner" value of 0 indicates no selection. 1 means home team won, 2 means away team won.
-function createWildcardGames( teams, conference )
-{
-   return [
-      {
-         homeTeam: teams[ conference + "2" ],
-         awayTeam: teams[ conference + "7" ],
-         winner: 0
-      },
-      {
-         homeTeam: teams[ conference + "3" ],
-         awayTeam: teams[ conference + "6" ],
-         winner: 0
-      },
-      {
-         homeTeam: teams[ conference + "4" ],
-         awayTeam: teams[ conference + "5" ],
-         winner: 0
-      },
-   ];
 }
 
 export default PlayoffBracketPicks;
