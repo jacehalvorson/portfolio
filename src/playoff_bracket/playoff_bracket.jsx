@@ -71,10 +71,10 @@ function PlayoffBracket( )
          </div>
 
          {( focus === "picks" )
-            ? <PlayoffBracketPicks currentYear={CurrentYear()}/>
+            ? <PlayoffBracketPicks currentYear={CurrentYear()} picks="0000000000000" />
             : ( focus === "leaderboard" )
                ? <PlayoffBracketLeaderboard deviceId={deviceId} />
-               : <PlayoffBracketEntry deviceId={deviceId}/>
+               : <PlayoffBracketEntry deviceId={deviceId} />
          }
 
          <div id="playoff-bracket-background-picture" />
