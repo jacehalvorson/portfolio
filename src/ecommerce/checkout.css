@@ -117,7 +117,7 @@ main#checkout {
    justify-items: center;
 }
 
-input {
+.ecommerce-user-input {
    border: 1px solid white;
    border-radius: 5px;
    padding: 5px;
@@ -132,16 +132,16 @@ input {
    transition: all 0.3s ease-in-out;
 }
 
-input:focus {
+.ecommerce-user-input:focus {
    outline-color: #007bff;
    border-color: #007bff;
 }
 
-input::placeholder {
+.ecommerce-user-input::placeholder {
    transition: all 0.3s ease-in-out;
 }
 
-input:focus::placeholder {
+.ecommerce-user-input:focus::placeholder {
    transform: translateY(-30px);
    color: #007bff;
    font-size: 14px;

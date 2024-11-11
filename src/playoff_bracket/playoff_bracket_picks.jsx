@@ -3,6 +3,7 @@ import { API } from "aws-amplify";
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import TextField from '@mui/material/TextField';
 
 import "./playoff_bracket_picks.css";
 import "../index.css";
@@ -42,7 +43,7 @@ function PlayoffBracketPicks( props )
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
    const [superBowl, setSuperBowl] = useState( emptyGame );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
-   const [picks, setPicks] = useState( "1110000000000" );
+   const [picks, setPicks] = useState( props.picks );
 
    const updatePick = ( index, value ) =>
    {
@@ -123,6 +124,31 @@ function PlayoffBracketPicks( props )
       setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, picks.substring( 10, 11 ) ) );
    }, [ nfcDivisionalGames, picks ] );
 
+   // Update the Super Bowl when either Championship game updates
+   React.useEffect( ( ) =>
+   {
+      setSuperBowl( {
+         homeTeam: ( afcChampionship.winner === 1 && afcChampionship.homeTeam )
+            ? afcChampionship.homeTeam
+            : ( afcChampionship.winner === 2 && afcChampionship.awayTeam )
+               ? afcChampionship.awayTeam
+               : null,
+         awayTeam: ( nfcChampionship.winner === 1 && nfcChampionship.homeTeam )
+            ? nfcChampionship.homeTeam
+            : ( nfcChampionship.winner === 2 && nfcChampionship.awayTeam )
+               ? nfcChampionship.awayTeam
+               : null,
+         winner: Number( picks.substring( 12, 13 ) )
+      });
+   }, [ nfcChampionship, afcChampionship, picks ] );
+
+   const changeHandler = ( event, newWinner ) =>
+   {
+      // If deselected, set to 0.
+      // Otherwise, set to the new winner (1 for home or 2 for away)
+      updatePick( 12, ( newWinner === null ) ? 0 : newWinner );
+   }
+
    return (
       <div id="playoff-bracket-picks">
          {/* NFC Wild Card */
@@ -196,21 +222,58 @@ function PlayoffBracketPicks( props )
             and "awayTeam" is the NFC team" */}
          <div id="super-bowl-grid-position">
             <div id="super-bowl">
-               <div id="super-bowl-teams-wrapper">
+               <ToggleButtonGroup
+                  id="super-bowl-teams-wrapper"
+                  onChange={changeHandler}
+                  exclusive
+                  value={superBowl.winner}
+               >
                   {(superBowl.homeTeam)
-                     ? <div className="super-bowl-team">
+                     ? <ToggleButton
+                           className="super-bowl-team"
+                           sx={{bgcolor: "white"}}
+                           style={{borderRadius: "1em"}}
+                           value={1}
+                       >
                           <img src={"/images/teams/" + superBowl.homeTeam.name + "-logo.png"} alt={ superBowl.homeTeam.name + " Logo" } />
                           <h3>{ superBowl.homeTeam.name }</h3>
-                       </div>
-                     : <div className="super-bowl-team" />}
+                       </ToggleButton>
+                     : <ToggleButton
+                           className="super-bowl-team"
+                           sx={{bgcolor: "white"}}
+                           style={{borderRadius: "1em"}}
+                           disabled
+                       />
+                  }
                   {(superBowl.awayTeam)
-                     ? <div className="super-bowl-team">
+                     ? <ToggleButton
+                           className="super-bowl-team"
+                           sx={{bgcolor: "white"}}
+                           style={{borderRadius: "1em"}}
+                           value={2}
+                        >
                           <img src={"/images/teams/" + superBowl.awayTeam.name + "-logo.png"} alt={ superBowl.awayTeam.name + " Logo" } />
                           <h3>{ superBowl.awayTeam.name }</h3>
-                       </div>
-                     : <div className="super-bowl-team" />}
-               </div>
-               <input id="super-bowl-tiebreaker" type="text" placeholder="0"/>
+                       </ToggleButton>
+                     : <ToggleButton
+                           className="super-bowl-team"
+                           sx={{bgcolor: "white"}}
+                           style={{borderRadius: "1em"}}
+                           disabled
+                       />
+                  }
+               </ToggleButtonGroup>
+               <TextField
+                  label="Total Score"
+                  id="tiebreaker-input"
+                  variant="outlined"
+                  type="number"
+                  slotProps={{
+                     inputPlaceholder: {
+                       textAlign: "center",
+                     },
+                  }}
+               />
             </div>
          </div>
       </div>
@@ -225,16 +288,9 @@ function PlayoffBracketGame( props )
 
    const changeHandler = ( event, newWinner ) =>
    {
-      if ( newWinner === null )
-      {
-         // Deselecting a winner, replace pick with 0
-         props.updatePick( props.pickIndex, 0 );   
-      }
-      else
-      {
-         // Selecting a winner, replace pick with 1 or 2
-         props.updatePick( props.pickIndex, newWinner );
-      }
+      // If deselected, set to 0.
+      // Otherwise, set to the new winner (1 for home or 2 for away)
+      props.updatePick( props.pickIndex, ( newWinner === null ) ? 0 : newWinner );
    }
    
    return (
@@ -255,7 +311,12 @@ function PlayoffBracketGame( props )
                  <h4>{ homeTeam.seed }</h4>
                  <h3 style={{color: "black"}}>{ homeTeam.name }</h3>
               </ToggleButton>
-            : <div className="playoff-bracket-team" />
+            : <ToggleButton
+                  className="playoff-bracket-team"
+                  sx={{bgcolor: "white"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  disabled
+              />
          }
          {(props.game.awayTeam)
             ? <ToggleButton
@@ -268,7 +329,12 @@ function PlayoffBracketGame( props )
                  <h4>{ awayTeam.seed }</h4>
                  <h3 style={{color: "black"}}>{ awayTeam.name }</h3>
               </ToggleButton>
-            : <div className="playoff-bracket-team" />
+            : <ToggleButton
+                  className="playoff-bracket-team"
+                  sx={{bgcolor: "white"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  disabled
+              />
          }
       </ToggleButtonGroup>
    )
@@ -310,11 +376,11 @@ function computeDivisionalGames( wildcardGames, byeTeam, divisionalPicks )
 
    wildcardGames.forEach( game =>
    {
-      if ( game.winner === 1 )
+      if ( game.winner === 1 && game.homeTeam )
       {
          divisionalTeams.push( game.homeTeam );
       }
-      else if ( game.winner === 2 )
+      else if ( game.winner === 2 && game.awayTeam )
       {
          divisionalTeams.push( game.awayTeam );
       }
