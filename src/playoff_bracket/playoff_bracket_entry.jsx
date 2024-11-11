@@ -13,11 +13,11 @@ function PlayoffBracketEntry( props )
       <main id="playoff-bracket-entry">
          <h2> { props.deviceId } </h2>
          <h2>Name</h2>
-         <input type="text" placeholder="Jace" id="name-input"/>
+         <input type="text" placeholder="Jace" />
          <h2>Picks (number found in URL)</h2>
-         <input type="text" placeholder="1211111111111" id="picks-input" />
+         <input type="text" placeholder="1211111111111" />
          <h2>Super Bowl total score (tiebreaker)</h2>
-         <input type="text" placeholder="53" id="tiebreaker-input" />
+         <input type="text" placeholder="53" />
          <button
             id="add-to-leaderboard"
             onClick={ ( ) => addBracketToTable( setPostStatus, props.deviceId ) }

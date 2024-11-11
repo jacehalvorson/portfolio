@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './checkout.css';
 
 const states = [
@@ -62,12 +62,6 @@ function CartItem( props )
 
 function Checkout( )
 {
-   const [ test, setTest ] = useState( 0 );
-   useEffect( ( ) => {
-      setTest( test+1 );
-      console.log( "test: " + test );
-   }, [ ] );
-
    return (
       <main id="checkout">
          <div id="checkout-cart">
@@ -79,20 +73,20 @@ function Checkout( )
             </div>
 
             <div id="cart-item-totals">
-               <h3 id="cart-total-quantity">{test} Items</h3>
-               <h3 id="cart-total-price">{"$" + test}</h3>
+               <h3 id="cart-total-quantity">3 Items</h3>
+               <h3 id="cart-total-price">{"$" + 87.69}</h3>
                <button id="checkout-button">Checkout</button>
             </div>
          </div>
 
          <div id="user-details">
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
-            <input type="email" placeholder="Email Address" />
-            <input type="tel" placeholder="Phone Number" />
-            <input type="textarea" placeholder="Address Line 1" />
-            <input type="text" placeholder="Address Line 2" />
-            <input type="text" placeholder="City" />
+            <input class="ecommerce-user-input" type="text" placeholder="First Name" />
+            <input class="ecommerce-user-input" type="text" placeholder="Last Name" />
+            <input class="ecommerce-user-input" type="email" placeholder="Email Address" />
+            <input class="ecommerce-user-input" type="tel" placeholder="Phone Number" />
+            <input class="ecommerce-user-input" type="textarea" placeholder="Address Line 1" />
+            <input class="ecommerce-user-input" type="text" placeholder="Address Line 2" />
+            <input class="ecommerce-user-input" type="text" placeholder="City" />
             <select>
                {states.map( ( state ) =>
                (
