@@ -70,10 +70,10 @@ function PlayoffBracketLeaderboard( props )
             console.error( err );
             setScoresStatus( "Error fetching brackets from database" );
          });
-   }, [ ] );
+   }, [ props.deviceId ] );
 
    return (
-      <div className="leaderboard">
+      <div className="playoff-bracket-leaderboard">
       {
          ( scoresStatus !== "" )
             ? <h2>{ scoresStatus }</h2>
@@ -82,7 +82,7 @@ function PlayoffBracketLeaderboard( props )
                <a href={"https://next.playoffpredictors.com/football/nfl/playoffpicture/37033920-C0E1-4EF4-8F0D-DA53DA41E3A0?L=" + entry.picks + "&sbhomescore=0&sbawayscore=0"}
                   key={index}
                >
-                  <div className="entry">
+                  <div className="playoff-bracket-leaderboard-entry">
                      {/* Entry name */}
                      <h2 className="name">{ entry.name }</h2>
 

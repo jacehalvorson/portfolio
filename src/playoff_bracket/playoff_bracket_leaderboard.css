@@ -1,4 +1,4 @@
-.leaderboard {
+.playoff-bracket-leaderboard {
    position: relative;
    display: flex;
    flex-direction: column;
@@ -9,12 +9,12 @@
    margin-bottom: 1em;
 }
 
-.leaderboard > a {
+.playoff-bracket-leaderboard > a {
    color: white;
    text-decoration: none;
 }
 
-.entry {
+.playoff-bracket-leaderboard-entry {
    width: clamp(18em, 85vw, 60em);
    border: 1px solid rgba(255, 255, 255, 0.2);
    border-radius: 0.8em;
@@ -36,69 +36,69 @@
                transform ease-in-out 150ms;
 }
 
-.entry:hover {
+.playoff-bracket-leaderboard-entry:hover {
    background-color: rgb(10, 10, 10);
    border-color: rgba(255, 255, 255, 0.5);
    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
    transform: scale(1.03);
 }
 
-.entry:active {
+.playoff-bracket-leaderboard-entry:active {
    background-color: rgb(0, 0, 0);
    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
    transform: none;
 
 }
 
-.entry > h2,h3 {
+.playoff-bracket-leaderboard-entry > h2,h3 {
    text-decoration: none;
    user-select: none;
    text-align: center;
 }
 
 @media screen and ( min-width: 769px ) {
-   .entry > h2 {
+   .playoff-bracket-leaderboard-entry > h2 {
       font-size: 2em;
    }
 }
 
-.entry > .name {
+.playoff-bracket-leaderboard-entry > .name {
    grid-row: 1 / span 2;
    grid-column: 2;
 }
 
-.entry > .score {
+.playoff-bracket-leaderboard-entry > .score {
    grid-row: 1;
    grid-column: 3;
    /* Cling to bottom of cell */
    align-self: last baseline;
 }
 
-.entry > .possible-score {
+.playoff-bracket-leaderboard-entry > .possible-score {
    color: grey;
    grid-row: 2;
    grid-column: 3;
 }
 
-.entry > .games-playing {
+.playoff-bracket-leaderboard-entry > .games-playing {
    grid-row: 1 / span 2;
    grid-column: 1;
    text-align: center;
 }
 
-.entry > .team-logo {
+.playoff-bracket-leaderboard-entry > .team-logo {
    width: 3em;
    height: 3em;
 }
 
-.entry > .eliminated-logo {
+.playoff-bracket-leaderboard-entry > .eliminated-logo {
    width: 2em;
    height: 2em;
    opacity: 0.7;
 }
 
 @media screen and ( max-width: 768px ) {
-   .entry > .games-playing > p {
+   .playoff-bracket-leaderboard-entry > .games-playing > p {
       font-size: 0.7em;
       margin-top: 0.3em;
    }
