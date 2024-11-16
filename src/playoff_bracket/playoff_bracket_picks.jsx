@@ -152,116 +152,120 @@ function PlayoffBracketPicks( props )
 
    return (
       <div id="playoff-bracket-picks">
-         {/* NFC Wild Card */
-         nfcWildcardGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               game={game}
-               key={index}
-               pickIndex={index}
-               updatePick={updatePick}
-            />
-         )}
+         <div id="playoff-bracket-wildcard-games">
+            <div class="playoff-bracket-afc">
+               {afcWildcardGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index + 3}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+            <div class="playoff-bracket-nfc">
+               {nfcWildcardGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+         </div>
 
-         {/* AFC Wild Card */
-         afcWildcardGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               game={game}
-               key={index}
-               pickIndex={index + 3}
-               updatePick={updatePick}
-            />
-         )}
-
-         {/* NFC Divisional */
-         nfcDivisionalGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               game={game}
-               key={index}
-               pickIndex={index + 6}
-               updatePick={updatePick}
-            />
-         )}
-
-         {/* AFC Divisional */
-         afcDivisionalGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               game={game}
-               key={index}
-               pickIndex={index + 8}
-               updatePick={updatePick}
-            />
-         )}
-
-         {/* NFC Championship */}
-         <PlayoffBracketGame
-            game={nfcChampionship}
-            pickIndex={10}
-            updatePick={updatePick}
-         />
-
-         {/* AFC Championship */}
-         <PlayoffBracketGame
-            game={afcChampionship}
-            pickIndex={11}
-            updatePick={updatePick}
-         />
-         
-         {/* Super Bowl */
-         /* In this special case, "homeTeam" is the AFC team
-            and "awayTeam" is the NFC team" */}
-         <div id="super-bowl-grid-position">
-            <div id="super-bowl">
-               <ToggleButtonGroup
-                  id="super-bowl-teams-wrapper"
-                  onChange={changeHandler}
-                  exclusive
-                  value={superBowl.winner}
-               >
-                  {(superBowl.homeTeam)
-                     ? <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           value={1}
-                       >
-                          <img src={"/images/teams/" + superBowl.homeTeam.name + "-logo.png"} alt={ superBowl.homeTeam.name + " Logo" } />
-                          <h3>{ superBowl.homeTeam.name }</h3>
-                       </ToggleButton>
-                     : <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           disabled
-                       />
-                  }
-                  {(superBowl.awayTeam)
-                     ? <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           value={2}
-                        >
-                          <img src={"/images/teams/" + superBowl.awayTeam.name + "-logo.png"} alt={ superBowl.awayTeam.name + " Logo" } />
-                          <h3>{ superBowl.awayTeam.name }</h3>
-                       </ToggleButton>
-                     : <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           disabled
-                       />
-                  }
-               </ToggleButtonGroup>
-               <TextField
-                  label="Total Score"
-                  id="tiebreaker-input"
-                  variant="outlined"
-                  slotProps={{
-                     inputPlaceholder: {
-                       textAlign: "center",
-                     },
-                  }}
+         <div id="playoff-bracket-divisional-games">
+            {afcDivisionalGames.map( ( game, index ) =>
+               <PlayoffBracketGame
+                  game={game}
+                  key={index}
+                  pickIndex={index + 8}
+                  updatePick={updatePick}
                />
+            )}
+            {nfcDivisionalGames.map( ( game, index ) =>
+               <PlayoffBracketGame
+                  game={game}
+                  key={index}
+                  pickIndex={index + 6}
+                  updatePick={updatePick}
+               />
+            )}
+         </div>
+
+         <div id="playoff-bracket-championships-and-super-bowl">
+            {/* NFC Championship */}
+            <PlayoffBracketGame
+               game={nfcChampionship}
+               pickIndex={10}
+               updatePick={updatePick}
+            />
+
+            {/* AFC Championship */}
+            <PlayoffBracketGame
+               game={afcChampionship}
+               pickIndex={11}
+               updatePick={updatePick}
+            />
+            
+            {/* Super Bowl */
+            /* In this special case, "homeTeam" is the AFC team
+               and "awayTeam" is the NFC team" */}
+            <div id="super-bowl-grid-position">
+               <div id="super-bowl">
+                  <ToggleButtonGroup
+                     id="super-bowl-teams-wrapper"
+                     onChange={changeHandler}
+                     exclusive
+                     value={superBowl.winner}
+                  >
+                     {(superBowl.homeTeam)
+                        ? <ToggleButton
+                              className="super-bowl-team"
+                              sx={{bgcolor: "white"}}
+                              style={{borderRadius: "1em"}}
+                              value={1}
+                        >
+                           <img src={"/images/teams/" + superBowl.homeTeam.name + "-logo.png"} alt={ superBowl.homeTeam.name + " Logo" } />
+                           <h3>{ superBowl.homeTeam.name }</h3>
+                        </ToggleButton>
+                        : <ToggleButton
+                              className="super-bowl-team"
+                              sx={{bgcolor: "white"}}
+                              style={{borderRadius: "1em"}}
+                              disabled
+                        />
+                     }
+                     {(superBowl.awayTeam)
+                        ? <ToggleButton
+                              className="super-bowl-team"
+                              sx={{bgcolor: "white"}}
+                              style={{borderRadius: "1em"}}
+                              value={2}
+                           >
+                           <img src={"/images/teams/" + superBowl.awayTeam.name + "-logo.png"} alt={ superBowl.awayTeam.name + " Logo" } />
+                           <h3>{ superBowl.awayTeam.name }</h3>
+                        </ToggleButton>
+                        : <ToggleButton
+                              className="super-bowl-team"
+                              sx={{bgcolor: "white"}}
+                              style={{borderRadius: "1em"}}
+                              disabled
+                        />
+                     }
+                  </ToggleButtonGroup>
+                  <TextField
+                     label="Total Score"
+                     id="tiebreaker-input"
+                     variant="outlined"
+                     slotProps={{
+                        inputPlaceholder: {
+                        textAlign: "center",
+                        },
+                     }}
+                  />
+               </div>
             </div>
          </div>
       </div>
@@ -292,7 +296,7 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   value={1}
               >
                  <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
@@ -310,7 +314,7 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   value={2}
               >
                  <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />

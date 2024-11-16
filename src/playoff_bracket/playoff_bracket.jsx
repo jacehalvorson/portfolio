@@ -51,18 +51,21 @@ function PlayoffBracket( )
             >
                <ToggleButton
                   value="leaderboard"
+                  style={{fontSize: "inherit"}}
                   aria-label="leaderboard button"
                >
                   Leaderboard
                </ToggleButton>
                <ToggleButton
                   value="picks"
+                  style={{fontSize: "inherit"}}
                   aria-label="picks button"
                >
                   Picks
                </ToggleButton>
                <ToggleButton
                   value="admin"
+                  style={{fontSize: "inherit"}}
                   aria-label="admin button"
                >
                   Admin
