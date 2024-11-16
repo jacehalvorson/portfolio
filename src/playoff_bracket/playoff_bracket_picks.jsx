@@ -56,8 +56,9 @@ function PlayoffBracketPicks( props )
 
       // Take the existing picks before and after the index, but replace to value at the index
       // e.g., "1121" + "2" + "00000"
-      let newPicks = picks;
-      newPicks = picks.substring(0, index) + value + picks.substring(index + 1);
+      let newPicks = picks.substring(0, index) +
+                     value +
+                     picks.substring(index + 1);
       setPicks( newPicks );
    }
 
@@ -154,8 +155,6 @@ function PlayoffBracketPicks( props )
          {/* NFC Wild Card */
          nfcWildcardGames.map( ( game, index ) =>
             <PlayoffBracketGame
-               gridRow={ ( 2 * index + 1 ) + " / span 2" }
-               gridColumn="7"
                game={game}
                key={index}
                pickIndex={index}
@@ -166,8 +165,6 @@ function PlayoffBracketPicks( props )
          {/* AFC Wild Card */
          afcWildcardGames.map( ( game, index ) =>
             <PlayoffBracketGame
-               gridRow={ ( 2 * index + 1 ) + " / span 2" }
-               gridColumn="1"
                game={game}
                key={index}
                pickIndex={index + 3}
@@ -178,8 +175,6 @@ function PlayoffBracketPicks( props )
          {/* NFC Divisional */
          nfcDivisionalGames.map( ( game, index ) =>
             <PlayoffBracketGame
-               gridRow={ ( 2 * index + 2 ) + " / span 2" }
-               gridColumn="6"
                game={game}
                key={index}
                pickIndex={index + 6}
@@ -190,8 +185,6 @@ function PlayoffBracketPicks( props )
          {/* AFC Divisional */
          afcDivisionalGames.map( ( game, index ) =>
             <PlayoffBracketGame
-               gridRow={ ( 2 * index + 2 ) + " / span 2" }
-               gridColumn="2"
                game={game}
                key={index}
                pickIndex={index + 8}
@@ -201,8 +194,6 @@ function PlayoffBracketPicks( props )
 
          {/* NFC Championship */}
          <PlayoffBracketGame
-            gridRow="3 / span 2"
-            gridColumn="5"
             game={nfcChampionship}
             pickIndex={10}
             updatePick={updatePick}
@@ -210,8 +201,6 @@ function PlayoffBracketPicks( props )
 
          {/* AFC Championship */}
          <PlayoffBracketGame
-            gridRow="3 / span 2"
-            gridColumn="3"
             game={afcChampionship}
             pickIndex={11}
             updatePick={updatePick}
@@ -267,7 +256,6 @@ function PlayoffBracketPicks( props )
                   label="Total Score"
                   id="tiebreaker-input"
                   variant="outlined"
-                  type="number"
                   slotProps={{
                      inputPlaceholder: {
                        textAlign: "center",
@@ -298,7 +286,7 @@ function PlayoffBracketGame( props )
                          onChange={changeHandler}
                          exclusive
                          value={winner}
-                         style={{ gridRow: props.gridRow, gridColumn: props.gridColumn, borderRadius: "1em" }}
+                         style={{ borderRadius: "1em" }}
       >
          {(props.game.homeTeam)
             ? <ToggleButton
