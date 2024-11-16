@@ -4,6 +4,7 @@ import { API } from "aws-amplify";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
 
 import "./playoff_bracket_picks.css";
 import "../index.css";
@@ -29,8 +30,29 @@ const playoffTeams2025 = {
    "A7": { name: "Steelers", seed: 7 }
 }
 
-// const emptyGame = { homeTeam: null, awayTeam: { name: "Vikings", seed: 1 }, winner: 0 };
-// const emptyGame = { homeTeam: { name: "Chiefs", seed: 3 }, awayTeam: { name: "Vikings", seed: 1 }, winner: 0 };
+const TiebreakerInput = styled(TextField)({
+   '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+         borderColor: 'white',
+      },
+      '&:hover fieldset': {
+         borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+         borderColor: 'white',
+      },
+   },
+   '& label': {
+      color: 'white'
+   },
+   '& input': {
+      color: 'white'
+   },
+   '& label.Mui-focused': {
+     color: 'white',
+   },
+});
+
 const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
 
 function PlayoffBracketPicks( props )
@@ -56,8 +78,9 @@ function PlayoffBracketPicks( props )
 
       // Take the existing picks before and after the index, but replace to value at the index
       // e.g., "1121" + "2" + "00000"
-      let newPicks = picks;
-      newPicks = picks.substring(0, index) + value + picks.substring(index + 1);
+      let newPicks = picks.substring(0, index) +
+                     value +
+                     picks.substring(index + 1);
       setPicks( newPicks );
    }
 
@@ -142,137 +165,95 @@ function PlayoffBracketPicks( props )
       });
    }, [ nfcChampionship, afcChampionship, picks ] );
 
-   const changeHandler = ( event, newWinner ) =>
-   {
-      // If deselected, set to 0.
-      // Otherwise, set to the new winner (1 for home or 2 for away)
-      updatePick( 12, ( newWinner === null ) ? 0 : newWinner );
-   }
-
    return (
       <div id="playoff-bracket-picks">
-         {/* NFC Wild Card */
-         nfcWildcardGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               gridRow={ ( 2 * index + 1 ) + " / span 2" }
-               gridColumn="7"
-               game={game}
-               key={index}
-               pickIndex={index}
-               updatePick={updatePick}
-            />
-         )}
+         <div id="playoff-bracket-wildcard-games">
+            <h2>Wild Card Games</h2>
+            <div class="playoff-bracket-afc">
+               {afcWildcardGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index + 3}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+            <div class="playoff-bracket-nfc">
+               {nfcWildcardGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+         </div>
 
-         {/* AFC Wild Card */
-         afcWildcardGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               gridRow={ ( 2 * index + 1 ) + " / span 2" }
-               gridColumn="1"
-               game={game}
-               key={index}
-               pickIndex={index + 3}
-               updatePick={updatePick}
-            />
-         )}
+         <div id="playoff-bracket-divisional-games">
+            <div class="playoff-bracket-afc">
+               <h2>AFC Divisional Games</h2>
+               {afcDivisionalGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index + 8}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+            <div class="playoff-bracket-nfc">
+               <h2>NFC Divisional Games</h2>
+               {nfcDivisionalGames.map( ( game, index ) =>
+                  <PlayoffBracketGame
+                     game={game}
+                     key={index}
+                     pickIndex={index + 6}
+                     updatePick={updatePick}
+                  />
+               )}
+            </div>
+         </div>
 
-         {/* NFC Divisional */
-         nfcDivisionalGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               gridRow={ ( 2 * index + 2 ) + " / span 2" }
-               gridColumn="6"
-               game={game}
-               key={index}
-               pickIndex={index + 6}
-               updatePick={updatePick}
-            />
-         )}
+         <div id="playoff-bracket-championships">
+            <div class="playoff-bracket-afc">
+               <h2>AFC Championship</h2>
+               <PlayoffBracketGame
+                  game={afcChampionship}
+                  pickIndex={11}
+                  updatePick={updatePick}
+               />
+            </div>
+            <div class="playoff-bracket-nfc">
+               <h2>NFC Championship</h2>
+               <PlayoffBracketGame
+                  game={nfcChampionship}
+                  pickIndex={10}
+                  updatePick={updatePick}
+               />
+            </div>
+         </div>
 
-         {/* AFC Divisional */
-         afcDivisionalGames.map( ( game, index ) =>
-            <PlayoffBracketGame
-               gridRow={ ( 2 * index + 2 ) + " / span 2" }
-               gridColumn="2"
-               game={game}
-               key={index}
-               pickIndex={index + 8}
-               updatePick={updatePick}
-            />
-         )}
-
-         {/* NFC Championship */}
-         <PlayoffBracketGame
-            gridRow="3 / span 2"
-            gridColumn="5"
-            game={nfcChampionship}
-            pickIndex={10}
-            updatePick={updatePick}
-         />
-
-         {/* AFC Championship */}
-         <PlayoffBracketGame
-            gridRow="3 / span 2"
-            gridColumn="3"
-            game={afcChampionship}
-            pickIndex={11}
-            updatePick={updatePick}
-         />
-         
-         {/* Super Bowl */
-         /* In this special case, "homeTeam" is the AFC team
-            and "awayTeam" is the NFC team" */}
-         <div id="super-bowl-grid-position">
+         <div id="playoff-bracket-super-bowl">
+            {/* Super Bowl */
+            /* In this special case, "homeTeam" is the AFC team
+               and "awayTeam" is the NFC team" */}
             <div id="super-bowl">
-               <ToggleButtonGroup
-                  id="super-bowl-teams-wrapper"
-                  onChange={changeHandler}
-                  exclusive
-                  value={superBowl.winner}
-               >
-                  {(superBowl.homeTeam)
-                     ? <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           value={1}
-                       >
-                          <img src={"/images/teams/" + superBowl.homeTeam.name + "-logo.png"} alt={ superBowl.homeTeam.name + " Logo" } />
-                          <h3>{ superBowl.homeTeam.name }</h3>
-                       </ToggleButton>
-                     : <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           disabled
-                       />
-                  }
-                  {(superBowl.awayTeam)
-                     ? <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           value={2}
-                        >
-                          <img src={"/images/teams/" + superBowl.awayTeam.name + "-logo.png"} alt={ superBowl.awayTeam.name + " Logo" } />
-                          <h3>{ superBowl.awayTeam.name }</h3>
-                       </ToggleButton>
-                     : <ToggleButton
-                           className="super-bowl-team"
-                           sx={{bgcolor: "white"}}
-                           style={{borderRadius: "1em"}}
-                           disabled
-                       />
-                  }
-               </ToggleButtonGroup>
-               <TextField
+               <h2>Super Bowl</h2>
+
+               <PlayoffBracketGame
+                  game={superBowl}
+                  pickIndex={12}
+                  updatePick={updatePick}
+               />
+
+               <TiebreakerInput
                   label="Total Score"
                   id="tiebreaker-input"
                   variant="outlined"
-                  type="number"
-                  slotProps={{
-                     inputPlaceholder: {
-                       textAlign: "center",
-                     },
-                  }}
+                  size="small"
+                  style={{ marginTop: "1em" }}
                />
             </div>
          </div>
@@ -298,13 +279,13 @@ function PlayoffBracketGame( props )
                          onChange={changeHandler}
                          exclusive
                          value={winner}
-                         style={{ gridRow: props.gridRow, gridColumn: props.gridColumn, borderRadius: "1em" }}
+                         style={{ borderRadius: "1em" }}
       >
          {(props.game.homeTeam)
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   value={1}
               >
                  <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
@@ -314,7 +295,7 @@ function PlayoffBracketGame( props )
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   disabled
               />
          }
@@ -322,7 +303,7 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   value={2}
               >
                  <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
@@ -332,7 +313,7 @@ function PlayoffBracketGame( props )
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start"}}
+                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
                   disabled
               />
          }
