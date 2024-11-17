@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Helmet }  from 'react-helmet';
 import Home from './home/home.jsx';
 import Conway from './conway/conway.jsx';
 import Ecommerce from './ecommerce/ecommerce.jsx';
@@ -20,14 +19,7 @@ function App( )
         <Route path="/ecommerce/product/:productId" element={ <Product /> } />
         <Route path="/ecommerce/checkout" element={ <Checkout /> } />
         <Route path="/stathuddle" element={ <NFLStats /> } />
-        <Route path="/playoffbracket" element={
-          <>
-            <Helmet>
-              <title>2025 Playoff Bracket</title>
-            </Helmet>
-              <PlayoffBracket />
-          </>
-        } />
+        <Route path="/playoffbracket" element={ <PlayoffBracket /> } />
         <Route path="*" element={<h1>404: Not Found</h1>} />
       </Routes>
     </Router>

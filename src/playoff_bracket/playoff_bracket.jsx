@@ -25,6 +25,7 @@ function PlayoffBracket( )
 {
    // Values: 'leaderboard', 'picks', 'admin'
    const [focus, setFocus] = React.useState( "picks" );
+   const [picks, setPicks] = React.useState( "0000000000000" );
    
    const switchFocus = (event, newFocus) =>
    {
@@ -73,12 +74,11 @@ function PlayoffBracket( )
             </ToggleButtonGroup>
          </div>
 
-         {( focus === "picks" )
-            ? <PlayoffBracketPicks currentYear={CurrentYear()} picks="0000000000000" />
-            : ( focus === "leaderboard" )
-               ? <PlayoffBracketLeaderboard deviceId={deviceId} />
-               : <PlayoffBracketEntry deviceId={deviceId} />
-         }
+         <div id="playoff-bracket-content">
+            <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} />
+            <PlayoffBracketPicks currentYear={CurrentYear()} picks={picks} setPicks={setPicks} />
+            <PlayoffBracketEntry deviceId={deviceId} />
+         </div>
 
          <div id="playoff-bracket-background-picture" />
       </main>

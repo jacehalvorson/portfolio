@@ -10,6 +10,7 @@ main#playoff-bracket {
    flex-direction: column;
    align-items: center;
    padding-bottom: 1em;
+   overflow-x: hidden;
 
    color: white;
 }
@@ -24,6 +25,20 @@ main#playoff-bracket {
    display: flex;
    align-items: center;
    justify-content: center;
+}
+
+#playoff-bracket-content {
+   position: relative;
+   margin-top: 1em;
+   z-index: 2;
+   width: auto;
+
+   display: flex;
+   align-items: flex-start;
+   justify-content: center;
+   gap: 10%;
+
+   transition: left 600ms ease-in-out;
 }
 
 #playoff-bracket-background-picture {
