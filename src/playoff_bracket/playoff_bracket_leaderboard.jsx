@@ -26,13 +26,28 @@ function PlayoffBracketLeaderboard( props )
             let allBrackets = [];
             response.forEach( player =>
             {
-               player.brackets.forEach( ( bracket, bracketIndex ) =>
+               if ( player.brackets === undefined || player.brackets.length === 0 )
+               {
+                  console.error( "Player " + player.name + " has no brackets" );
+               }
+               else if ( player.brackets.length === 1 )
+               {
                   allBrackets.push({
-                     name: player.name + " (" + (bracketIndex+1) + ")",
-                     picks: bracket.picks,
-                     tiebreaker: bracket.tiebreaket
-                  })
-               );
+                     name: player.name,
+                     picks: player.brackets[0].picks,
+                     tiebreaker: player.brackets[0].tiebreaker
+                  });
+               }
+               else
+               {
+                  player.brackets.forEach( ( bracket, bracketIndex ) =>
+                     allBrackets.push({
+                        name: player.name + " (" + (bracketIndex+1) + ")",
+                        picks: bracket.picks,
+                        tiebreaker: bracket.tiebreaket
+                     })
+                  );
+               }
 
                if ( player.devices.includes( props.deviceId ) )
                {
@@ -79,48 +94,47 @@ function PlayoffBracketLeaderboard( props )
             ? <h2>{ scoresStatus }</h2>
             : scores.map( ( entry, index ) => {
             return (
-               <a href={"https://next.playoffpredictors.com/football/nfl/playoffpicture/37033920-C0E1-4EF4-8F0D-DA53DA41E3A0?L=" + entry.picks + "&sbhomescore=0&sbawayscore=0"}
-                  key={index}
+               <div className="playoff-bracket-leaderboard-entry"
+                     onClick={ ( ) => { props.setPicks( entry.picks ) } }
+                     key={index}
                >
-                  <div className="playoff-bracket-leaderboard-entry">
-                     {/* Entry name */}
-                     <h2 className="name">{ entry.name }</h2>
+                  {/* Entry name */}
+                  <h2 className="name">{ entry.name }</h2>
 
-                     {/* Score */}
-                     <h2 className="score" style={{marginTop: 3}}>{ entry.pointsWon }</h2>
+                  {/* Score */}
+                  <h2 className="score" style={{marginTop: 3}}>{ entry.pointsWon }</h2>
 
-                     {/* Possible score */}
-                     <h3 className="possible-score">{ entry.pointsAvailable } possible</h3>
+                  {/* Possible score */}
+                  <h3 className="possible-score">{ entry.pointsAvailable } possible</h3>
 
-                     {/* Teams playing this week that this entry picked*/}
-                     { 
-                        entry.gamePlaying.map( ( team, index ) => {
-                           return (                             
-                              <img src={ logoFilename(team) }
-                                 alt={ team }
-                                 key={ index }
+                  {/* Teams playing this week that this entry picked*/}
+                  { 
+                     entry.gamePlaying.map( ( team, index ) => {
+                        return (                             
+                           <img src={ logoFilename(team) }
+                              alt={ team }
+                              key={ index }
+                              className="games-playing team-logo"
+                           />
+                        );
+                     })
+                  }
+                  {
+                     // X if the super bowl winner is out
+                     ( entry.gamePlaying.length === 0 )
+                        ? <>
+                              <img src={ logoFilename( getTeamName( CurrentYear(), entry.superBowl[ 0 ].conference, entry.superBowl[ 0 ].prediction ) ) }
+                                 alt="Eliminated"
                                  className="games-playing team-logo"
                               />
-                           );
-                        })
-                     }
-                     {
-                        // X if the super bowl winner is out
-                        ( entry.gamePlaying.length === 0 )
-                           ? <>
-                                 <img src={ logoFilename(getTeamName(CurrentYear(), entry.superBowl[ 0 ].conference, entry.superBowl[ 0 ].prediction )) }
-                                    alt="Eliminated"
-                                    className="games-playing team-logo"
-                                 />
-                                 <img src="images/x.png"
-                                    alt="Eliminated"
-                                    className="games-playing eliminated-logo"
-                                 />
-                              </>
-                           : <></>
-                     }
-                  </div>
-               </a>
+                              <img src="images/x.png"
+                                 alt="Eliminated"
+                                 className="games-playing eliminated-logo"
+                              />
+                           </>
+                        : <></>
+                  }
+               </div>
             );
          })
       }

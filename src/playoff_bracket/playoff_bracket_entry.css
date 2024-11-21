@@ -1,4 +1,8 @@
 main#playoff-bracket-entry {
+   margin-top: 1em;
+   margin-bottom: 1em;
+   width: calc( 100vw - ( 100vw - 100% ) );
+   
    display: flex;
    flex-direction: column;
    align-items: center;

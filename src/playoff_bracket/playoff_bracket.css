@@ -8,8 +8,7 @@ main#playoff-bracket {
 
    display: flex;
    flex-direction: column;
-   align-items: center;
-   padding-bottom: 1em;
+   overflow-x: hidden;
 
    color: white;
 }
@@ -24,6 +23,18 @@ main#playoff-bracket {
    display: flex;
    align-items: center;
    justify-content: center;
+}
+
+#playoff-bracket-content {
+   position: relative;
+   margin-top: 1em;
+   width: 300vw;
+
+   display: flex;
+   align-items: start;
+   justify-content: space-evenly;
+
+   transition: margin-left 400ms ease-in-out;
 }
 
 #playoff-bracket-background-picture {
@@ -43,5 +54,14 @@ main#playoff-bracket {
 @media (max-width: 768px) {
    main#playoff-bracket {
       font-size: clamp( 3px, 1.5vw, 12px );
+   }
+
+   #playoff-bracket > h1 {
+      font-size: 4em;
+   }
+   
+   #focus-selection-group {
+      font-size: 2em;
+      margin-bottom: 0.5em;
    }
 }
