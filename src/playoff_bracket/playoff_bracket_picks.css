@@ -1,18 +1,21 @@
 #playoff-bracket-picks {
-   margin-top: 1em;  
+   position: relative;
+   margin-top: 1em;
+   margin-bottom: 1em;
+   width: calc( 100vw - ( 100vw - 100% ) );
 
    display: flex;
-   flex-direction: column;
-   align-items: stretch;
+   align-items: center;
    justify-content: center;
+   flex-direction: column;
    gap: 1em;
 }
 
-#playoff-bracket-wildcard-games {  
+#playoff-bracket-wildcard-games {
+   width: 80%;
+
    display: flex;
-   align-items: flex-start;
-   justify-content: center;
-   gap: 2em;
+   justify-content: space-around;
 }
 
 #playoff-bracket-wildcard-games > .playoff-bracket-afc,
@@ -23,10 +26,11 @@
 }
 
 #playoff-bracket-divisional-games {
+   width: 80%;
+
    display: flex;
    align-items: flex-start;
    justify-content: space-around;
-   gap: 2em;
 }
 
 #playoff-bracket-divisional-games > .playoff-bracket-afc,
@@ -37,10 +41,11 @@
 }
 
 #playoff-bracket-championships {
+   width: 80%;
+   
    display: flex;
    align-items: flex-start;
    justify-content: space-around;
-   gap: 2em;
 }
 
 #playoff-bracket-championships > .playoff-bracket-afc,
@@ -74,17 +79,22 @@
 .playoff-bracket-team {
    height: 45%;
    width: 96%;
+}
 
+.playoff-bracket-team > .image-container {
+   height: 100%;
    display: flex;
    align-items: center;
+   justify-content: center;
 }
 
-.playoff-bracket-team > img {
-   width: 20%;
-   margin-right: 0.5em;
+.playoff-bracket-team > .image-container > img {
+   width: 4em;
+   margin-right: 1em;
+   margin-left: -0.5em;
 }
 
-.playoff-bracket-team > h4 {
+.playoff-bracket-team > h3 {
    color: grey;
    margin-right: 0.5em;
 }
@@ -96,12 +106,41 @@
    border-radius: 1em;
 
    margin: 3em;
-   margin-top: -8em;
+   margin-top: -9em;
 
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: space-evenly;
+}
+
+#super-bowl > .playoff-bracket-game {
+   flex-direction: row;
+   width: 18em;
+}
+
+#super-bowl > .playoff-bracket-game > .playoff-bracket-team {
+   height: 96%;
+   width: 48%;
+
+   flex-direction: column;
+}
+
+#super-bowl > .playoff-bracket-game > .playoff-bracket-team > .image-container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+}
+
+#super-bowl > .playoff-bracket-game > .playoff-bracket-team > .image-container > img {
+   width: 6em;
+   margin: 0;
+}
+
+#super-bowl > .playoff-bracket-game > .playoff-bracket-team > h3 {
+   display: none;
 }
 
 #tiebreaker-input {
@@ -115,14 +154,18 @@
       gap: 2em;
    }
 
+   .playoff-bracket-team > .image-container > img {
+      margin-left: -1em;
+   }
+
    #playoff-bracket-wildcard-games {
       border: 1px solid white;
       border-radius: 1em;
       padding: 1em;
+      width: 93%;
 
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
       gap: 0;
    }
 
@@ -133,8 +176,9 @@
 
    #playoff-bracket-divisional-games {
       align-items: center;
-      justify-content: space-evenly;
-      font-size: 1.2em;
+      justify-content: center;
+      font-size: 1.3em;
+      gap: 2em;
    }
 
    #playoff-bracket-divisional-games > .playoff-bracket-afc,
@@ -154,7 +198,8 @@
    #playoff-bracket-championships {
       align-items: center;
       justify-content: center;
-      font-size: 1.3em;;
+      font-size: 1.3em;
+      gap: 2em;
    }
 
    #playoff-bracket-championships > .playoff-bracket-afc,

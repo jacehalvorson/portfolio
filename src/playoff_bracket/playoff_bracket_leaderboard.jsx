@@ -95,7 +95,7 @@ function PlayoffBracketLeaderboard( props )
             : scores.map( ( entry, index ) => {
             return (
                <div className="playoff-bracket-leaderboard-entry"
-                     onClick={ ( ) => props.setPicks( entry.picks ) }
+                     onClick={ ( ) => { props.setPicks( entry.picks ) } }
                      key={index}
                >
                   {/* Entry name */}

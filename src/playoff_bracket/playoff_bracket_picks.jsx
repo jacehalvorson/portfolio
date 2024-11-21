@@ -266,6 +266,8 @@ function PlayoffBracketGame( props )
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
    const winner = props.game.winner;
+   // Place items at the end in the super bowl
+   const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
 
    const changeHandler = ( event, newWinner ) =>
    {
@@ -285,17 +287,19 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={1}
               >
-                 <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
-                 <h4>{ homeTeam.seed }</h4>
-                 <h3 style={{color: "black"}}>{ homeTeam.name }</h3>
+                 <div className="image-container">
+                     <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
+                 </div>
+                 <h3>{ homeTeam.seed }</h3>
+                 <h2 style={{color: "black"}}>{ homeTeam.name }</h2>
               </ToggleButton>
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={-1}
                   disabled
               />
@@ -304,17 +308,19 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={2}
               >
-                 <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
-                 <h4>{ awayTeam.seed }</h4>
-                 <h3 style={{color: "black"}}>{ awayTeam.name }</h3>
+                 <div className="image-container">
+                     <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
+                 </div>
+                 <h3>{ awayTeam.seed }</h3>
+                 <h2 style={{color: "black"}}>{ awayTeam.name }</h2>
               </ToggleButton>
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={-1}
                   disabled
               />
