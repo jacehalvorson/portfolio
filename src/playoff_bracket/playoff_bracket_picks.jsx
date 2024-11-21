@@ -65,7 +65,6 @@ function PlayoffBracketPicks( props )
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
    const [superBowl, setSuperBowl] = useState( emptyGame );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
-   const [picks, setPicks] = useState( props.picks );
 
    const updatePick = ( index, value ) =>
    {
@@ -78,10 +77,10 @@ function PlayoffBracketPicks( props )
 
       // Take the existing picks before and after the index, but replace to value at the index
       // e.g., "1121" + "2" + "00000"
-      let newPicks = picks.substring(0, index) +
+      let newPicks = props.picks.substring(0, index) +
                      value +
-                     picks.substring(index + 1);
-      setPicks( newPicks );
+                     props.picks.substring(index + 1);
+      props.setPicks( newPicks );
    }
 
    // Update teams when the page loads
@@ -117,35 +116,35 @@ function PlayoffBracketPicks( props )
    // Update all the Wild Card games when the playoff teams or picks change
    React.useEffect( ( ) => {
       // Make a list of NFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setNfcWildcardGames( computeWildcardGames( playoffTeams, "N", picks.substring( 0, 3 ) ) );
+      setNfcWildcardGames( computeWildcardGames( playoffTeams, "N", props.picks.substring( 0, 3 ) ) );
 
       // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setAfcWildcardGames( computeWildcardGames( playoffTeams, "A", picks.substring( 3, 6 ) ) );
-   }, [ playoffTeams, picks ] );
+      setAfcWildcardGames( computeWildcardGames( playoffTeams, "A", props.picks.substring( 3, 6 ) ) );
+   }, [ playoffTeams, props.picks ] );
 
    // Update the NFC Divisional games when Wild Card games update
    React.useEffect( ( ) =>
    {
-      setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, playoffTeams[ "N1" ], picks.substring( 6, 8 ) ) );
-   }, [ nfcWildcardGames, playoffTeams, picks ] );
+      setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, playoffTeams[ "N1" ], props.picks.substring( 6, 8 ) ) );
+   }, [ nfcWildcardGames, playoffTeams, props.picks ] );
       
    // Update the AFC Divisional games when Wild Card games update
    React.useEffect( ( ) =>
    {
-      setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, playoffTeams[ "A1" ], picks.substring( 8, 10 ) ) );
-   }, [ afcWildcardGames, playoffTeams, picks ] );
+      setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, playoffTeams[ "A1" ], props.picks.substring( 8, 10 ) ) );
+   }, [ afcWildcardGames, playoffTeams, props.picks ] );
 
    // Update the AFC Championship when Divisional Games update
    React.useEffect( ( ) =>
    {
-      setAfcChampionship( computeChampionshipGame( afcDivisionalGames, picks.substring( 11, 12 ) ) );
-   }, [ afcDivisionalGames, picks ] );
+      setAfcChampionship( computeChampionshipGame( afcDivisionalGames, props.picks.substring( 11, 12 ) ) );
+   }, [ afcDivisionalGames, props.picks ] );
 
    // Update the NFC Championship when Divisional Games update
    React.useEffect( ( ) =>
    {
-      setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, picks.substring( 10, 11 ) ) );
-   }, [ nfcDivisionalGames, picks ] );
+      setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, props.picks.substring( 10, 11 ) ) );
+   }, [ nfcDivisionalGames, props.picks ] );
 
    // Update the Super Bowl when either Championship game updates
    React.useEffect( ( ) =>
@@ -161,15 +160,15 @@ function PlayoffBracketPicks( props )
             : ( nfcChampionship.winner === 2 && nfcChampionship.awayTeam )
                ? nfcChampionship.awayTeam
                : null,
-         winner: Number( picks.substring( 12, 13 ) )
+         winner: Number( props.picks.substring( 12, 13 ) )
       });
-   }, [ nfcChampionship, afcChampionship, picks ] );
+   }, [ nfcChampionship, afcChampionship, props.picks ] );
 
    return (
       <div id="playoff-bracket-picks">
          <div id="playoff-bracket-wildcard-games">
             <h2>Wild Card Games</h2>
-            <div class="playoff-bracket-afc">
+            <div className="playoff-bracket-afc">
                {afcWildcardGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
@@ -179,7 +178,7 @@ function PlayoffBracketPicks( props )
                   />
                )}
             </div>
-            <div class="playoff-bracket-nfc">
+            <div className="playoff-bracket-nfc">
                {nfcWildcardGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
@@ -192,7 +191,7 @@ function PlayoffBracketPicks( props )
          </div>
 
          <div id="playoff-bracket-divisional-games">
-            <div class="playoff-bracket-afc">
+            <div className="playoff-bracket-afc">
                <h2>AFC Divisional Games</h2>
                {afcDivisionalGames.map( ( game, index ) =>
                   <PlayoffBracketGame
@@ -203,7 +202,7 @@ function PlayoffBracketPicks( props )
                   />
                )}
             </div>
-            <div class="playoff-bracket-nfc">
+            <div className="playoff-bracket-nfc">
                <h2>NFC Divisional Games</h2>
                {nfcDivisionalGames.map( ( game, index ) =>
                   <PlayoffBracketGame
@@ -217,7 +216,7 @@ function PlayoffBracketPicks( props )
          </div>
 
          <div id="playoff-bracket-championships">
-            <div class="playoff-bracket-afc">
+            <div className="playoff-bracket-afc">
                <h2>AFC Championship</h2>
                <PlayoffBracketGame
                   game={afcChampionship}
@@ -225,7 +224,7 @@ function PlayoffBracketPicks( props )
                   updatePick={updatePick}
                />
             </div>
-            <div class="playoff-bracket-nfc">
+            <div className="playoff-bracket-nfc">
                <h2>NFC Championship</h2>
                <PlayoffBracketGame
                   game={nfcChampionship}
@@ -253,6 +252,7 @@ function PlayoffBracketPicks( props )
                   id="tiebreaker-input"
                   variant="outlined"
                   size="small"
+                  inputMode="numeric"
                   style={{ marginTop: "1em" }}
                />
             </div>
@@ -266,6 +266,8 @@ function PlayoffBracketGame( props )
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
    const winner = props.game.winner;
+   // Place items at the end in the super bowl
+   const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
 
    const changeHandler = ( event, newWinner ) =>
    {
@@ -285,17 +287,20 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={1}
               >
-                 <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
-                 <h4>{ homeTeam.seed }</h4>
-                 <h3 style={{color: "black"}}>{ homeTeam.name }</h3>
+                 <div className="image-container">
+                     <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
+                 </div>
+                 <h3>{ homeTeam.seed }</h3>
+                 <h2 style={{color: "black"}}>{ homeTeam.name }</h2>
               </ToggleButton>
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
+                  value={-1}
                   disabled
               />
          }
@@ -303,17 +308,20 @@ function PlayoffBracketGame( props )
             ? <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={2}
               >
-                 <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
-                 <h4>{ awayTeam.seed }</h4>
-                 <h3 style={{color: "black"}}>{ awayTeam.name }</h3>
+                 <div className="image-container">
+                     <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
+                 </div>
+                 <h3>{ awayTeam.seed }</h3>
+                 <h2 style={{color: "black"}}>{ awayTeam.name }</h2>
               </ToggleButton>
             : <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: "flex-start", fontSize: "0.8em"}}
+                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
+                  value={-1}
                   disabled
               />
          }
