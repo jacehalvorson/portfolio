@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
 
+import Button from '@mui/material/Button';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
@@ -65,6 +66,7 @@ function PlayoffBracketPicks( props )
    const [afcChampionship, setAfcChampionship] = useState( emptyGame );
    const [superBowl, setSuperBowl] = useState( emptyGame );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
+   const [tiebreaker, setTiebreaker] = useState( "" );
 
    const updatePick = ( index, value ) =>
    {
@@ -254,9 +256,37 @@ function PlayoffBracketPicks( props )
                   size="small"
                   inputMode="numeric"
                   style={{ marginTop: "1em" }}
+                  onChange={( event ) => {
+                     setTiebreaker( parseInt( event.target.value ));
+                  }}
                />
             </div>
          </div>
+
+
+         {( props.picks.includes("0") || isNaN( tiebreaker ) || tiebreaker < 0 )
+         
+         // Picks are not filled out, disable submission
+         ? <Button
+            id="submit-picks-button"
+            variant="outlined"
+            size="large"
+            style={{marginTop: "-3em"}}
+         >
+            Submit
+         </Button>
+
+         // Picks are filled out, allow submission
+         : <Button
+            id="submit-picks-button"
+            variant="contained"
+            style={{marginTop: "-3em"}}
+            size="large"
+            onClick={() => {alert("Submit picks: " + props.picks + ", Tiebreaker: " + tiebreaker);}}
+         >
+            Submit
+         </Button>
+         }
       </div>
    );
 }
