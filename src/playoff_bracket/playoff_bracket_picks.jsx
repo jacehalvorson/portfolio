@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
 
-import { emptyGame, computeWildcardGames, computeDivisionalGames, computeChampionshipGame } from "./playoff_bracket_utils"
+import { addBracketToTable,
+         emptyGame,
+         computeWildcardGames,
+         computeDivisionalGames,
+         computeChampionshipGame
+} from "./playoff_bracket_utils"
 
 import Button from '@mui/material/Button';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -67,6 +72,7 @@ function PlayoffBracketPicks( props )
    const [superBowl, setSuperBowl] = useState( emptyGame );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
    const [tiebreaker, setTiebreaker] = useState( "" );
+   const [submitStatus, setSubmitStatus] = useState( "" );
 
    const updatePick = ( index, value ) =>
    {
@@ -122,6 +128,8 @@ function PlayoffBracketPicks( props )
 
       // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
       setAfcWildcardGames( computeWildcardGames( playoffTeams, "A", props.picks.substring( 3, 6 ) ) );
+
+      setSubmitStatus( "Submit" );
    }, [ playoffTeams, props.picks ] );
 
    // Update the NFC Divisional games when Wild Card games update
@@ -263,8 +271,9 @@ function PlayoffBracketPicks( props )
             </div>
          </div>
 
-
-         {( props.picks.includes("0") || isNaN( tiebreaker ) || tiebreaker < 0 )
+         {/* If the input isn't valid don't allow submision */}
+         {( !props.picks || props.picks.includes("0") || props.picks.length !== 13 ||
+            !tiebreaker || isNaN( tiebreaker ) || tiebreaker < 0 )
          
          // Picks are not filled out, disable submission
          ? <Button
@@ -282,9 +291,14 @@ function PlayoffBracketPicks( props )
             variant="contained"
             style={{marginTop: "-3em"}}
             size="large"
-            onClick={() => {alert("Submit picks: " + props.picks + ", Tiebreaker: " + tiebreaker);}}
+            onClick={() =>
+            {
+               addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker );
+               if (submitStatus == "Success")
+                  props.setNewBracketSubmitted( true );
+            }}
          >
-            Submit
+            { ( submitStatus === "" ) ? "Submit" : submitStatus }
          </Button>
          }
       </div>

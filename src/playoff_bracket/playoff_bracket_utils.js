@@ -124,59 +124,61 @@ function computeChampionshipGame( divisionalGames, championshipPick )
    };
 }
 
-
-async function addBracketToTable( setPostStatus, deviceId )
+async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
 {
-   let name = document.getElementById( "name-input" ).value;
+   let brackets = [ ];
+   let devices = [ ];
+   let playerFound = false;
+   let name = "";
    let bracket = {
-      picks: document.getElementById( "picks-input" ).value,
-      tiebreaker: Number( document.getElementById( "tiebreaker-input" ).value )
+      picks: picks,
+      tiebreaker: tiebreaker
    };
 
-   // Sanitize input
-   if ( !name || !bracket || !bracket.picks || !bracket.tiebreaker ||
-        name === "" ||
-        bracket.picks === "" || isNaN( Number( bracket.picks ) ) || bracket.picks.length !== 13 ||
-        isNaN( bracket.tiebreaker ) || bracket.tiebreaker < 0 )
-   {
-      console.log( "Invalid input: name: " + name + ", picks: " + bracket.picks + ", tiebreaker: " + bracket.tiebreaker + " }" );
-      setPostStatus( "Invalid input" );
-      return;
-   }
-
-   setPostStatus( "Adding bracket to leaderboard..." );
+   setSubmitStatus( "Adding bracket to leaderboard..." );
 
    // Check if this player is already in the database
    API.get( apiName, "/?table=playoffBrackets2025" )
    .then( response => {
-      let player = response.find( entry => entry.name === name );
-
-      // Default case - new player, start a list of brackets and devices
-      let brackets = [ bracket ];
-      let devices = [ deviceId ];
-      
-      if ( player )
+      // First check if this device has been used in the past
+      response.forEach( player =>
       {
-         // If the player already has brackets but not this one, add this one to the list.
-         // Throw error if this was an attempt to re-submit the same bracket.
-         if ( player.brackets.length > 0 )
+         if ( ( player.devices && player.devices.includes( deviceId ) )  )
          {
+            playerFound = true;
+            window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+            name = player.name;
             if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
             {
                throw Error("Bracket is already in database");
             }
-            else
-            {
-               brackets = player.brackets.concat( brackets );
-            }
+            brackets = player.brackets.concat( bracket );
+            devices = player.devices;
          }
-               
-         // If the player already has devices but not this one, add this one to the list.
-         // No error if device already exists.
-         if ( player.devices.length > 0 && !player.includes( deviceId ) )
+      });
+
+      // Prompt for a name and check if it is already in the database
+      if (!playerFound)
+      {
+         name = prompt( `Device ID: ${deviceId}\nPicks: ${bracket.picks}\nTiebreaker: ${bracket.tiebreaker}\n\nName:` );
+         brackets = [ bracket ];
+         devices = [ deviceId ];
+
+         // Check if this player is already in the database (on a different device)
+         response.forEach( player =>
          {
-            devices = player.devices.concat( devices );
-         }
+            if ( player.name === name )
+            {
+               playerFound = true;
+               window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+               if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
+               {
+                  throw Error("Bracket is already in database");
+               }
+               brackets = player.brackets.concat( bracket );
+               devices = player.devices.concat( deviceId );
+            }
+         });
       }
 
       let bracketData = {
@@ -193,16 +195,16 @@ async function addBracketToTable( setPostStatus, deviceId )
          body: bracketData
       })
       .then( response => {
-         setPostStatus( "Success" );
+         setSubmitStatus( "Success" );
       })
       .catch( err => {
          console.error( err );
-         setPostStatus( "Error adding bracket to database" );
+         setSubmitStatus( "Error adding bracket to database" );
       });
    })
    .catch( err => {
       console.error( err );
-      setPostStatus( (err.message === "Bracket is already in database")
+      setSubmitStatus( (err.message === "Bracket is already in database")
          ? err.message
          : "Error while fetching brackets from database"
       );

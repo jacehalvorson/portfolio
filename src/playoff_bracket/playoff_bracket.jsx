@@ -26,6 +26,7 @@ function PlayoffBracket( )
    // focus is 0 leaderboard and 1 for picks
    const [focus, setFocus] = React.useState( 1 );
    const [picks, setPicks] = React.useState( "0000000000000" );
+   const [newBracketSubmitted, setNewBracketSubmitted] = React.useState( false );
    
    React.useEffect( ( ) => {
       setFocus(1);
@@ -79,9 +80,9 @@ function PlayoffBracket( )
          </div>
 
          <div id="playoff-bracket-content" style={{ marginLeft: `${ focus * -100 }vw` }}>
-            <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} />
-            <PlayoffBracketPicks currentYear={CurrentYear()} picks={picks} setPicks={setPicks} />
-            <PlayoffBracketEntry deviceId={deviceId} />
+            <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} newBracketSubmitted={newBracketSubmitted} setNewBracketSubmitted={setNewBracketSubmitted}/>
+            <PlayoffBracketPicks deviceId={deviceId} currentYear={CurrentYear()} picks={picks} setPicks={setPicks} setNewBracketSubmitted={setNewBracketSubmitted} />
+            <PlayoffBracketEntry deviceId={deviceId}/>
          </div>
 
          <div id="playoff-bracket-background-picture" />
