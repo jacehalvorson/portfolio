@@ -81,6 +81,10 @@
    width: 96%;
 }
 
+/* .playoff-bracket-team.MuiToggleButton-root:hover {
+   background-color: purple;
+ } */
+
 .playoff-bracket-team > .image-container {
    height: 100%;
    display: flex;

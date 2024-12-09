@@ -20,8 +20,8 @@ const nflTeamColors = {
    "Chiefs": "#E31837",
    "Raiders": "#000000",
    "Chargers": "#0080C6",
-   "Navy": "#0B162A",
-   "Honolulu": "#0076B6",
+   "Bears": "#0B162A",
+   "Lions": "#0076B6",
    "Packers": "#203731",
    "Vikings": "#4F2683",
    "Cowboys": "#003594",
@@ -246,4 +246,4 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
    });
 }
 
-export { addBracketToTable, computeWildcardGames, computeDivisionalGames, computeChampionshipGame, emptyGame };
+export { addBracketToTable, computeWildcardGames, computeDivisionalGames, computeChampionshipGame, emptyGame, nflTeamColors };

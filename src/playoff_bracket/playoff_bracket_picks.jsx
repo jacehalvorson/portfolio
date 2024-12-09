@@ -295,8 +295,8 @@ function PlayoffBracketPicks( props )
             onClick={() =>
             {
                addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker );
-               if (submitStatus == "Success")
-                  props.setNewBracketSubmitted( true );
+               if (submitStatus === "Success")
+                  props.setNewBracketSubmitted( oldValue => !oldValue );
             }}
          >
             { ( submitStatus === "" ) ? "Submit" : submitStatus }
@@ -311,8 +311,10 @@ function PlayoffBracketGame( props )
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
    const winner = props.game.winner;
+   // const winningTeam = ( winner === 1 ) ? homeTeam : ( winner === 2 ) ? awayTeam : null;
    // Place items at the end in the super bowl
    const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
+   const winningTeam = ( winner === 1 ) ? homeTeam : ( winner === 2 ) ? awayTeam : null;
 
    const changeHandler = ( event, newWinner ) =>
    {
@@ -323,20 +325,29 @@ function PlayoffBracketGame( props )
    
    return (
       <ToggleButtonGroup className="playoff-bracket-game"
-                         onChange={changeHandler}
-                         exclusive
-                         value={winner}
-                         style={{ borderRadius: "1em" }}
+                        onChange={changeHandler}
+                        exclusive
+                        value={winner}
+                        style={{ borderRadius: "1em" }}
       >
-         {[ homeTeam, awayTeam ].map( team =>
+         {[ homeTeam, awayTeam ].map( ( team, index ) =>
          {
+            const styles = {
+               borderRadius: "1em",
+               justifyContent: justifyContentValue,
+               fontSize: "0.7em",
+               backgroundColor: ( team && winner === index + 1 )
+                  ? nflTeamColors[team.name]
+                  : "white"
+            };
             if ( team )
             {
                return <ToggleButton
-                  className="playoff-bracket-team"
+                  className={"playoff-bracket-team"}
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
-                  value={1}
+                  style={styles}
+                  value={index + 1}
+                  key={index}
                >
                   <div className="image-container">
                      <img src={"/images/teams/" + team.name + "-logo.png"} alt={ team.name + " Logo" } />
@@ -350,9 +361,10 @@ function PlayoffBracketGame( props )
                return <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
+                  style={{backgroundColor: "white", borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={-1}
                   disabled
+                  key={index}
                />
             }
          })}
