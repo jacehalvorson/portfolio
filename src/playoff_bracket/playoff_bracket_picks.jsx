@@ -311,10 +311,8 @@ function PlayoffBracketGame( props )
    const homeTeam = props.game.homeTeam;
    const awayTeam = props.game.awayTeam;
    const winner = props.game.winner;
-   // const winningTeam = ( winner === 1 ) ? homeTeam : ( winner === 2 ) ? awayTeam : null;
    // Place items at the end in the super bowl
    const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
-   const winningTeam = ( winner === 1 ) ? homeTeam : ( winner === 2 ) ? awayTeam : null;
 
    const changeHandler = ( event, newWinner ) =>
    {
