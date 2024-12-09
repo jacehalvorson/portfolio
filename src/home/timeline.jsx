@@ -3,21 +3,14 @@ import './timeline.css';
 
 const timelineEventList = [
   {
-    title: "Shift Manager",
-    employer: "Dairy Queen",
-    startDate: "February 2019",
-    endDate: "August 2021",
+    title: "Software Engineer",
+    employer: "Honeywell Aerospace Technologies",
+    startDate: "August 2023",
+    endDate: "Present",
     description: [
-      "Managed and trained employees to ensure quality customer service.",
-      "Supported a safe work environment by properly cleaning and maintaining equipment."
+      "Write and verify requirements, software, and tests for aircraft Inertial Reference Units (IRUs).",
+      "Run and analyze flight simulations to verify software performance.",
     ]
-  },
-  {
-    title: "Security Monitor",
-    employer: "University of Minnesota",
-    startDate: "October 2021",
-    endDate: "May 2022",
-    description: "Kept constant, concise, and meticulous communication via logging and radio discussion. Held continuous surveillance and campus building patrols to ensure security and safety for both students and faculty, and provided assistance to students with safe travel through UMN’s 24/7 safe-walk program."
   },
   {
     title: "Firmware Engineering Intern",
@@ -29,28 +22,44 @@ const timelineEventList = [
       "Effectively utilized engineering strategies while addressing problems to improve adaptability and robustness of code.",
       "Frequent discussion with stakeholders to find the ideal implementation of systems."
     ]
+  },
+  {
+    title: "Security Monitor",
+    employer: "University of Minnesota",
+    startDate: "October 2021",
+    endDate: "May 2022",
+    description: "Kept constant, concise, and meticulous communication via logging and radio discussion. Held continuous surveillance and campus building patrols to ensure security and safety for both students and faculty, and provided assistance to students with safe travel through UMN’s 24/7 safe-walk program."
+  },
+  {
+    title: "Shift Manager",
+    employer: "Dairy Queen",
+    startDate: "February 2019",
+    endDate: "August 2021",
+    description: [
+      "Managed and trained employees to ensure quality customer service.",
+      "Supported a safe work environment by properly cleaning and maintaining equipment."
+    ]
   }
 ];
 
 function TimelineEvent( props )
 {
   const isEventIndexEven = ( props.eventIndex % 2 === 0 );
-
+  
   return (
     <div className={ isEventIndexEven ? "timeline-event right" : "timeline-event left" }>
       { isEventIndexEven ? <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> : <></> }
       <i className="timeline-circle" />
       <div className="timeline-event-content">
-        <h2>{ props.title }</h2>
-        <h3>{ props.employer }</h3>
-        <ul>
+        <h2>{ props.employer }</h2>
+        <h3>{ props.title }</h3>
+        
           { ( props.description instanceof Array )
-              ? props.description.map( ( bulletPoint ) => (
+              ? <ul>{props.description.map( ( bulletPoint ) => (
                 ( <li>{ bulletPoint }</li> )
-              ))
+              ))}</ul>
               : ( <p>{ props.description }</p> )
           }
-        </ul>
       </div>
       { isEventIndexEven ? <></> : <h3 className="timeline-date-range">{ props.startDate } - { props.endDate }</h3> }
       

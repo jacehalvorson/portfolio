@@ -3,7 +3,6 @@ import {CurrentYear} from "./script.js";
 
 import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
 import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
-import PlayoffBracketEntry from "./playoff_bracket_entry.jsx";
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -26,6 +25,7 @@ function PlayoffBracket( )
    // focus is 0 leaderboard and 1 for picks
    const [focus, setFocus] = React.useState( 1 );
    const [picks, setPicks] = React.useState( "0000000000000" );
+   const [newBracketSubmitted, setNewBracketSubmitted] = React.useState( false );
    
    React.useEffect( ( ) => {
       setFocus(1);
@@ -56,32 +56,24 @@ function PlayoffBracket( )
             >
                <ToggleButton
                   value={0}
-                  style={{fontSize: "inherit"}}
+                  style={{fontSize: "inherit", width: "9em"}}
                   aria-label="leaderboard button"
                >
                   Leaderboard
                </ToggleButton>
                <ToggleButton
                   value={1}
-                  style={{fontSize: "inherit"}}
+                  style={{fontSize: "inherit", width: "9em"}}
                   aria-label="picks button"
                >
                   Picks
-               </ToggleButton>
-               <ToggleButton
-                  value={2}
-                  style={{fontSize: "inherit"}}
-                  aria-label="admin button"
-               >
-                  Admin
                </ToggleButton>
             </ToggleButtonGroup>
          </div>
 
          <div id="playoff-bracket-content" style={{ marginLeft: `${ focus * -100 }vw` }}>
-            <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} />
-            <PlayoffBracketPicks currentYear={CurrentYear()} picks={picks} setPicks={setPicks} />
-            <PlayoffBracketEntry deviceId={deviceId} />
+            <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} newBracketSubmitted={newBracketSubmitted} />
+            <PlayoffBracketPicks deviceId={deviceId} currentYear={CurrentYear()} picks={picks} setPicks={setPicks} setNewBracketSubmitted={setNewBracketSubmitted} />
          </div>
 
          <div id="playoff-bracket-background-picture" />

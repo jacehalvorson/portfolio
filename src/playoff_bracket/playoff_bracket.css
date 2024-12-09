@@ -28,7 +28,7 @@ main#playoff-bracket {
 #playoff-bracket-content {
    position: relative;
    margin-top: 1em;
-   width: 300vw;
+   width: 200vw;
 
    display: flex;
    align-items: start;

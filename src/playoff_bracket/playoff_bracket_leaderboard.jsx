@@ -80,12 +80,13 @@ function PlayoffBracketLeaderboard( props )
             // Set scores variable to display list of entries
             setScores( sortedBrackets );
             setScoresStatus( "" );
+            console.log( "Bracket scores loaded" );
          })
          .catch( err => {
             console.error( err );
             setScoresStatus( "Error fetching brackets from database" );
          });
-   }, [ props.deviceId ] );
+   }, [ props.deviceId, props.newBracketSubmitted ] );
 
    return (
       <div className="playoff-bracket-leaderboard">

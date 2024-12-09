@@ -686,7 +686,7 @@ function getBrackets(ShortPath, winningPicks, userChoosePicks = "")
 
 			if (gamesPlayingNow1 < 6) {
 				// Check for first week to see if these are still running this weekend.
-				if (winningPoints.conference ==- "N" && winningPoints.prediction == object.wildcardGamesNFC[0].prediction) {
+				if (winningPoints.conference === "N" && winningPoints.prediction == object.wildcardGamesNFC[0].prediction) {
 					if (winningPoints.winWeek1 === 0) {
 						object.gamePlaying.push(winningPoints.team);
 					};

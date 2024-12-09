@@ -67,7 +67,7 @@
    border-radius: 1em;
    margin: 0.3em;
 
-   background: #493853;
+   background: black;
    color: black;
 
    display: flex;
@@ -80,6 +80,10 @@
    height: 45%;
    width: 96%;
 }
+
+/* .playoff-bracket-team.MuiToggleButton-root:hover {
+   background-color: purple;
+ } */
 
 .playoff-bracket-team > .image-container {
    height: 100%;
