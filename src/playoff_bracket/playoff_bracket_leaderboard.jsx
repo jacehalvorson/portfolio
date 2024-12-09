@@ -80,7 +80,6 @@ function PlayoffBracketLeaderboard( props )
             // Set scores variable to display list of entries
             setScores( sortedBrackets );
             setScoresStatus( "" );
-            props.setNewBracketSubmitted( false );
             console.log( "Bracket scores loaded" );
          })
          .catch( err => {

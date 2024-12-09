@@ -5,7 +5,8 @@ import { addBracketToTable,
          emptyGame,
          computeWildcardGames,
          computeDivisionalGames,
-         computeChampionshipGame
+         computeChampionshipGame,
+         nflTeamColors
 } from "./playoff_bracket_utils"
 
 import Button from '@mui/material/Button';
@@ -294,8 +295,8 @@ function PlayoffBracketPicks( props )
             onClick={() =>
             {
                addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker );
-               if (submitStatus == "Success")
-                  props.setNewBracketSubmitted( true );
+               if (submitStatus === "Success")
+                  props.setNewBracketSubmitted( oldValue => !oldValue );
             }}
          >
             { ( submitStatus === "" ) ? "Submit" : submitStatus }
@@ -327,48 +328,44 @@ function PlayoffBracketGame( props )
                          value={winner}
                          style={{ borderRadius: "1em" }}
       >
-         {(props.game.homeTeam)
-            ? <ToggleButton
+         {[ homeTeam, awayTeam ].map( ( team, index ) =>
+         {
+            const styles = {
+               borderRadius: "1em",
+               justifyContent: justifyContentValue,
+               fontSize: "0.7em",
+               backgroundColor: ( team && winner === index + 1 )
+                  ? nflTeamColors[team.name]
+                  : "white"
+            };
+            if ( team )
+            {
+               return <ToggleButton
+                  className={"playoff-bracket-team"}
+                  sx={{bgcolor: "white"}}
+                  style={styles}
+                  value={index + 1}
+                  key={index}
+               >
+                  <div className="image-container">
+                     <img src={"/images/teams/" + team.name + "-logo.png"} alt={ team.name + " Logo" } />
+                  </div>
+                  <h3>{ team.seed }</h3>
+                  <h2 style={{color: "black"}}>{ team.name }</h2>
+               </ToggleButton>
+            }
+            else
+            {
+               return <ToggleButton
                   className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
-                  value={1}
-              >
-                 <div className="image-container">
-                     <img src={"/images/teams/" + homeTeam.name + "-logo.png"} alt={ homeTeam.name + " Logo" } />
-                 </div>
-                 <h3>{ homeTeam.seed }</h3>
-                 <h2 style={{color: "black"}}>{ homeTeam.name }</h2>
-              </ToggleButton>
-            : <ToggleButton
-                  className="playoff-bracket-team"
-                  sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
+                  style={{backgroundColor: "white", borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={-1}
                   disabled
-              />
-         }
-         {(props.game.awayTeam)
-            ? <ToggleButton
-                  className="playoff-bracket-team"
-                  sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
-                  value={2}
-              >
-                 <div className="image-container">
-                     <img src={"/images/teams/" + awayTeam.name + "-logo.png"} alt={ awayTeam.name + " Logo" } />
-                 </div>
-                 <h3>{ awayTeam.seed }</h3>
-                 <h2 style={{color: "black"}}>{ awayTeam.name }</h2>
-              </ToggleButton>
-            : <ToggleButton
-                  className="playoff-bracket-team"
-                  sx={{bgcolor: "white"}}
-                  style={{borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
-                  value={-1}
-                  disabled
-              />
-         }
+                  key={index}
+               />
+            }
+         })}
       </ToggleButtonGroup>
    )
 }

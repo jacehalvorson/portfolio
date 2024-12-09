@@ -3,6 +3,41 @@ import { API } from "aws-amplify";
 const apiName = "apiplayoffbrackets";
 const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
 
+const nflTeamColors = {
+   "Ravens": "#241773",
+   "Bengals": "#FB4F14",
+   "Browns": "#311D00",
+   "Steelers": "#FFB612",
+   "Bills": "#00338D",
+   "Dolphins": "#008E97",
+   "Patriots": "#002244",
+   "Jets": "#125740",
+   "Texans": "#03202F",
+   "Colts": "#002C5F",
+   "Jaguars": "#101820",
+   "Titans": "#0C2340",
+   "Broncos": "#FB4F14",
+   "Chiefs": "#E31837",
+   "Raiders": "#000000",
+   "Chargers": "#0080C6",
+   "Bears": "#0B162A",
+   "Lions": "#0076B6",
+   "Packers": "#203731",
+   "Vikings": "#4F2683",
+   "Cowboys": "#003594",
+   "Giants": "#0B2265",
+   "Eagles": "#004C54",
+   "Commanders": "#5A1414",
+   "Falcons": "#A71930",
+   "Panthers": "#0085CA",
+   "Saints": "#D3BC8D",
+   "Buccaneers": "#D50A0A",
+   "Cardinals": "#97233F",
+   "Rams": "#003594",
+   "49ers": "#AA0000",
+   "Seahawks": "#002244",
+};
+
 // Given the wildcard games and the picks, compute the divisional games.
 // conference is either "N" or "A" for NFC or AFC.
 // wildcardPicks is a string with 3 characters. e.g., "011" means the first game is
@@ -211,4 +246,4 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
    });
 }
 
-export { addBracketToTable, computeWildcardGames, computeDivisionalGames, computeChampionshipGame, emptyGame };
+export { addBracketToTable, computeWildcardGames, computeDivisionalGames, computeChampionshipGame, emptyGame, nflTeamColors };
