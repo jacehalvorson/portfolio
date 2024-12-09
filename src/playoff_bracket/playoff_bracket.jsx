@@ -3,7 +3,6 @@ import {CurrentYear} from "./script.js";
 
 import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
 import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
-import PlayoffBracketEntry from "./playoff_bracket_entry.jsx";
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -57,24 +56,17 @@ function PlayoffBracket( )
             >
                <ToggleButton
                   value={0}
-                  style={{fontSize: "inherit"}}
+                  style={{fontSize: "inherit", width: "9em"}}
                   aria-label="leaderboard button"
                >
                   Leaderboard
                </ToggleButton>
                <ToggleButton
                   value={1}
-                  style={{fontSize: "inherit"}}
+                  style={{fontSize: "inherit", width: "9em"}}
                   aria-label="picks button"
                >
                   Picks
-               </ToggleButton>
-               <ToggleButton
-                  value={2}
-                  style={{fontSize: "inherit"}}
-                  aria-label="admin button"
-               >
-                  Admin
                </ToggleButton>
             </ToggleButtonGroup>
          </div>
@@ -82,7 +74,6 @@ function PlayoffBracket( )
          <div id="playoff-bracket-content" style={{ marginLeft: `${ focus * -100 }vw` }}>
             <PlayoffBracketLeaderboard deviceId={deviceId} setPicks={setPicks} newBracketSubmitted={newBracketSubmitted} setNewBracketSubmitted={setNewBracketSubmitted}/>
             <PlayoffBracketPicks deviceId={deviceId} currentYear={CurrentYear()} picks={picks} setPicks={setPicks} setNewBracketSubmitted={setNewBracketSubmitted} />
-            <PlayoffBracketEntry deviceId={deviceId}/>
          </div>
 
          <div id="playoff-bracket-background-picture" />
