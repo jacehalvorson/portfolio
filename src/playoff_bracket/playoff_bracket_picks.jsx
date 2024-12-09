@@ -325,10 +325,10 @@ function PlayoffBracketGame( props )
    
    return (
       <ToggleButtonGroup className="playoff-bracket-game"
-                        onChange={changeHandler}
-                        exclusive
-                        value={winner}
-                        style={{ borderRadius: "1em" }}
+                         onChange={changeHandler}
+                         exclusive
+                         value={winner}
+                         style={{ borderRadius: "1em" }}
       >
          {[ homeTeam, awayTeam ].map( ( team, index ) =>
          {
