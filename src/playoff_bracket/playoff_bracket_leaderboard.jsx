@@ -19,7 +19,9 @@ function PlayoffBracketLeaderboard(props)
    const [ scoresStatus, setScoresStatus ] = React.useState( "Loading brackets..." );
    
    React.useEffect( ( ) => {
-      API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
+    // Instead of fetching for the current year, fetch for 2025 temporarily.
+    //   API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
+      API.get( apiName, "/?table=playoffBrackets2025" )
           .then(response => {
               // Extract the winning bracket from the response
               const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
@@ -31,7 +33,8 @@ function PlayoffBracketLeaderboard(props)
 
               let allBrackets = [];
               response.forEach(player => {
-                  if (FootballYearStarts() === true || player.devices != null && player.devices.includes(props.deviceId)) {
+                  console.log(player.name);
+                  if (FootballYearStarts() === true || (player.devices && player.devices.includes(props.deviceId))) {
                       if (player.brackets === undefined || player.brackets.length === 0) {
                           console.error("Player " + player.name + " has no brackets");
                       }
@@ -52,7 +55,7 @@ function PlayoffBracketLeaderboard(props)
                           );
                       }
 
-                      if (player.devices != null && player.devices.includes(props.deviceId)) {
+                      if (player.devices && player.devices.includes(props.deviceId)) {
                           console.log("This is player " + player.name + " with device ID " + props.deviceId);
                       }
                   }
@@ -77,7 +80,6 @@ function PlayoffBracketLeaderboard(props)
                       return a.name.localeCompare(b.name);
                   }
               });
-              //console.log(sortedBrackets);
 
             // Set scores variable to display list of entries
             setScores( sortedBrackets );
