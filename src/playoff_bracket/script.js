@@ -1,3 +1,5 @@
+import { CurrentYear } from "./YearUpdate.js";
+
 // Update values of 1 (win) and 2 (lost) by winWeek1.  Future you will have to change winWeek2, winWeek3 and winWeek4.
 const WinningGames_OLD = [
 		{team: "49ers",  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
@@ -24,19 +26,19 @@ function getTeamName(year, conference, seed)
       switch ( seed )
       {
          case 1:
-            return "49ers";
+			  return "Vikings";
          case 2:
-            return "Cowboys";
+			  return "49ers";
          case 3:
-            return "Lions";
+			  return "Commanders";
          case 4:
-            return "Buccaneers";
+			  return "Saints";
          case 5:
-            return "Eagles";
+			  return "Packers";
          case 6:
-            return "Rams";
+			  return "Lions";
          case 7:
-            return "Packers";
+			  return "Bears";
          default:
             return "";
       }
@@ -64,16 +66,6 @@ function getTeamName(year, conference, seed)
 
    console.error( "Unable to find logo for team with seed " + seed + " in conference " + conference );
    return "";
-}
-
-function CurrentYear()
-{
-	var year = new Date().getFullYear();
-// Temporary change of year.
-var d = new Date();
-d.setFullYear(d.getFullYear(), d.getMonth() + 6);
-year = d.getFullYear();
-	return year;
 }
 
 function logoFilename(teamName)
@@ -132,7 +124,7 @@ function gameOpponent(weekDivision, conference, prediction, winningGames) {
 		};		
 		
 		const winningPoints = winningGames.find(team => team.conference.slice(0, 1) == conference.slice(0, 1) && 
-				team.prediction == prediction && team.winWeek1 == 2);
+			team.prediction == prediction && team.winWeek1 == 2);
 		return winningPoints.prediction;		
 	}
 	else if (weekDivision.slice(0, 1) == "C" || weekDivision.slice(0, 1) == "c") {
@@ -181,13 +173,34 @@ function secondLargest(arr) {
    return [...arr].sort((a, b) => b - a)[1];
 }
 
+function pretendPick(weekDivision, smallList, footballNumber, pickList)
+{
+	if (weekDivision.slice(0, 1) == "W" || weekDivision.slice(0, 1) == "w") {
+		if (footballNumber === 2 || footballNumber === 3 || footballNumber === 4) {
+			pickList = pickList.substring(0, smallList - 1) + "1" + pickList.substring(smallList);
+		}
+		else if (footballNumber === 5 || footballNumber === 6 || footballNumber === 7) {
+			pickList = pickList.substring(0, smallList - 1) + "2" + pickList.substring(smallList);
+		}
+	}
+	else if (weekDivision.slice(0, 1) == "D" || weekDivision.slice(0, 1) == "d") {
+	}
+	else if (weekDivision.slice(0, 1) == "C" || weekDivision.slice(0, 1) == "c") {
+	}
+	else if (weekDivision.slice(0, 1) == "S" || weekDivision.slice(0, 1) == "s") {
+	}
+
+	console.log("pretendPick = List " + smallList + " footballNumber " + footballNumber + " " + pickList);
+	return pickList;
+}
+
 function getWinningGames(pickList)
 {
 	var year = CurrentYear();
 	
 	// Start with all 0s (unpicked)
 	var winningGames = [
-		{team: getTeamName(year, "N", 1),  conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+		{team: getTeamName(year, "N", 1), conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: getTeamName(year, "N", 2), conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: getTeamName(year, "N", 3), conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
 		{team: getTeamName(year, "N", 4), conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
@@ -688,74 +701,151 @@ function getBrackets(ShortPath, winningPicks, userChoosePicks = "")
 				// Check for first week to see if these are still running this weekend.
 				if (winningPoints.conference === "N" && winningPoints.prediction == object.wildcardGamesNFC[0].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 4,
+							numberOrder: 5
+						});
 					};
 				};
 				if (winningPoints.conference === "N" && winningPoints.prediction == object.wildcardGamesNFC[1].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 6,
+							numberOrder: 6
+						});
 					};
 				};
 				if (winningPoints.conference === "N" && winningPoints.prediction == object.wildcardGamesNFC[2].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 5,
+							numberOrder: 4
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.wildcardGamesAFC[0].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 1,
+							numberOrder: 2
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.wildcardGamesAFC[1].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 3,
+							numberOrder: 3
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.wildcardGamesAFC[2].prediction) {
 					if (winningPoints.winWeek1 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							weekDivision: "Wildcard",
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Wild", "", winningPoints.prediction, WinningGames),
+							smallList: 2,
+							numberOrder: 1
+						});
 					};
 				};
 			}
 			else if (gamesPlayingNow2 < 4) {
 				// Check for second week to see if these are still running this weekend.
-				if (winningPoints.conference ==- "N" && winningPoints.prediction == object.divisionalGamesNFC[0].prediction) {
+				if (winningPoints.conference === "N" && winningPoints.prediction == object.divisionalGamesNFC[0].prediction) {
 					if (winningPoints.winWeek2 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Divisional", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 4
+						});
 					};
 				};
 				if (winningPoints.conference === "N" && winningPoints.prediction == object.divisionalGamesNFC[1].prediction) {
 					if (winningPoints.winWeek2 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Divisional", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 3
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.divisionalGamesAFC[0].prediction) {
 					if (winningPoints.winWeek2 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Divisional", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 2
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.divisionalGamesAFC[1].prediction) {
 					if (winningPoints.winWeek2 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Divisional", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 1
+						});
 					};
 				};
 			}
 			else if (gamesPlayingNow3 < 2) {
 				if (winningPoints.conference === "N" && winningPoints.prediction == object.championshipGameNFC[0].prediction) {
 					if (winningPoints.winWeek3 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Champion", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 2
+						});
 					};
 				};
 				if (winningPoints.conference === "A" && winningPoints.prediction == object.championshipGameAFC[0].prediction) {
 					if (winningPoints.winWeek3 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Champion", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 1
+						});
 					};
 				};
 			}
 			else if (gamesPlayingNow4 < 1) {
 				if (winningPoints.conference === object.superBowl[0].conference && winningPoints.prediction == object.superBowl[0].prediction) {
 					if (winningPoints.winWeek4 === 0) {
-						object.gamePlaying.push(winningPoints.team);
+						object.gamePlaying.push({
+							game: winningPoints.team,
+							winNumber: winningPoints.prediction,
+							loseNumber: gameOpponent("Superbowl", winningPoints.conference, winningPoints.prediction, WinningGames),
+							numberOrder: 1
+						});
 					}
 				};
 			}
@@ -765,5 +855,5 @@ function getBrackets(ShortPath, winningPicks, userChoosePicks = "")
 	return bracket;
 }
 
-export {getBrackets, CurrentYear, getTeamName, logoFilename};
+export { getBrackets, getTeamName, logoFilename, pretendPick };
 

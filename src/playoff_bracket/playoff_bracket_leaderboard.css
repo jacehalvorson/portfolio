@@ -103,3 +103,36 @@
       margin-top: 0.3em;
    }
 }
+
+.playoff-bracket-leaderboard-game {
+   height: 1em;
+   width: 4em;
+   border-radius: 1em;
+   margin: 0.3em;
+
+   color: black;
+
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+.playoff-bracket-leaderboard-team {
+   height: 45%;
+   width: 96%;
+   color: black;
+}
+
+.playoff-bracket-leaderboard-team > .image-container {
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.playoff-bracket-leaderboard-team > .image-container > img {
+   width: 3em;
+   margin-right: 12em;
+   margin-left: 0em;
+}

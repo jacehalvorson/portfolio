@@ -1,5 +1,5 @@
 import React from "react";
-import {CurrentYear} from "./script.js";
+import { CurrentYear } from "./YearUpdate.js";
 
 import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
 import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
