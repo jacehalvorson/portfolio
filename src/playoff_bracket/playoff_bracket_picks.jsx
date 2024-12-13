@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { API } from "aws-amplify";
 
-import { addBracketToTable,
-         emptyGame,
+import { emptyGame,
          computeWildcardGames,
          computeDivisionalGames,
          computeChampionshipGame,
+         computeSuperBowl,
          nflTeamColors
 } from "./playoff_bracket_utils"
+import submitBracket from "./playoff_bracket_submit_bracket";
 
 import Button from '@mui/material/Button';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -76,6 +77,7 @@ function PlayoffBracketPicks( props )
    const [submitStatus, setSubmitStatus] = useState( "" );
 
    const currentYear = props.currentYear
+   const picks = props.picks;
 
    const updatePick = ( index, value ) =>
    {
@@ -87,10 +89,10 @@ function PlayoffBracketPicks( props )
       }
 
       // Take the existing picks before and after the index, but replace to value at the index
-      // e.g., "1121" + "2" + "00000"
-      let newPicks = props.picks.substring(0, index) +
+      // e.g., "1121" + "2" + "00000000"
+      let newPicks = picks.substring(0, index) +
                      value +
-                     props.picks.substring(index + 1);
+                     picks.substring(index + 1);
       props.setPicks( newPicks );
    }
 
@@ -126,56 +128,45 @@ function PlayoffBracketPicks( props )
 
    // Update all the Wild Card games when the playoff teams or picks change
    React.useEffect( ( ) => {
-      // Make a list of NFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setNfcWildcardGames( computeWildcardGames( playoffTeams, "N", props.picks.substring( 0, 3 ) ) );
-
       // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setAfcWildcardGames( computeWildcardGames( playoffTeams, "A", props.picks.substring( 3, 6 ) ) );
+      setAfcWildcardGames( computeWildcardGames( "A", picks.substring( 0, 3 ) ) );
 
+      // Make a list of NFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
+      setNfcWildcardGames( computeWildcardGames( "N", picks.substring( 3, 6 ) ) );
+
+      // Reset the submit status when the picks change
       setSubmitStatus( "Submit" );
-   }, [ playoffTeams, props.picks ] );
+   }, [ picks ] );
+
+   // Update the AFC Divisional games when Wild Card games update
+   React.useEffect( ( ) =>
+   {
+      setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, "A", picks.substring( 6, 8 ) ) );
+   }, [ afcWildcardGames, playoffTeams, picks ] );
 
    // Update the NFC Divisional games when Wild Card games update
    React.useEffect( ( ) =>
    {
-      setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, playoffTeams[ "N1" ], props.picks.substring( 6, 8 ) ) );
-   }, [ nfcWildcardGames, playoffTeams, props.picks ] );
-      
-   // Update the AFC Divisional games when Wild Card games update
-   React.useEffect( ( ) =>
-   {
-      setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, playoffTeams[ "A1" ], props.picks.substring( 8, 10 ) ) );
-   }, [ afcWildcardGames, playoffTeams, props.picks ] );
+      setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, "N", picks.substring( 8, 10 ) ) );
+   }, [ nfcWildcardGames, playoffTeams, picks ] );
 
    // Update the AFC Championship when Divisional Games update
    React.useEffect( ( ) =>
    {
-      setAfcChampionship( computeChampionshipGame( afcDivisionalGames, props.picks.substring( 11, 12 ) ) );
-   }, [ afcDivisionalGames, props.picks ] );
+      setAfcChampionship( computeChampionshipGame( afcDivisionalGames, picks.substring( 10, 11 ) ) );
+   }, [ afcDivisionalGames, picks ] );
 
    // Update the NFC Championship when Divisional Games update
    React.useEffect( ( ) =>
    {
-      setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, props.picks.substring( 10, 11 ) ) );
-   }, [ nfcDivisionalGames, props.picks ] );
+      setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, picks.substring( 11, 12 ) ) );
+   }, [ nfcDivisionalGames, picks ] );
 
    // Update the Super Bowl when either Championship game updates
    React.useEffect( ( ) =>
    {
-      setSuperBowl( {
-         homeTeam: ( afcChampionship.winner === 1 && afcChampionship.homeTeam )
-            ? afcChampionship.homeTeam
-            : ( afcChampionship.winner === 2 && afcChampionship.awayTeam )
-               ? afcChampionship.awayTeam
-               : null,
-         awayTeam: ( nfcChampionship.winner === 1 && nfcChampionship.homeTeam )
-            ? nfcChampionship.homeTeam
-            : ( nfcChampionship.winner === 2 && nfcChampionship.awayTeam )
-               ? nfcChampionship.awayTeam
-               : null,
-         winner: Number( props.picks.substring( 12, 13 ) )
-      });
-   }, [ nfcChampionship, afcChampionship, props.picks ] );
+      setSuperBowl( computeSuperBowl( afcChampionship, nfcChampionship, picks.substring( 12, 13 ) ) );
+   }, [ nfcChampionship, afcChampionship, picks ] );
 
    return (
       <div id="playoff-bracket-picks">
@@ -186,8 +177,9 @@ function PlayoffBracketPicks( props )
                   <PlayoffBracketGame
                      game={game}
                      key={index}
-                     pickIndex={index + 3}
+                     pickIndex={index}
                      updatePick={updatePick}
+                     playoffTeams={playoffTeams}
                   />
                )}
             </div>
@@ -196,8 +188,9 @@ function PlayoffBracketPicks( props )
                   <PlayoffBracketGame
                      game={game}
                      key={index}
-                     pickIndex={index}
+                     pickIndex={index + 3}
                      updatePick={updatePick}
+                     playoffTeams={playoffTeams}
                   />
                )}
             </div>
@@ -210,8 +203,9 @@ function PlayoffBracketPicks( props )
                   <PlayoffBracketGame
                      game={game}
                      key={index}
-                     pickIndex={index + 8}
+                     pickIndex={index + 6}
                      updatePick={updatePick}
+                     playoffTeams={playoffTeams}
                   />
                )}
             </div>
@@ -221,8 +215,9 @@ function PlayoffBracketPicks( props )
                   <PlayoffBracketGame
                      game={game}
                      key={index}
-                     pickIndex={index + 6}
+                     pickIndex={index + 8}
                      updatePick={updatePick}
+                     playoffTeams={playoffTeams}
                   />
                )}
             </div>
@@ -233,16 +228,18 @@ function PlayoffBracketPicks( props )
                <h2>AFC Championship</h2>
                <PlayoffBracketGame
                   game={afcChampionship}
-                  pickIndex={11}
+                  pickIndex={10}
                   updatePick={updatePick}
+                  playoffTeams={playoffTeams}
                />
             </div>
             <div className="playoff-bracket-nfc">
                <h2>NFC Championship</h2>
                <PlayoffBracketGame
                   game={nfcChampionship}
-                  pickIndex={10}
+                  pickIndex={11}
                   updatePick={updatePick}
+                  playoffTeams={playoffTeams}
                />
             </div>
          </div>
@@ -258,6 +255,7 @@ function PlayoffBracketPicks( props )
                   game={superBowl}
                   pickIndex={12}
                   updatePick={updatePick}
+                  playoffTeams={playoffTeams}
                />
 
                <TiebreakerInput
@@ -275,7 +273,7 @@ function PlayoffBracketPicks( props )
          </div>
 
          {/* If the input isn't valid don't allow submision */}
-         {( !props.picks || props.picks.includes("0") || props.picks.length !== 13 ||
+         {( !picks || picks.includes("0") || picks.length !== 13 ||
             !tiebreaker || isNaN( tiebreaker ) || tiebreaker < 0 )
          
          // Picks are not filled out, disable submission
@@ -296,7 +294,7 @@ function PlayoffBracketPicks( props )
             size="large"
             onClick={() =>
             {
-               addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker, props.setNewBracketSubmitted );
+               submitBracket( setSubmitStatus, props.deviceId, picks, tiebreaker, props.setNewBracketSubmitted );
             }}
          >
             { ( submitStatus === "" ) ? "Submit" : submitStatus }
@@ -308,8 +306,8 @@ function PlayoffBracketPicks( props )
 
 function PlayoffBracketGame( props )
 {
-   const homeTeam = props.game.homeTeam;
-   const awayTeam = props.game.awayTeam;
+   const homeTeam = props.playoffTeams[props.game.homeTeam];
+   const awayTeam = props.playoffTeams[props.game.awayTeam];
    const winner = props.game.winner;
    // Place items at the end in the super bowl
    const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
