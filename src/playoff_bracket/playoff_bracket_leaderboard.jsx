@@ -17,6 +17,8 @@ function PlayoffBracketLeaderboard(props)
 {
    const [ scores, setScores ] = React.useState( [] );
    const [ scoresStatus, setScoresStatus ] = React.useState( "Loading brackets..." );
+
+   const newBracketSubmitted = props.newBracketSubmitted;
    
    React.useEffect( ( ) => {
     // Instead of fetching for the current year, fetch for 2025 temporarily.
@@ -90,7 +92,7 @@ function PlayoffBracketLeaderboard(props)
             console.error( err );
             setScoresStatus( "Error fetching brackets from database" );
          });
-   }, [ props.deviceId, props.newBracketSubmitted ] );
+   }, [ props.deviceId, newBracketSubmitted ] );
 
    return (
       <div className="playoff-bracket-leaderboard">

@@ -12,10 +12,9 @@
 }
 
 #playoff-bracket-wildcard-games {
-   width: 80%;
-
    display: flex;
    justify-content: space-around;
+   gap: 4em;
 }
 
 #playoff-bracket-wildcard-games > .playoff-bracket-afc,
@@ -26,11 +25,10 @@
 }
 
 #playoff-bracket-divisional-games {
-   width: 80%;
-
    display: flex;
    align-items: flex-start;
    justify-content: space-around;
+   gap: 19em;
 }
 
 #playoff-bracket-divisional-games > .playoff-bracket-afc,
@@ -41,11 +39,10 @@
 }
 
 #playoff-bracket-championships {
-   width: 80%;
-   
    display: flex;
    align-items: flex-start;
    justify-content: space-around;
+   gap: 33em;
 }
 
 #playoff-bracket-championships > .playoff-bracket-afc,
@@ -80,10 +77,6 @@
    height: 45%;
    width: 96%;
 }
-
-/* .playoff-bracket-team.MuiToggleButton-root:hover {
-   background-color: purple;
- } */
 
 .playoff-bracket-team > .image-container {
    height: 100%;

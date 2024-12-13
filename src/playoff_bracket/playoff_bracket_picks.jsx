@@ -75,6 +75,8 @@ function PlayoffBracketPicks( props )
    const [tiebreaker, setTiebreaker] = useState( "" );
    const [submitStatus, setSubmitStatus] = useState( "" );
 
+   const currentYear = props.currentYear
+
    const updatePick = ( index, value ) =>
    {
       if ( isNaN( Number( index ) ) || Number( index ) < 0 || Number( index ) > 12 ||
@@ -105,7 +107,7 @@ function PlayoffBracketPicks( props )
          response.forEach( team => 
          {
             // Only take teams from this year
-            if ( team.year === props.currentYear )
+            if ( team.year === currentYear )
             {
                teams[team.position] = {
                   name: team.team,
@@ -120,7 +122,7 @@ function PlayoffBracketPicks( props )
          console.log( "Error fetching teams from API and parsing" );
          console.error( err );
       })
-   }, [ props.currentYear ] );
+   }, [ currentYear ] );
 
    // Update all the Wild Card games when the playoff teams or picks change
    React.useEffect( ( ) => {
@@ -294,9 +296,7 @@ function PlayoffBracketPicks( props )
             size="large"
             onClick={() =>
             {
-               addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker );
-               if (submitStatus === "Success")
-                  props.setNewBracketSubmitted( oldValue => !oldValue );
+               addBracketToTable( setSubmitStatus, props.deviceId, props.picks, tiebreaker, props.setNewBracketSubmitted );
             }}
          >
             { ( submitStatus === "" ) ? "Submit" : submitStatus }

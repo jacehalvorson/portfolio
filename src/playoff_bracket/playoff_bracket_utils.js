@@ -159,7 +159,7 @@ function computeChampionshipGame( divisionalGames, championshipPick )
    };
 }
 
-async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
+async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker, setNewBracketSubmitted )
 {
    let brackets = [ ];
    let devices = [ ];
@@ -181,7 +181,11 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
          if ( ( player.devices && player.devices.includes( deviceId ) )  )
          {
             playerFound = true;
-            window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+            let cancel = window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+            if (!cancel)
+            {
+               throw Error("Bracket not added to database");;
+            }
             name = player.name;
             if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
             {
@@ -196,6 +200,10 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
       if (!playerFound)
       {
          name = prompt( `Device ID: ${deviceId}\nPicks: ${bracket.picks}\nTiebreaker: ${bracket.tiebreaker}\n\nName:` );
+         if ( !name )
+         {
+            throw Error("Bracket not added to database");;
+         }
          brackets = [ bracket ];
          devices = [ deviceId ];
 
@@ -205,10 +213,16 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
             if ( player.name === name )
             {
                playerFound = true;
-               window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+               let cancel = window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
+               if (cancel)
+               {
+                  setSubmitStatus( "Bracket not added to database" );
+                  return;
+               }
                if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
                {
-                  throw Error("Bracket is already in database");
+                  setSubmitStatus( "Bracket is already in database" );
+                  return;
                }
                brackets = player.brackets.concat( bracket );
                devices = player.devices.concat( deviceId );
@@ -231,6 +245,7 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
       })
       .then( response => {
          setSubmitStatus( "Success" );
+         setNewBracketSubmitted( oldValue => !oldValue );
       })
       .catch( err => {
          console.error( err );
@@ -239,10 +254,7 @@ async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
    })
    .catch( err => {
       console.error( err );
-      setSubmitStatus( (err.message === "Bracket is already in database")
-         ? err.message
-         : "Error while fetching brackets from database"
-      );
+      setSubmitStatus( err.message );
    });
 }
 
