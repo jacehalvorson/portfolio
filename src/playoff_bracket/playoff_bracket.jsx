@@ -31,11 +31,21 @@ function PlayoffBracket( )
       setFocus(1);
    }, [ picks ] );
 
+   //newFocus is 0 for leaderboard and 1 for picks
    const switchFocus = (event, newFocus) =>
    {
       if (newFocus !== null)
       {
          setFocus(newFocus);
+      }
+
+      // Scroll to top if the user switches to picks
+      if (newFocus === 1)
+      {
+         window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
       }
    }
 
