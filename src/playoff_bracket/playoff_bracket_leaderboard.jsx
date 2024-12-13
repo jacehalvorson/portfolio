@@ -21,67 +21,60 @@ function PlayoffBracketLeaderboard(props)
    const newBracketSubmitted = props.newBracketSubmitted;
    
    React.useEffect( ( ) => {
-    // Instead of fetching for the current year, fetch for 2025 temporarily.
-    //   API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
+      // Instead of fetching for the current year, fetch for 2025 temporarily.
+      //   API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
       API.get( apiName, "/?table=playoffBrackets2025" )
-          .then(response => {
-              // Extract the winning bracket from the response
-              const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
-              // Take out the winning entry from the response
-              response.splice(response.indexOf(winningEntry), 1);
+         .then(response => {
+            // Extract the winning bracket from the response
+            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            // Take out the winning entry from the response
+            response.splice(response.indexOf(winningEntry), 1);
 
-              // Use the deviceId to look up the pick that the may have changed.
-              // response2.split ... to receive the data from API.
+            // Use the deviceId to look up the pick that the may have changed.
+            // response2.split ... to receive the data from API.
 
-              let allBrackets = [];
-              response.forEach(player => {
-                  console.log(player.name);
+            let allBrackets = [];
+            response.forEach(player => {
+               console.log(player.name);
                   if (FootballYearStarts() === true || (player.devices && player.devices.includes(props.deviceId))) {
-                      if (player.brackets === undefined || player.brackets.length === 0) {
+                     if (!player.brackets || player.brackets.length === 0) {
                           console.error("Player " + player.name + " has no brackets");
-                      }
-                      else if (player.brackets.length === 1) {
-                          allBrackets.push({
+                     }
+                     else {
+                        player.brackets.forEach((bracket, bracketIndex) =>
+                           allBrackets.push({
                               name: player.name,
-                              picks: player.brackets[0].picks,
-                              tiebreaker: player.brackets[0].tiebreaker
-                          });
-                      }
-                      else {
-                          player.brackets.forEach((bracket, bracketIndex) =>
-                              allBrackets.push({
-                                  name: player.name + " (" + (bracketIndex + 1) + ")",
-                                  picks: bracket.picks,
-                                  tiebreaker: bracket.tiebreaket
-                              })
-                          );
-                      }
+                              bracketIndex: bracketIndex,
+                              picks: bracket.picks,
+                              tiebreaker: bracket.tiebreaket
+                           })
+                        );
+                     }
 
-                      if (player.devices && player.devices.includes(props.deviceId)) {
-                          console.log("This is player " + player.name + " with device ID " + props.deviceId);
-                      }
+                     if (player.devices && player.devices.includes(props.deviceId)) {
+                        console.log("This is player " + player.name + " with device ID " + props.deviceId);
+                     }
                   }
-              })
+               })
 
-              // Get the points, max points, and bracket for each entry
-              //let brackets = getBrackets( allBrackets, winningEntry.picks/*, response2*/ );
-              let brackets = getBrackets(allBrackets, winningEntry.picks, testPicks);
-              //let brackets = getBrackets(allBrackets, winningEntry.picks, "0002000000000");
-              //let brackets = getBrackets( brackets, "0000000000000",
-              //                                      "0100000000000" );
+               // Get the points, max points, and bracket for each entry
+               let brackets = getBrackets(allBrackets, winningEntry.picks, testPicks);
 
-              // Sort first on points won, then points available, then by name
-              let sortedBrackets = brackets.sort((a, b) => {
+               // Sort first on points won, then points available, then by name
+               let sortedBrackets = brackets.sort((a, b) => {
                   if (b.pointsWon !== a.pointsWon) {
-                      return b.pointsWon - a.pointsWon;
+                     return b.pointsWon - a.pointsWon;
                   }
                   else if (b.pointsAvailable !== a.pointsAvailable) {
-                      return b.pointsAvailable - a.pointsAvailable;
+                     return b.pointsAvailable - a.pointsAvailable;
+                  }
+                  else if (b.name !== a.name) {
+                     return a.name.localeCompare(b.name);
                   }
                   else {
-                      return a.name.localeCompare(b.name);
+                     return b.bracketIndex - a.bracketIndex;
                   }
-              });
+            });
 
             // Set scores variable to display list of entries
             setScores( sortedBrackets );
@@ -106,7 +99,7 @@ function PlayoffBracketLeaderboard(props)
                      key={index}
                >
                   {/* Entry name */}
-                  <h2 className="name">{ entry.name }</h2>
+                  <h2 className="name">{ entry.name }{ ( false ) ? ` (${"none"})` : "" }</h2>
                   {/* Score */}
                   <h2 className="score" style={{marginTop: 3}}>{ entry.pointsWon }</h2>
 
