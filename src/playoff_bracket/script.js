@@ -103,7 +103,7 @@ function logoFilename(teamName)
 //    return [...arr].sort((a, b) => b - a)[1];
 // }
 
-function pretendPick(weekDivision, smallList, footballNumber, pickList)
+function pretendPick(weekDivision, conferance, smallList, footballNumber, pickList)
 {
 	if (weekDivision.slice(0, 1) === "W" || weekDivision.slice(0, 1) === "w") {
 		if (footballNumber === 2 || footballNumber === 3 || footballNumber === 4) {
@@ -114,15 +114,79 @@ function pretendPick(weekDivision, smallList, footballNumber, pickList)
 		}
 	}
 	else if (weekDivision.slice(0, 1) === "D" || weekDivision.slice(0, 1) === "d") {
+		if (footballNumber === 1 || footballNumber === 2) {
+			pickList = pickList.substring(0, smallList - 1) + "1" + pickList.substring(smallList);
+		}
+		else if (footballNumber === 3 || footballNumber === 4) {
+			pickList = pickList.substring(0, smallList - 1) + "2" + pickList.substring(smallList);
+		}
 	}
 	else if (weekDivision.slice(0, 1) === "C" || weekDivision.slice(0, 1) === "c") {
+		if (footballNumber === 1) {
+			pickList = pickList.substring(0, smallList - 1) + "1" + pickList.substring(smallList);
+		}
+		else if (footballNumber === 2) {
+			pickList = pickList.substring(0, smallList - 1) + "2" + pickList.substring(smallList);
+		}
 	}
 	else if (weekDivision.slice(0, 1) === "S" || weekDivision.slice(0, 1) === "s") {
+		// 1 is A while 2 is N.
+		if (conferance === "A") {
+			pickList = pickList.substring(0, smallList - 1) + "1" + pickList.substring(smallList);
+		}
+		else {
+			pickList = pickList.substring(0, smallList - 1) + "2" + pickList.substring(smallList);
+		}
 	}
 
-	console.log("pretendPick = List " + smallList + " footballNumber " + footballNumber + " " + pickList);
+	console.log("pretendPick  " + conferance + " " + weekDivision.slice(0, 1) + " List " + smallList + " footballNumber " + footballNumber + " " + pickList);
 	return pickList;
 }
+
+// function getWinningGames(pickList)
+// {
+// 	var year = CurrentYear();
+	
+// 	// Start with all 0s (unpicked)
+// 	var winningGames = [
+// 		{team: getTeamName(year, "N", 1), conference: "N", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 2), conference: "N", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 3), conference: "N", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 4), conference: "N", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 5), conference: "N", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 6), conference: "N", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "N", 7), conference: "N", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 1), conference: "A", prediction: 1, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 2), conference: "A", prediction: 2, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 3), conference: "A", prediction: 3, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 4), conference: "A", prediction: 4, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 5), conference: "A", prediction: 5, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 6), conference: "A", prediction: 6, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0},
+// 		{team: getTeamName(year, "A", 7), conference: "A", prediction: 7, winWeek1: 0, winWeek2: 0, winWeek3: 0, winWeek4: 0}
+// 	];
+
+// 	var NFCWeek1 = [0, 0, 0];
+// 	var holdWeek = 0;
+// 	// NFC wildcard
+// 	[[3, 6], [4, 5], [2, 7]].forEach((teams, index) => {
+// 		if (pickList[index + 3] === "1") {
+// 			winningGames[teams[0] - 1].winWeek1 = 1;
+// 			NFCWeek1[holdWeek] = teams[0];
+// 		}
+// 		else if (footballNumber === 5 || footballNumber === 6 || footballNumber === 7) {
+// 			pickList = pickList.substring(0, smallList - 1) + "2" + pickList.substring(smallList);
+// 		}
+// 	}
+// 	else if (weekDivision.slice(0, 1) === "D" || weekDivision.slice(0, 1) === "d") {
+// 	}
+// 	else if (weekDivision.slice(0, 1) === "C" || weekDivision.slice(0, 1) === "c") {
+// 	}
+// 	else if (weekDivision.slice(0, 1) === "S" || weekDivision.slice(0, 1) === "s") {
+// 	}
+
+// 	console.log("pretendPick = List " + smallList + " footballNumber " + footballNumber + " " + pickList);
+// 	return pickList;
+// }
 
 // function getWinningGames(pickList)
 // {

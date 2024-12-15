@@ -10,6 +10,7 @@ import "../index.css";
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
@@ -78,10 +79,10 @@ function PlayoffBracketLeaderboard(props)
                }
             });
 
-            // Set scores variable to display list of entries
-            setScores( sortedBrackets );
-            setScoresStatus( "" );
-         })
+              // Set scores variable to display list of entries
+              setScores(sortedBrackets);
+              setScoresStatus("");
+          })
          .catch( err => {
             console.error( err );
             setScoresStatus( "Error fetching brackets from database" );
@@ -133,16 +134,16 @@ function PlayoffBracketLeaderboard(props)
                                              (
                                                 <div className="playoff-bracket-leaderboard-team"> {team.game}
                                                       <div>
-                                                         <button onClick={() => { let list = pretendPick(team.weekDivision, team.smallList, team.winNumber, testPicks); testPicks = list;  close(); }}>
+                                                         <button onClick={() => { let list = pretendPick(team.weekDivision, team.conferance, team.smallList, team.winNumber, testPicks); testPicks = list;  close(); }}>
                                                             Won!
                                                          </button>
-                                                         <button onClick={() => { let list = pretendPick(team.weekDivision, team.smallList, team.loseNumber, testPicks); testPicks = list;  close(); }}>
+                                                         <button onClick={() => { let list = pretendPick(team.weekDivision, team.conferance, team.smallList, team.loseNumber, testPicks); testPicks = list;  close(); }}>
                                                             Lost!
                                                          </button>
                                                          <button onClick={() => close()}>
                                                             Cancel
                                                          </button>
-                                                         <button onClick={() => { console.log("Reseting all."); close(); }}>
+                                                         <button onClick={() => { testPicks = "0000000000000"; console.log("Reseting all."); close(); }}>
                                                             Restart All
                                                          </button>
                                                       </div>

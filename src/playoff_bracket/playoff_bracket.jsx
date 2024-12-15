@@ -91,4 +91,4 @@ function PlayoffBracket( )
    );
 }
 
-export default PlayoffBracket;
+export { PlayoffBracket as default, getOrCreateDeviceId };
