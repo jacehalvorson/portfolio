@@ -5,10 +5,9 @@ import { FootballYearStarts } from "./YearUpdate.js";
 import { logoFilename, pretendPick } from "./script.js";
 import calculatePoints from "./playoff_bracket_calculate_points.js";
 
-import { FootballYearStarts } from "./YearUpdate.js";
-import { logoFilename, pretendPick } from "./script.js";
 import "./playoff_bracket_leaderboard.css";
 import "../index.css";
+
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
