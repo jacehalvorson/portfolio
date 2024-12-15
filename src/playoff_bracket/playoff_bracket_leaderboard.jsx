@@ -144,7 +144,7 @@ function PlayoffBracketLeaderboard(props)
                                                          <button onClick={() => close()}>
                                                             Cancel
                                                          </button>
-                                                         <button onClick={() => { console.log("Reseting all."); close(); }}>
+                                                         <button onClick={() => { testPicks = "0000000000000"; console.log("Reseting all."); close(); }}>
                                                             Restart All
                                                          </button>
                                                       </div>
