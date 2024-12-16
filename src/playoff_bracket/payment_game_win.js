@@ -45,22 +45,21 @@ export default async function submitGameComplete(setSubmitGame, deviceID, picks)
                     return 0;
                 }
             };
-            if (validDevice === true) {
-                // Send POST request to database API with this data
-                API.post(apiName, "/?table=playoffBrackets" + CurrentYear(), {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: bracketData
+
+            // Send POST request to database API with this data
+            API.post(apiName, "/?table=playoffBrackets" + CurrentYear(), {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: bracketData
+            })
+                .then(response => {
+                    setSubmitGame("Success");
                 })
-                    .then(response => {
-                        setSubmitGame("Success");
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        setSubmitGame("Error adding bracket to database");
-                    });
-            }
+                .catch(err => {
+                    console.error(err);
+                    setSubmitGame("Error adding bracket to database");
+                });
         })
         .catch(err =>
         {
