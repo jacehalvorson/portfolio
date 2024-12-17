@@ -9,19 +9,34 @@ export default async function submitGameComplete(setSubmitGame, deviceID, picks)
     let validDevice = false;
 
     setSubmitGame("Adding updated games...");
-
     // Check if this player is already in the database
     API.get(apiName, "/?table=playoffBrackets" + CurrentYear())
         .then(response => {
-            // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
-            response.forEach(player => {
-                if (player.devices && (deviceID.includes(devices[0]) || deviceID.includes(devices[1]) || deviceID.includes(devices[2]))) {
+            devices.forEach(device => {
+                if (deviceID === device) {
                     validDevice = true;
                 }
-            });
-            if (validDevice !== true) {
+            })
+            if (!validDevice) {
                 alert("The Picks has been updated and you have been charged $50 from Venmo for this change.");
+                setSubmitGame("Denied.");
+                return 0;
+            }
+
+            // Extract the winning bracket from the response
+            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
+            validDevice = false;
+            response.forEach(player =>
+            {
+                if (player.devices && player.devices.includes(deviceID))
+                {
+                    validDevice = true;
+                    console.log("This is player " + player.name + " with device ID " + deviceID);
+                }
+            });
+            if (validDevice !== true)
+            {
+                alert("You do not have an account set up in AWS.  Are you using one before 2025?");
                 setSubmitGame("Denied.");
                 return 0;
             }
