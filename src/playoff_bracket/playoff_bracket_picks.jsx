@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { API } from "aws-amplify";
 
 import { emptyGame,
@@ -23,7 +23,7 @@ const apiName = "apiplayoffbrackets";
 
 // Temporarily use local teams instead of fetching from database
 const DISABLE_API_CALL = true;
-const playoffTeams2025 = {
+export const playoffTeams2025 = {
    "N1": { name: "Vikings", seed: 1 },
    "N2": { name: "49ers", seed: 2 },
    "N3": { name: "Commanders", seed: 3 },
@@ -91,13 +91,13 @@ function PlayoffBracketPicks( props )
       // Take the existing picks before and after the index, but replace to value at the index
       // e.g., "1121" + "2" + "00000000"
       let newPicks = picks.substring(0, index) +
-                     value +
+                     value.toString() +
                      picks.substring(index + 1);
       props.setPicks( newPicks );
    }
 
    // Update teams when the page loads
-   React.useEffect( ( ) => {
+   useEffect( ( ) => {
       // If the teams are already loaded, save time by using those.
       if ( DISABLE_API_CALL ) return;
 
@@ -127,7 +127,7 @@ function PlayoffBracketPicks( props )
    }, [ currentYear ] );
 
    // Update all the Wild Card games when the playoff teams or picks change
-   React.useEffect( ( ) => {
+   useEffect( ( ) => {
       // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
       setAfcWildcardGames( computeWildcardGames( "A", picks.substring( 0, 3 ) ) );
 
@@ -139,31 +139,31 @@ function PlayoffBracketPicks( props )
    }, [ picks ] );
 
    // Update the AFC Divisional games when Wild Card games update
-   React.useEffect( ( ) =>
+   useEffect( ( ) =>
    {
       setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, "A", picks.substring( 6, 8 ) ) );
    }, [ afcWildcardGames, playoffTeams, picks ] );
 
    // Update the NFC Divisional games when Wild Card games update
-   React.useEffect( ( ) =>
+   useEffect( ( ) =>
    {
       setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, "N", picks.substring( 8, 10 ) ) );
    }, [ nfcWildcardGames, playoffTeams, picks ] );
 
    // Update the AFC Championship when Divisional Games update
-   React.useEffect( ( ) =>
+   useEffect( ( ) =>
    {
       setAfcChampionship( computeChampionshipGame( afcDivisionalGames, picks.substring( 10, 11 ) ) );
    }, [ afcDivisionalGames, picks ] );
 
    // Update the NFC Championship when Divisional Games update
-   React.useEffect( ( ) =>
+   useEffect( ( ) =>
    {
       setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, picks.substring( 11, 12 ) ) );
    }, [ nfcDivisionalGames, picks ] );
 
    // Update the Super Bowl when either Championship game updates
-   React.useEffect( ( ) =>
+   useEffect( ( ) =>
    {
       setSuperBowl( computeSuperBowl( afcChampionship, nfcChampionship, picks.substring( 12, 13 ) ) );
    }, [ nfcChampionship, afcChampionship, picks ] );
@@ -332,14 +332,14 @@ function PlayoffBracketGame( props )
                borderRadius: "1em",
                justifyContent: justifyContentValue,
                fontSize: "0.7em",
-               backgroundColor: ( team && winner === index + 1 )
+               backgroundColor: ( ( winner === ( index + 1 ) ) && team && team.name && nflTeamColors[team.name] )
                   ? nflTeamColors[team.name]
                   : "white"
             };
             if ( team )
             {
                return <ToggleButton
-                  className={"playoff-bracket-team"}
+                  className="playoff-bracket-team"
                   sx={{bgcolor: "white"}}
                   style={styles}
                   value={index + 1}

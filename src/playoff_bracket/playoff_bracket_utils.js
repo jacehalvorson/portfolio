@@ -175,4 +175,38 @@ function computeSuperBowl( afcChampionship, nfcChampionship, superBowlPick )
    };
 }
 
-export { computeWildcardGames, computeDivisionalGames, computeChampionshipGame, computeSuperBowl, emptyGame, nflTeamColors };
+// nflGameResults takes the "1011021210000" format.
+function getCurrentGames( nflGameResults )
+{
+   let afcWildcardGames = computeWildcardGames( "A", nflGameResults.substring( 0, 3 ) );
+   let nfcWildcardGames = computeWildcardGames( "N", nflGameResults.substring( 3, 6 ) );
+   let afcDivisionalGames = computeDivisionalGames( afcWildcardGames, "A", nflGameResults.substring( 6, 8 ) );
+   let nfcDivisionalGames = computeDivisionalGames( nfcWildcardGames, "N", nflGameResults.substring( 8, 10 ) );
+   let afcChampionshipGame = computeChampionshipGame( afcDivisionalGames, nflGameResults.substring( 10, 11 ) );
+   let nfcChampionshipGame = computeChampionshipGame( nfcDivisionalGames, nflGameResults.substring( 11, 12 ) );
+   let superBowl = computeSuperBowl( afcChampionshipGame, nfcChampionshipGame, nflGameResults.substring( 12, 13 ) );
+
+   if ( nflGameResults.substring( 0, 6 ).includes( "0" ) )
+   {
+      // Wild Card games
+      return [ ...afcWildcardGames, ...nfcWildcardGames ];
+   }
+   else if ( nflGameResults.substring( 6, 12 ).includes( "0" ) )
+   {
+      // Divisional games
+      return [ ...afcDivisionalGames, ...nfcDivisionalGames ];
+   }
+   else if ( nflGameResults.substring( 12, 13 ) === "0" )
+   {
+      // Championship games
+      return [ afcChampionshipGame, nfcChampionshipGame ];
+   }
+   else
+   {
+      // Super Bowl
+      return [ superBowl ];
+   }
+}
+
+
+export { computeWildcardGames, computeDivisionalGames, computeChampionshipGame, computeSuperBowl, getCurrentGames, emptyGame, nflTeamColors };
