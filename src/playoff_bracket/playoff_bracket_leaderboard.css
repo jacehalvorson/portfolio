@@ -1,7 +1,7 @@
-.playoff-bracket-leaderboard {
+#playoff-bracket-leaderboard {
    position: relative;
    margin-top: 1em;
-   margin-bottom: 1em;
+   margin-bottom: 10em;
    width: calc( 100vw - ( 100vw - 100% ) );
 
    display: flex;
@@ -12,7 +12,7 @@
    font-size: 1.2em;
 }
 
-.playoff-bracket-what-if {
+#playoff-bracket-what-if {
    height: 8em;
    width: 100%;
    
@@ -116,7 +116,7 @@
       margin-top: 0.3em;
    }
 
-   .playoff-bracket-what-if {
+   #playoff-bracket-what-if {
       height: 12em;
    }
 

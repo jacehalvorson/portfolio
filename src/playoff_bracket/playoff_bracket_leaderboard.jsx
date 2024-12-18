@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API } from "aws-amplify";
 
-import { FootballYearStarts } from "./YearUpdate.js";
+import { CurrentYear, FootballYearStarts } from "./YearUpdate.js";
 import calculatePoints from "./playoff_bracket_calculate_points.js";
 import { getCurrentGames, nflTeamColors } from "./playoff_bracket_utils.js";
 import { playoffTeams2025 } from "./playoff_bracket_picks.jsx";
@@ -16,23 +16,23 @@ const apiName = "apiplayoffbrackets";
 
 function PlayoffBracketLeaderboard(props)
 {
-   const [ scores, setScores ] = useState( [] );
-   const [ scoresStatus, setScoresStatus ] = useState( "Loading brackets..." );
+   const [ brackets, setBrackets ] = useState( [ ] );
+   const [ loadStatus, setLoadStatus ] = useState( "Loading brackets..." );
+   const [ winningEntry, setWinningEntry ] = useState( { name: "NFL_BRACKET", picks: "0000000000000" } );
    const [ currentGames, setCurrentGames ] = useState( [ ] );
    const [ testPicks, setTestPicks ] = useState( "000000" );
 
    const newBracketSubmitted = props.newBracketSubmitted;
    
    useEffect( ( ) => {
-      // Instead of fetching for the current year, fetch for 2025 temporarily.
-      //   API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
-      API.get( apiName, "/?table=playoffBrackets2025" )
+      API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
          .then(response => {
             // Extract the winning bracket from the response
-            const winningEntry = response.find(entry => entry.name === "NFL_BRACKET");
-            setCurrentGames( getCurrentGames( winningEntry.picks ) );
+            const winningEntry = response.find( entry => entry.name === "NFL_BRACKET" );
             // Take out the winning entry from the response
             response.splice(response.indexOf(winningEntry), 1);
+            // Set global variable
+            setWinningEntry( winningEntry );
 
             let brackets = [];
             response.forEach(player => {
@@ -46,7 +46,9 @@ function PlayoffBracketLeaderboard(props)
                            name: player.name,
                            bracketIndex: bracketIndex,
                            picks: bracket.picks,
-                           tiebreaker: bracket.tiebreaket
+                           tiebreaker: bracket.tiebreaker,
+                           score: 0,
+                           maxPoints: 0
                         })
                      );
                   }
@@ -56,42 +58,79 @@ function PlayoffBracketLeaderboard(props)
                   }
                }
             });
-
-            // Get the points, max points, and bracket for each entry
-            brackets.forEach( ( bracket ) =>
-            {
-               bracket.points = calculatePoints( bracket.picks, winningEntry.picks );
-            });
-
-            // Sort first on points won, then points available, then by name, then by bracket index
-            let sortedBrackets = brackets.sort((a, b) => {
-               if (b.points !== a.points) {
-                  return b.points - a.points;
-               }
-               // else if (b.pointsAvailable !== a.pointsAvailable) {
-               //    return b.pointsAvailable - a.pointsAvailable;
-               // }
-               else if (b.name !== a.name) {
-                  return a.name.localeCompare(b.name);
-               }
-               else {
-                  return a.bracketIndex - b.bracketIndex;
-               }
-            });
-
-            // Set scores variable to display list of entries
-            setScores(sortedBrackets);
-            setScoresStatus("");
+            setBrackets( brackets );
           })
          .catch( err => {
             console.error( err );
-            setScoresStatus( "Error fetching brackets from database" );
+            setLoadStatus( "Error fetching brackets from database" );
          });
    }, [ props.deviceId, newBracketSubmitted ] );
 
+   // Update the scores when the brackets, winning entry, or test picks change
+   useEffect( ( ) => {
+      // Use winning entry to calculate scores, but splice in test picks for the current unpicked games
+      const currentGames = getCurrentGames( winningEntry.picks );
+      let scoreSource;
+      switch ( currentGames.length )
+      {
+         case 6:
+            // Wildcard round, use the first 6 picks from the test picks
+            scoreSource = testPicks + winningEntry.picks.substring( 6 );
+            break;
+         case 4:
+            // Divisional round, use the first 6 picks from the winning entry, then 4 of the test picks, then the rest from the winning entry
+            scoreSource = winningEntry.picks.substring( 0, 6 ) + testPicks.substring( 0, 4 ) + winningEntry.picks.substring( 11 );
+            break;
+         case 2:
+            // Championships, use the first 10 picks from the winning entry, then 2 of the test picks, then the rest from the winning entry
+            scoreSource = winningEntry.picks.substring( 0, 10 ) + testPicks.substring( 0, 2 ) + winningEntry.picks.substring( 13 );
+            break;
+         case 1:
+            // Super Bowl, use the first 12 picks from the winning entry, then 1 of the test picks
+            scoreSource = winningEntry.picks.substring( 0, 12 ) + testPicks.substring( 0, 1 );
+            break;
+         case 0: // Intentional fall-through
+         default:
+            // Use the winning entry directly
+            scoreSource = winningEntry.picks;
+            break;
+      }
+
+      console.log("Score source: " + scoreSource);
+
+      // Calculate points, sort, and write the brackets to the global variable
+      setBrackets( brackets =>
+      {
+         brackets.forEach(bracket => {
+            bracket.points = calculatePoints( bracket.picks, scoreSource, currentGames );
+            // bracket.maxPoints = calculateMaxPoints( bracket.picks, winningEntry.picks, currentGames );
+         });
+   
+         // Sort first on points won, then points available, then by name, then by bracket index
+         return brackets.sort((a, b) => {
+            if (b.points !== a.points) {
+               return b.points - a.points;
+            }
+            // else if (b.maxPoints !== a.maxPoints) {
+            //    return b.maxPoints - a.maxPoints;
+            // }
+            else if (b.name !== a.name) {
+               return a.name.localeCompare(b.name);
+            }
+            else {
+               return a.bracketIndex - b.bracketIndex;
+            }
+         });
+      });
+
+      // Set current games and load status
+      setCurrentGames( currentGames );
+      setLoadStatus("");
+   }, [ brackets, winningEntry, testPicks ] );
+
    return (
-      <div className="playoff-bracket-leaderboard">
-         <div className="playoff-bracket-what-if">
+      <div id="playoff-bracket-leaderboard">
+         <div id="playoff-bracket-what-if">
          {
             currentGames.map( ( game, gameIndex ) =>
             {
@@ -125,7 +164,12 @@ function PlayoffBracketLeaderboard(props)
                            : ""
                      };
 
-                     return <ToggleButton className="playoff-bracket-what-if-button" value={teamIndex + 1} style={style}>
+                     return <ToggleButton
+                        className="playoff-bracket-what-if-button"
+                        value={teamIndex + 1}
+                        style={style}
+                        key={teamIndex}
+                     >
                         <img src={"/images/teams/" + teamName + "-logo.png"} alt={ teamName + " Logo" } />
                      </ToggleButton>
                   })}
@@ -134,9 +178,9 @@ function PlayoffBracketLeaderboard(props)
          }
          </div>
 
-         {( scoresStatus )
-         ? <h2>{ scoresStatus }</h2>
-         : scores.map( ( entry, index ) =>
+         {( loadStatus )
+         ? <h2>{ loadStatus }</h2>
+         : brackets.map( ( entry, index ) =>
             <div className="playoff-bracket-leaderboard-entry" 
                onClick={ ( ) => { props.setPicks( entry.picks ) } }
                key={index}
