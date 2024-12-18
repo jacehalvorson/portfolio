@@ -191,12 +191,12 @@ function getCurrentGames( nflGameResults )
       // Wild Card games
       return [ ...afcWildcardGames, ...nfcWildcardGames ];
    }
-   else if ( nflGameResults.substring( 6, 12 ).includes( "0" ) )
+   else if ( nflGameResults.substring( 6, 10 ).includes( "0" ) )
    {
       // Divisional games
       return [ ...afcDivisionalGames, ...nfcDivisionalGames ];
    }
-   else if ( nflGameResults.substring( 12, 13 ) === "0" )
+   else if ( nflGameResults.substring( 10, 12 ).includes( "0" ) )
    {
       // Championship games
       return [ afcChampionshipGame, nfcChampionshipGame ];
