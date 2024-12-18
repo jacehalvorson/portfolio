@@ -1,7 +1,7 @@
-.playoff-bracket-leaderboard {
+#playoff-bracket-leaderboard {
    position: relative;
    margin-top: 1em;
-   margin-bottom: 1em;
+   margin-bottom: 10em;
    width: calc( 100vw - ( 100vw - 100% ) );
 
    display: flex;
@@ -12,9 +12,31 @@
    font-size: 1.2em;
 }
 
-.playoff-bracket-leaderboard > a {
-   color: white;
-   text-decoration: none;
+#playoff-bracket-what-if {
+   height: 8em;
+   width: 100%;
+   
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 1em;
+}
+
+.playoff-bracket-what-if-group {
+   height: 100%;
+}
+
+.playoff-bracket-what-if-button {
+   height: 50%;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.playoff-bracket-what-if-button > img {
+   width: 3em;
 }
 
 .playoff-bracket-leaderboard-entry {
@@ -80,26 +102,24 @@
    grid-column: 3;
 }
 
-.playoff-bracket-leaderboard-entry > .games-playing {
+.playoff-bracket-leaderboard-entry > .team-logo {
+   width: 3em;
    grid-row: 1 / span 2;
    grid-column: 1;
    text-align: center;
-}
-
-.playoff-bracket-leaderboard-entry > .team-logo {
-   width: 3em;
-   height: 3em;
-}
-
-.playoff-bracket-leaderboard-entry > .eliminated-logo {
-   width: 2em;
-   height: 2em;
-   opacity: 0.7;
 }
 
 @media screen and ( max-width: 768px ) {
    .playoff-bracket-leaderboard-entry > .games-playing > p {
       font-size: 0.7em;
       margin-top: 0.3em;
+   }
+
+   #playoff-bracket-what-if {
+      height: 12em;
+   }
+
+   .playoff-bracket-what-if-button > img {
+      width: 2em;
    }
 }

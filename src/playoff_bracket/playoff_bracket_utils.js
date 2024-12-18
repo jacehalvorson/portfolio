@@ -1,7 +1,14 @@
-import { API } from "aws-amplify";
-
-const apiName = "apiplayoffbrackets";
 const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
+
+const emptyGames = {
+   afcWildcardGames: [ emptyGame, emptyGame, emptyGame ],
+   nfcWildcardGames: [ emptyGame, emptyGame, emptyGame ],
+   afcDivisionalGames: [ emptyGame, emptyGame ],
+   nfcDivisionalGames: [ emptyGame, emptyGame ],
+   afcChampionshipGame: emptyGame,
+   nfcChampionshipGame: emptyGame,
+   superBowl: emptyGame
+};
 
 const nflTeamColors = {
    "Ravens": "#241773",
@@ -43,23 +50,23 @@ const nflTeamColors = {
 // wildcardPicks is a string with 3 characters. e.g., "011" means the first game is
 // unpicked and the second and third games are picked for the home team, where the
 // first game is defined as the highest seed playing the lowest seed.
-function computeWildcardGames( playoffTeams, conference, wildcardPicks )
+function computeWildcardGames( conference, wildcardPicks )
 {
    return [
    {
-      homeTeam: playoffTeams[ conference + "2" ],
-      awayTeam: playoffTeams[ conference + "7" ],
-      winner: Number(wildcardPicks[0])
+      homeTeam: conference.toString() + "2",
+      awayTeam: conference.toString() + "7",
+      winner: parseInt( wildcardPicks[ 0 ] )
    },
    {
-      homeTeam: playoffTeams[ conference + "3" ],
-      awayTeam: playoffTeams[ conference + "6" ],
-      winner: Number(wildcardPicks[1])
+      homeTeam: conference.toString() + "3",
+      awayTeam: conference.toString() + "6",
+      winner: parseInt( wildcardPicks[ 1 ] )
    },
    {
-      homeTeam: playoffTeams[ conference + "4" ],
-      awayTeam: playoffTeams[ conference + "5" ],
-      winner: Number(wildcardPicks[2])
+      homeTeam: conference.toString() + "4",
+      awayTeam: conference.toString() + "5",
+      winner: parseInt( wildcardPicks[ 2 ] )
    }];
 }
 
@@ -67,9 +74,9 @@ function computeWildcardGames( playoffTeams, conference, wildcardPicks )
 // divisionalPicks is a string with 2 charactes. e.g., "01" means the first game is
 // unpicked and the second game is picked for the home team, where the first game
 // is defined as the highest seed playing the lowest seed.
-function computeDivisionalGames( wildcardGames, byeTeam, divisionalPicks )
+function computeDivisionalGames( wildcardGames, conference, divisionalPicks )
 {
-   let divisionalTeams = [ byeTeam ];
+   let divisionalTeams = [ conference.toString() + "1" ];
    let divisionalGames = [ ];
 
    wildcardGames.forEach( game =>
@@ -86,7 +93,7 @@ function computeDivisionalGames( wildcardGames, byeTeam, divisionalPicks )
    });
 
    // Sort teams by seed
-   divisionalTeams.sort( ( a, b ) => a.seed - b.seed );
+   divisionalTeams.sort( ( a, b ) => parseInt( a[ 1 ] ) - parseInt( b[ 1 ] ) );
 
    // Repeatedly take the highest and lowest seeds to play each other
    // until there are no more teams left
@@ -117,8 +124,8 @@ function computeDivisionalGames( wildcardGames, byeTeam, divisionalPicks )
    }
 
    // Incorporate picks into the divisional games
-   divisionalGames[0].winner = Number( divisionalPicks[0] );
-   divisionalGames[1].winner = Number( divisionalPicks[1] );
+   divisionalGames[0].winner = parseInt( divisionalPicks[0] );
+   divisionalGames[1].winner = parseInt( divisionalPicks[1] );
 
    return divisionalGames;
 }
@@ -148,102 +155,84 @@ function computeChampionshipGame( divisionalGames, championshipPick )
    }
 
    // Sort teams by seed
-   championshipTeams.sort( ( a, b ) => a.seed - b.seed );
+   championshipTeams.sort( ( a, b ) => parseInt( a[ 1 ] ) - parseInt( b[ 1 ] ) );
 
    return {
       homeTeam: championshipTeams[0],
       awayTeam: ( championshipTeams.length > 1 )
          ? championshipTeams[1]
          : null,
-      winner: Number( championshipPick )
+      winner: parseInt( championshipPick )
    };
 }
 
-async function addBracketToTable( setSubmitStatus, deviceId, picks, tiebreaker )
+// Given the championship games and the super bowl pick, compute the super bowl game
+// superBowlPick is a string with 1 character. e.g., "1" means the AFC team won.
+function computeSuperBowl( afcChampionship, nfcChampionship, superBowlPick )
 {
-   let brackets = [ ];
-   let devices = [ ];
-   let playerFound = false;
-   let name = "";
-   let bracket = {
-      picks: picks,
-      tiebreaker: tiebreaker
+   return {
+      homeTeam: ( afcChampionship.winner === 1 && afcChampionship.homeTeam )
+         ? afcChampionship.homeTeam
+         : ( afcChampionship.winner === 2 && afcChampionship.awayTeam )
+            ? afcChampionship.awayTeam
+            : null,
+      awayTeam: ( nfcChampionship.winner === 1 && nfcChampionship.homeTeam )
+         ? nfcChampionship.homeTeam
+         : ( nfcChampionship.winner === 2 && nfcChampionship.awayTeam )
+            ? nfcChampionship.awayTeam
+            : null,
+      winner: parseInt( superBowlPick )
    };
-
-   setSubmitStatus( "Adding bracket to leaderboard..." );
-
-   // Check if this player is already in the database
-   API.get( apiName, "/?table=playoffBrackets2025" )
-   .then( response => {
-      // First check if this device has been used in the past
-      response.forEach( player =>
-      {
-         if ( ( player.devices && player.devices.includes( deviceId ) )  )
-         {
-            playerFound = true;
-            window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
-            name = player.name;
-            if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
-            {
-               throw Error("Bracket is already in database");
-            }
-            brackets = player.brackets.concat( bracket );
-            devices = player.devices;
-         }
-      });
-
-      // Prompt for a name and check if it is already in the database
-      if (!playerFound)
-      {
-         name = prompt( `Device ID: ${deviceId}\nPicks: ${bracket.picks}\nTiebreaker: ${bracket.tiebreaker}\n\nName:` );
-         brackets = [ bracket ];
-         devices = [ deviceId ];
-
-         // Check if this player is already in the database (on a different device)
-         response.forEach( player =>
-         {
-            if ( player.name === name )
-            {
-               playerFound = true;
-               window.confirm(`${player.name} - You have ${player.brackets.length} bracket${ ( player.brackets.length === 1 ) ? "" : "s"} in the database.\nDo you want to add another?\n`);
-               if ( player.brackets.find( entry => entry.picks === bracket.picks && entry.tiebreaker === bracket.tiebreaker ) )
-               {
-                  throw Error("Bracket is already in database");
-               }
-               brackets = player.brackets.concat( bracket );
-               devices = player.devices.concat( deviceId );
-            }
-         });
-      }
-
-      let bracketData = {
-         name: name,
-         brackets: brackets,
-         devices: devices
-      };
-   
-      // Send POST request to database API with this data
-      API.post( apiName, "/?table=playoffBrackets2025", {
-         headers: {
-            "Content-Type": "application/json"
-         },
-         body: bracketData
-      })
-      .then( response => {
-         setSubmitStatus( "Success" );
-      })
-      .catch( err => {
-         console.error( err );
-         setSubmitStatus( "Error adding bracket to database" );
-      });
-   })
-   .catch( err => {
-      console.error( err );
-      setSubmitStatus( (err.message === "Bracket is already in database")
-         ? err.message
-         : "Error while fetching brackets from database"
-      );
-   });
 }
 
-export { addBracketToTable, computeWildcardGames, computeDivisionalGames, computeChampionshipGame, emptyGame, nflTeamColors };
+// picks takes the "1011021210000" format.
+// Return an object with all games and their winners.
+function computeAllGames( picks )
+{
+   let afcWildcardGames = computeWildcardGames( "A", picks.substring( 0, 3 ) );
+   let nfcWildcardGames = computeWildcardGames( "N", picks.substring( 3, 6 ) );
+   let afcDivisionalGames = computeDivisionalGames( afcWildcardGames, "A", picks.substring( 6, 8 ) );
+   let nfcDivisionalGames = computeDivisionalGames( nfcWildcardGames, "N", picks.substring( 8, 10 ) );
+   let afcChampionshipGame = computeChampionshipGame( afcDivisionalGames, picks.substring( 10, 11 ) );
+   let nfcChampionshipGame = computeChampionshipGame( nfcDivisionalGames, picks.substring( 11, 12 ) );
+   let superBowl = computeSuperBowl( afcChampionshipGame, nfcChampionshipGame, picks.substring( 12, 13 ) );
+
+   return {
+      afcWildcardGames: afcWildcardGames,
+      nfcWildcardGames: nfcWildcardGames,
+      afcDivisionalGames: afcDivisionalGames,
+      nfcDivisionalGames: nfcDivisionalGames,
+      afcChampionshipGame: afcChampionshipGame,
+      nfcChampionshipGame: nfcChampionshipGame,
+      superBowl: superBowl
+   };
+}
+
+// nflGameResults takes the "1011021210000" format.
+function getCurrentGames( nflGameResults )
+{
+   const games = computeAllGames( nflGameResults );
+
+   if ( nflGameResults.substring( 0, 6 ).includes( "0" ) )
+   {
+      // Wild Card games
+      return [ ...games.afcWildcardGames, ...games.nfcWildcardGames ];
+   }
+   else if ( nflGameResults.substring( 6, 10 ).includes( "0" ) )
+   {
+      // Divisional games
+      return [ ...games.afcDivisionalGames, ...games.nfcDivisionalGames ];
+   }
+   else if ( nflGameResults.substring( 10, 12 ).includes( "0" ) )
+   {
+      // Championship games
+      return [ games.afcChampionshipGame, games.nfcChampionshipGame ];
+   }
+   else
+   {
+      // Super Bowl
+      return [ games.superBowl ];
+   }
+}
+
+export { computeAllGames, getCurrentGames, emptyGames, nflTeamColors };

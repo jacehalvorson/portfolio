@@ -1,144 +1,231 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { API } from "aws-amplify";
-import {getBrackets, CurrentYear, getTeamName, logoFilename} from "./script.js";
+
+import { CurrentYear, FootballYearStarts } from "./YearUpdate.js";
+import calculatePoints from "./playoff_bracket_calculate_points.js";
+import { getCurrentGames, nflTeamColors } from "./playoff_bracket_utils.js";
+import { playoffTeams2025 } from "./playoff_bracket_picks.jsx";
+
 import "./playoff_bracket_leaderboard.css";
-import "../index.css";
+
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const apiName = "apiplayoffbrackets";
 
-function PlayoffBracketLeaderboard( props )
+function PlayoffBracketLeaderboard(props)
 {
-   const [ scores, setScores ] = React.useState( [] );
-   const [ scoresStatus, setScoresStatus ] = React.useState( "Loading brackets..." );
-   
-   React.useEffect( ( ) => {
-      API.get( apiName, "/?table=playoffBrackets2025" )
-         .then( response => {
+   const [ tempBrackets, setTempBrackets ] = useState( [ ] );
+   const [ brackets, setBrackets ] = useState( [ ] );
+   const [ loadStatus, setLoadStatus ] = useState( "Loading brackets..." );
+   const [ winningPicks, setWinningPicks ] = useState( "0000000000000" );
+   const [ currentPicksOffset, setCurrentPicksOffset ] = useState( "000000" );
+   const [ currentGames, setCurrentGames ] = useState( [ ] );
+   const [ testPicks, setTestPicks ] = useState( "000000" );
 
+   const newBracketSubmitted = props.newBracketSubmitted;
+   
+   useEffect( ( ) => {
+      API.get( apiName, "/?table=playoffBrackets" + CurrentYear() )
+         .then(response => {
             // Extract the winning bracket from the response
             const winningEntry = response.find( entry => entry.name === "NFL_BRACKET" );
             // Take out the winning entry from the response
-            response.splice( response.indexOf(winningEntry), 1 );
+            response.splice(response.indexOf(winningEntry), 1);
+            // Set global variable
+            setWinningPicks( winningEntry.picks );
 
-            // Use the deviceId to look up the pick that the may have changed.
-            // response2.split ... to receive the data from API.
+            let brackets = [];
+            response.forEach(player => {
+               if (FootballYearStarts() === true || (player.devices && player.devices.includes(props.deviceId))) {
+                  if (!player.brackets || player.brackets.length === 0) {
+                     console.error("Player " + player.name + " has no brackets");
+                  }
+                  else {
+                     player.brackets.forEach((bracket, bracketIndex) =>
+                        brackets.push({
+                           name: player.name,
+                           bracketIndex: bracketIndex,
+                           picks: bracket.picks,
+                           tiebreaker: bracket.tiebreaker,
+                           points: 0,
+                           maxPoints: 0,
+                           superBowlWinner: "N1"
+                        })
+                     );
+                  }
 
-            let allBrackets = [];
-            response.forEach( player =>
-            {
-               if ( player.brackets === undefined || player.brackets.length === 0 )
-               {
-                  console.error( "Player " + player.name + " has no brackets" );
-               }
-               else if ( player.brackets.length === 1 )
-               {
-                  allBrackets.push({
-                     name: player.name,
-                     picks: player.brackets[0].picks,
-                     tiebreaker: player.brackets[0].tiebreaker
-                  });
-               }
-               else
-               {
-                  player.brackets.forEach( ( bracket, bracketIndex ) =>
-                     allBrackets.push({
-                        name: player.name + " (" + (bracketIndex+1) + ")",
-                        picks: bracket.picks,
-                        tiebreaker: bracket.tiebreaket
-                     })
-                  );
-               }
-
-               if ( player.devices.includes( props.deviceId ) )
-               {
-                  console.log("This is player " + player.name + " with device ID " + props.deviceId );
-               }
-            })
-
-            // Get the points, max points, and bracket for each entry
-            let brackets = getBrackets( allBrackets, winningEntry.picks/*, response2*/ );
-            //let brackets = getBrackets( brackets, "0000000000000",
-            //                                      "0100000000000" );
-            
-            // Sort first on points won, then points available, then by name
-            let sortedBrackets = brackets.sort( ( a, b ) => 
-            {
-               if ( b.pointsWon !== a.pointsWon )
-               {
-                  return b.pointsWon - a.pointsWon;
-               }
-               else if ( b.pointsAvailable !== a.pointsAvailable )
-               {
-                  return b.pointsAvailable - a.pointsAvailable;
-               }
-               else
-               {
-                  return a.name.localeCompare( b.name );
+                  if (player.devices && player.devices.includes(props.deviceId)) {
+                     console.log("This is player " + player.name + " with device ID " + props.deviceId);
+                  }
                }
             });
-
-            // Set scores variable to display list of entries
-            setScores( sortedBrackets );
-            setScoresStatus( "" );
-            console.log( "Bracket scores loaded" );
-         })
+            setTempBrackets( brackets );
+          })
          .catch( err => {
             console.error( err );
-            setScoresStatus( "Error fetching brackets from database" );
+            setLoadStatus( "Error fetching brackets from database" );
          });
-   }, [ props.deviceId, props.newBracketSubmitted ] );
+   }, [ props.deviceId, newBracketSubmitted ] );
+   
+   // Update the current games based on the winning picks
+   useEffect( ( ) => {
+      const newCurrentGames = getCurrentGames( winningPicks );
+
+      // Set the offset where the current games are from the beginning of picks
+      switch ( newCurrentGames.length )
+      {
+         case 6:
+            // Wild card round
+            setCurrentPicksOffset( 0 );
+            break;
+         case 4:
+            // Divisional round
+            setCurrentPicksOffset( 6 );
+            break;
+         case 2:
+            // Conference championships
+            setCurrentPicksOffset( 10 );
+            break;
+         case 1:
+            // Super Bowl
+            setCurrentPicksOffset( 12 );
+            break;
+         case 0: // Intentional fall-through
+         default:
+            // Invalid current games - don't set offset
+            break;
+      }
+
+      // Update testPicks to incorporate the winners of current games
+      newCurrentGames.forEach( ( game, gameIndex ) =>
+      {
+         if ( game.winner !== 0 )
+         {
+            setTestPicks( testPicks =>
+            {
+               return testPicks.substring( 0, gameIndex ) + game.winner.toString( ) + testPicks.substring( gameIndex + 1 );
+            });
+         }
+      });
+
+      setCurrentGames( newCurrentGames );
+   }, [ winningPicks ] );
+
+   // Update the scores when the brackets, winning entry, or test picks change
+   useEffect( ( ) => {
+      // Use winning entry to calculate scores, but splice in test picks for the current unpicked games
+      let scoreSource = winningPicks;
+
+      // Splice in the test picks
+      scoreSource = winningPicks.substring( 0, currentPicksOffset ) +
+                    testPicks.substring( 0, currentGames.length ) +
+                    winningPicks.substring( currentPicksOffset + currentGames.length );
+
+      // Calculate points, sort, and write the brackets to the global variable
+      let brackets = [ ...tempBrackets ];
+      brackets.forEach(bracket => {
+         const calculatedData = calculatePoints( bracket.picks, scoreSource );
+         bracket.points = calculatedData.points;
+         bracket.maxPoints = calculatedData.maxPoints;
+         bracket.superBowlWinner = calculatedData.superBowlWinner;
+      });
+
+      // Sort first on points won, then points available, then by name, then by bracket index
+      brackets.sort((a, b) => {
+         if (b.points !== a.points) {
+            return b.points - a.points;
+         }
+         else if (b.maxPoints !== a.maxPoints) {
+            return b.maxPoints - a.maxPoints;
+         }
+         else if (b.name !== a.name) {
+            return a.name.localeCompare(b.name);
+         }
+         else {
+            return a.bracketIndex - b.bracketIndex;
+         }
+      });
+
+      // Set brackets and load status
+      setBrackets( brackets );
+      setLoadStatus("");
+   }, [ tempBrackets, currentGames, currentPicksOffset, testPicks, winningPicks ] );
 
    return (
-      <div className="playoff-bracket-leaderboard">
-      {
-         ( scoresStatus !== "" )
-            ? <h2>{ scoresStatus }</h2>
-            : scores.map( ( entry, index ) => {
-            return (
-               <div className="playoff-bracket-leaderboard-entry"
-                     onClick={ ( ) => { props.setPicks( entry.picks ) } }
-                     key={index}
-               >
-                  {/* Entry name */}
-                  <h2 className="name">{ entry.name }</h2>
+      <div id="playoff-bracket-leaderboard">
+         <div id="playoff-bracket-what-if">
+         {
+            currentGames.map( ( game, gameIndex ) =>
+            {
+               const winner = parseInt( testPicks[ gameIndex ] );
 
-                  {/* Score */}
-                  <h2 className="score" style={{marginTop: 3}}>{ entry.pointsWon }</h2>
-
-                  {/* Possible score */}
-                  <h3 className="possible-score">{ entry.pointsAvailable } possible</h3>
-
-                  {/* Teams playing this week that this entry picked*/}
-                  { 
-                     entry.gamePlaying.map( ( team, index ) => {
-                        return (                             
-                           <img src={ logoFilename(team) }
-                              alt={ team }
-                              key={ index }
-                              className="games-playing team-logo"
-                           />
-                        );
-                     })
-                  }
+               const changeHandler = ( event, newWinner ) =>
+               {
+                  let newPick = ( newWinner === null ) ? 0 : newWinner;
+                  setTestPicks( testPicks =>
                   {
-                     // X if the super bowl winner is out
-                     ( entry.gamePlaying.length === 0 )
-                        ? <>
-                              <img src={ logoFilename( getTeamName( CurrentYear(), entry.superBowl[ 0 ].conference, entry.superBowl[ 0 ].prediction ) ) }
-                                 alt="Eliminated"
-                                 className="games-playing team-logo"
-                              />
-                              <img src="images/x.png"
-                                 alt="Eliminated"
-                                 className="games-playing eliminated-logo"
-                              />
-                           </>
-                        : <></>
-                  }
-               </div>
-            );
-         })
-      }
+                     return testPicks.substring( 0, gameIndex ) + newPick.toString( ) + testPicks.substring( gameIndex + 1 );
+                  });
+               }
+
+               return <ToggleButtonGroup
+                  className="playoff-bracket-what-if-group"
+                  key={gameIndex}
+                  orientation="vertical"
+                  exclusive
+                  onChange={changeHandler}
+                  value={winner}
+               >
+                  {[ game.homeTeam, game.awayTeam ].map( ( team, teamIndex ) =>
+                  {
+                     if ( !team || !playoffTeams2025[team] || !playoffTeams2025[team].name )
+                        return <></>;
+
+                     const teamName = playoffTeams2025[team].name;
+                     const isDisabled = ( winningPicks[ currentPicksOffset + gameIndex ] !== "0" ) ? true : false;
+                     const style = {
+                        backgroundColor: ( winner === ( teamIndex + 1 ) && nflTeamColors[ teamName ] )
+                           ? nflTeamColors[ teamName ]
+                           : ""
+                     };
+
+                     return <ToggleButton
+                        className="playoff-bracket-what-if-button"
+                        value={teamIndex + 1}
+                        style={style}
+                        key={teamIndex}
+                        disabled={isDisabled}
+                     >
+                        <img src={"/images/teams/" + teamName + "-logo.png"} alt={ teamName + " Logo" } />
+                     </ToggleButton>
+                  })}
+               </ToggleButtonGroup>
+            })
+         }
+         </div>
+
+         {( loadStatus )
+         ? <h2>{ loadStatus }</h2>
+         : brackets.map( ( bracket, index ) =>
+            <div className="playoff-bracket-leaderboard-entry" 
+               onClick={ ( ) => { props.setPicks( bracket.picks ) } }
+               key={index}
+            >
+               {/* Entry name */}
+               <h2 className="name">{ bracket.name }{ ( bracket.bracketIndex > 0 ) ? ` (${bracket.bracketIndex + 1})` : "" }</h2>
+               {/* Score */}
+               <h2 className="score" style={{marginTop: 3}}>{ bracket.points }</h2>
+
+               {/* Possible score TODO add maxPoints to brackets*/}
+               <h3 className="possible-score">{ bracket.maxPoints } possible</h3>
+               
+               <img src={`/images/teams/${playoffTeams2025[ bracket.superBowlWinner ].name}-logo.png`}
+                  alt="Super Bowl winner"
+                  className="team-logo"
+               />
+            </div>
+         )}
       </div>
    );
 }

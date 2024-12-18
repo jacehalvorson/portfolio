@@ -4,7 +4,7 @@ import './ecommerce.css'
 
 // File names
 const productsFileName = '/products.json';
-const cartFileName = '/cart.json';
+// const cartFileName = '/cart.json';
 
 function ProductPreviews( )
 {

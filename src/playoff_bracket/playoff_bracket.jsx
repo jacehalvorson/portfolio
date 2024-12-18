@@ -1,14 +1,13 @@
 import React from "react";
-import {CurrentYear} from "./script.js";
+import { CurrentYear } from "./YearUpdate.js";
 
 import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
 import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
 
+import "./playoff_bracket.css";
+
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-import "./playoff_bracket.css";
-import "../index.css";
 
 function getOrCreateDeviceId( ) 
 {
@@ -31,11 +30,21 @@ function PlayoffBracket( )
       setFocus(1);
    }, [ picks ] );
 
+   //newFocus is 0 for leaderboard and 1 for picks
    const switchFocus = (event, newFocus) =>
    {
       if (newFocus !== null)
       {
          setFocus(newFocus);
+      }
+
+      // Scroll to top if the user switches to picks
+      if (newFocus === 1)
+      {
+         window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
       }
    }
 
@@ -81,4 +90,4 @@ function PlayoffBracket( )
    );
 }
 
-export default PlayoffBracket;
+export { PlayoffBracket as default, getOrCreateDeviceId };
