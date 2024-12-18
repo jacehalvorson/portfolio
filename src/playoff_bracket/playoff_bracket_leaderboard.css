@@ -104,7 +104,6 @@
 
 .playoff-bracket-leaderboard-entry > .team-logo {
    width: 3em;
-   height: 3em;
    grid-row: 1 / span 2;
    grid-column: 1;
    text-align: center;

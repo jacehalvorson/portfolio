@@ -1,5 +1,15 @@
 const emptyGame = { homeTeam: null, awayTeam: null, winner: 0 };
 
+const emptyGames = {
+   afcWildcardGames: [ emptyGame, emptyGame, emptyGame ],
+   nfcWildcardGames: [ emptyGame, emptyGame, emptyGame ],
+   afcDivisionalGames: [ emptyGame, emptyGame ],
+   nfcDivisionalGames: [ emptyGame, emptyGame ],
+   afcChampionshipGame: emptyGame,
+   nfcChampionshipGame: emptyGame,
+   superBowl: emptyGame
+};
+
 const nflTeamColors = {
    "Ravens": "#241773",
    "Bengals": "#FB4F14",
@@ -46,17 +56,17 @@ function computeWildcardGames( conference, wildcardPicks )
    {
       homeTeam: conference.toString() + "2",
       awayTeam: conference.toString() + "7",
-      winner: Number(wildcardPicks[0])
+      winner: parseInt( wildcardPicks[ 0 ] )
    },
    {
       homeTeam: conference.toString() + "3",
       awayTeam: conference.toString() + "6",
-      winner: Number(wildcardPicks[1])
+      winner: parseInt( wildcardPicks[ 1 ] )
    },
    {
       homeTeam: conference.toString() + "4",
       awayTeam: conference.toString() + "5",
-      winner: Number(wildcardPicks[2])
+      winner: parseInt( wildcardPicks[ 2 ] )
    }];
 }
 
@@ -83,7 +93,7 @@ function computeDivisionalGames( wildcardGames, conference, divisionalPicks )
    });
 
    // Sort teams by seed
-   divisionalTeams.sort( ( a, b ) => a.seed - b.seed );
+   divisionalTeams.sort( ( a, b ) => parseInt( a[ 1 ] ) - parseInt( b[ 1 ] ) );
 
    // Repeatedly take the highest and lowest seeds to play each other
    // until there are no more teams left
@@ -114,8 +124,8 @@ function computeDivisionalGames( wildcardGames, conference, divisionalPicks )
    }
 
    // Incorporate picks into the divisional games
-   divisionalGames[0].winner = Number( divisionalPicks[0] );
-   divisionalGames[1].winner = Number( divisionalPicks[1] );
+   divisionalGames[0].winner = parseInt( divisionalPicks[0] );
+   divisionalGames[1].winner = parseInt( divisionalPicks[1] );
 
    return divisionalGames;
 }
@@ -145,14 +155,14 @@ function computeChampionshipGame( divisionalGames, championshipPick )
    }
 
    // Sort teams by seed
-   championshipTeams.sort( ( a, b ) => a.seed - b.seed );
+   championshipTeams.sort( ( a, b ) => parseInt( a[ 1 ] ) - parseInt( b[ 1 ] ) );
 
    return {
       homeTeam: championshipTeams[0],
       awayTeam: ( championshipTeams.length > 1 )
          ? championshipTeams[1]
          : null,
-      winner: Number( championshipPick )
+      winner: parseInt( championshipPick )
    };
 }
 
@@ -171,42 +181,58 @@ function computeSuperBowl( afcChampionship, nfcChampionship, superBowlPick )
          : ( nfcChampionship.winner === 2 && nfcChampionship.awayTeam )
             ? nfcChampionship.awayTeam
             : null,
-      winner: Number( superBowlPick )
+      winner: parseInt( superBowlPick )
+   };
+}
+
+// picks takes the "1011021210000" format.
+// Return an object with all games and their winners.
+function computeAllGames( picks )
+{
+   let afcWildcardGames = computeWildcardGames( "A", picks.substring( 0, 3 ) );
+   let nfcWildcardGames = computeWildcardGames( "N", picks.substring( 3, 6 ) );
+   let afcDivisionalGames = computeDivisionalGames( afcWildcardGames, "A", picks.substring( 6, 8 ) );
+   let nfcDivisionalGames = computeDivisionalGames( nfcWildcardGames, "N", picks.substring( 8, 10 ) );
+   let afcChampionshipGame = computeChampionshipGame( afcDivisionalGames, picks.substring( 10, 11 ) );
+   let nfcChampionshipGame = computeChampionshipGame( nfcDivisionalGames, picks.substring( 11, 12 ) );
+   let superBowl = computeSuperBowl( afcChampionshipGame, nfcChampionshipGame, picks.substring( 12, 13 ) );
+
+   return {
+      afcWildcardGames: afcWildcardGames,
+      nfcWildcardGames: nfcWildcardGames,
+      afcDivisionalGames: afcDivisionalGames,
+      nfcDivisionalGames: nfcDivisionalGames,
+      afcChampionshipGame: afcChampionshipGame,
+      nfcChampionshipGame: nfcChampionshipGame,
+      superBowl: superBowl
    };
 }
 
 // nflGameResults takes the "1011021210000" format.
 function getCurrentGames( nflGameResults )
 {
-   let afcWildcardGames = computeWildcardGames( "A", nflGameResults.substring( 0, 3 ) );
-   let nfcWildcardGames = computeWildcardGames( "N", nflGameResults.substring( 3, 6 ) );
-   let afcDivisionalGames = computeDivisionalGames( afcWildcardGames, "A", nflGameResults.substring( 6, 8 ) );
-   let nfcDivisionalGames = computeDivisionalGames( nfcWildcardGames, "N", nflGameResults.substring( 8, 10 ) );
-   let afcChampionshipGame = computeChampionshipGame( afcDivisionalGames, nflGameResults.substring( 10, 11 ) );
-   let nfcChampionshipGame = computeChampionshipGame( nfcDivisionalGames, nflGameResults.substring( 11, 12 ) );
-   let superBowl = computeSuperBowl( afcChampionshipGame, nfcChampionshipGame, nflGameResults.substring( 12, 13 ) );
+   const games = computeAllGames( nflGameResults );
 
    if ( nflGameResults.substring( 0, 6 ).includes( "0" ) )
    {
       // Wild Card games
-      return [ ...afcWildcardGames, ...nfcWildcardGames ];
+      return [ ...games.afcWildcardGames, ...games.nfcWildcardGames ];
    }
    else if ( nflGameResults.substring( 6, 10 ).includes( "0" ) )
    {
       // Divisional games
-      return [ ...afcDivisionalGames, ...nfcDivisionalGames ];
+      return [ ...games.afcDivisionalGames, ...games.nfcDivisionalGames ];
    }
    else if ( nflGameResults.substring( 10, 12 ).includes( "0" ) )
    {
       // Championship games
-      return [ afcChampionshipGame, nfcChampionshipGame ];
+      return [ games.afcChampionshipGame, games.nfcChampionshipGame ];
    }
    else
    {
       // Super Bowl
-      return [ superBowl ];
+      return [ games.superBowl ];
    }
 }
 
-
-export { computeWildcardGames, computeDivisionalGames, computeChampionshipGame, computeSuperBowl, getCurrentGames, emptyGame, nflTeamColors };
+export { computeAllGames, getCurrentGames, emptyGames, nflTeamColors };

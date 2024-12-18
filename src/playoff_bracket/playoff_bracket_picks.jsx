@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import { API } from "aws-amplify";
 
-import { emptyGame,
-         computeWildcardGames,
-         computeDivisionalGames,
-         computeChampionshipGame,
-         computeSuperBowl,
-         nflTeamColors
-} from "./playoff_bracket_utils"
+import { computeAllGames, emptyGames, nflTeamColors } from "./playoff_bracket_utils"
 import submitBracket from "./playoff_bracket_submit_bracket";
 
 import Button from '@mui/material/Button';
@@ -17,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 
 import "./playoff_bracket_picks.css";
-import "../index.css";
 
 const apiName = "apiplayoffbrackets";
 
@@ -65,20 +58,18 @@ const TiebreakerInput = styled(TextField)({
 
 function PlayoffBracketPicks( props )
 {
-   const [nfcWildcardGames, setNfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
-   const [afcWildcardGames, setAfcWildcardGames] = useState( [emptyGame, emptyGame, emptyGame] );
-   const [nfcDivisionalGames, setNfcDivisionalGames] = useState( [ emptyGame, emptyGame ] );
-   const [afcDivisionalGames, setAfcDivisionalGames] = useState( [ emptyGame, emptyGame ] );
-   const [nfcChampionship, setNfcChampionship] = useState( emptyGame );
-   const [afcChampionship, setAfcChampionship] = useState( emptyGame );
-   const [superBowl, setSuperBowl] = useState( emptyGame );
+   const [games, setGames] = useState( emptyGames );
    const [playoffTeams, setPlayoffTeams] = useState( playoffTeams2025 );
-   const [tiebreaker, setTiebreaker] = useState( "" );
-   const [submitStatus, setSubmitStatus] = useState( "" );
+   const [tiebreaker, setTiebreaker] = useState( 0 );
+   const [submitStatus, setSubmitStatus] = useState( "Submit" );
 
    const currentYear = props.currentYear
+   const deviceId = props.deviceId;
    const picks = props.picks;
+   const setPicks = props.setPicks;
+   const setNewBracketSubmitted = props.setNewBracketSubmitted;
 
+   // Used by buttons to select teams. Error checks the new value and updates picks
    const updatePick = ( index, value ) =>
    {
       if ( isNaN( Number( index ) ) || Number( index ) < 0 || Number( index ) > 12 ||
@@ -93,7 +84,7 @@ function PlayoffBracketPicks( props )
       let newPicks = picks.substring(0, index) +
                      value.toString() +
                      picks.substring(index + 1);
-      props.setPicks( newPicks );
+      setPicks( newPicks );
    }
 
    // Update teams when the page loads
@@ -128,52 +119,18 @@ function PlayoffBracketPicks( props )
 
    // Update all the Wild Card games when the playoff teams or picks change
    useEffect( ( ) => {
-      // Make a list of AFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setAfcWildcardGames( computeWildcardGames( "A", picks.substring( 0, 3 ) ) );
-
-      // Make a list of NFC Wild Card teams that play each other (2 & 7, 3 & 6, 4 & 5)
-      setNfcWildcardGames( computeWildcardGames( "N", picks.substring( 3, 6 ) ) );
+      setGames( computeAllGames( picks ) );
 
       // Reset the submit status when the picks change
       setSubmitStatus( "Submit" );
    }, [ picks ] );
-
-   // Update the AFC Divisional games when Wild Card games update
-   useEffect( ( ) =>
-   {
-      setAfcDivisionalGames( computeDivisionalGames( afcWildcardGames, "A", picks.substring( 6, 8 ) ) );
-   }, [ afcWildcardGames, playoffTeams, picks ] );
-
-   // Update the NFC Divisional games when Wild Card games update
-   useEffect( ( ) =>
-   {
-      setNfcDivisionalGames( computeDivisionalGames( nfcWildcardGames, "N", picks.substring( 8, 10 ) ) );
-   }, [ nfcWildcardGames, playoffTeams, picks ] );
-
-   // Update the AFC Championship when Divisional Games update
-   useEffect( ( ) =>
-   {
-      setAfcChampionship( computeChampionshipGame( afcDivisionalGames, picks.substring( 10, 11 ) ) );
-   }, [ afcDivisionalGames, picks ] );
-
-   // Update the NFC Championship when Divisional Games update
-   useEffect( ( ) =>
-   {
-      setNfcChampionship( computeChampionshipGame( nfcDivisionalGames, picks.substring( 11, 12 ) ) );
-   }, [ nfcDivisionalGames, picks ] );
-
-   // Update the Super Bowl when either Championship game updates
-   useEffect( ( ) =>
-   {
-      setSuperBowl( computeSuperBowl( afcChampionship, nfcChampionship, picks.substring( 12, 13 ) ) );
-   }, [ nfcChampionship, afcChampionship, picks ] );
 
    return (
       <div id="playoff-bracket-picks">
          <div id="playoff-bracket-wildcard-games">
             <h2>Wild Card Games</h2>
             <div className="playoff-bracket-afc">
-               {afcWildcardGames.map( ( game, index ) =>
+               {games.afcWildcardGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
                      key={index}
@@ -184,7 +141,7 @@ function PlayoffBracketPicks( props )
                )}
             </div>
             <div className="playoff-bracket-nfc">
-               {nfcWildcardGames.map( ( game, index ) =>
+               {games.nfcWildcardGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
                      key={index}
@@ -199,7 +156,7 @@ function PlayoffBracketPicks( props )
          <div id="playoff-bracket-divisional-games">
             <div className="playoff-bracket-afc">
                <h2>AFC Divisional Games</h2>
-               {afcDivisionalGames.map( ( game, index ) =>
+               {games.afcDivisionalGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
                      key={index}
@@ -211,7 +168,7 @@ function PlayoffBracketPicks( props )
             </div>
             <div className="playoff-bracket-nfc">
                <h2>NFC Divisional Games</h2>
-               {nfcDivisionalGames.map( ( game, index ) =>
+               {games.nfcDivisionalGames.map( ( game, index ) =>
                   <PlayoffBracketGame
                      game={game}
                      key={index}
@@ -227,7 +184,7 @@ function PlayoffBracketPicks( props )
             <div className="playoff-bracket-afc">
                <h2>AFC Championship</h2>
                <PlayoffBracketGame
-                  game={afcChampionship}
+                  game={games.afcChampionshipGame}
                   pickIndex={10}
                   updatePick={updatePick}
                   playoffTeams={playoffTeams}
@@ -236,7 +193,7 @@ function PlayoffBracketPicks( props )
             <div className="playoff-bracket-nfc">
                <h2>NFC Championship</h2>
                <PlayoffBracketGame
-                  game={nfcChampionship}
+                  game={games.nfcChampionshipGame}
                   pickIndex={11}
                   updatePick={updatePick}
                   playoffTeams={playoffTeams}
@@ -252,7 +209,7 @@ function PlayoffBracketPicks( props )
                <h2>Super Bowl</h2>
 
                <PlayoffBracketGame
-                  game={superBowl}
+                  game={games.superBowl}
                   pickIndex={12}
                   updatePick={updatePick}
                   playoffTeams={playoffTeams}
@@ -294,7 +251,7 @@ function PlayoffBracketPicks( props )
             size="large"
             onClick={() =>
             {
-               submitBracket( setSubmitStatus, props.deviceId, picks, tiebreaker, props.setNewBracketSubmitted );
+               submitBracket( setSubmitStatus, deviceId, picks, tiebreaker, setNewBracketSubmitted );
             }}
          >
             { ( submitStatus === "" ) ? "Submit" : submitStatus }
@@ -306,17 +263,19 @@ function PlayoffBracketPicks( props )
 
 function PlayoffBracketGame( props )
 {
-   const homeTeam = props.playoffTeams[props.game.homeTeam];
-   const awayTeam = props.playoffTeams[props.game.awayTeam];
-   const winner = props.game.winner;
+   const game = props.game;
+   const homeTeam = props.playoffTeams[game.homeTeam];
+   const awayTeam = props.playoffTeams[game.awayTeam];
+   const winner = game.winner;
+   const pickIndex = props.pickIndex;
    // Place items at the end in the super bowl
-   const justifyContentValue = ( props.pickIndex === 12 ) ? "flex-end" : "flex-start";
+   const justifyContentValue = ( pickIndex === 12 ) ? "flex-end" : "flex-start";
 
    const changeHandler = ( event, newWinner ) =>
    {
       // If deselected, set to 0.
       // Otherwise, set to the new winner (1 for home or 2 for away)
-      props.updatePick( props.pickIndex, ( newWinner === null ) ? 0 : newWinner );
+      props.updatePick( pickIndex, ( newWinner === null ) ? 0 : newWinner );
    }
    
    return (
@@ -328,41 +287,43 @@ function PlayoffBracketGame( props )
       >
          {[ homeTeam, awayTeam ].map( ( team, index ) =>
          {
+            // These styles override MUI defaults. The backgroundColor is white by default,
+            // but it changes to the team's color if they're picked to win (and white text).
             const styles = {
                borderRadius: "1em",
                justifyContent: justifyContentValue,
                fontSize: "0.7em",
                backgroundColor: ( ( winner === ( index + 1 ) ) && team && team.name && nflTeamColors[team.name] )
                   ? nflTeamColors[team.name]
-                  : "white"
+                  : "white",
             };
-            if ( team )
+
+            // Invalid team, return empty disabled button
+            if ( !team )
             {
                return <ToggleButton
                   className="playoff-bracket-team"
-                  sx={{bgcolor: "white"}}
                   style={styles}
-                  value={index + 1}
-                  key={index}
-               >
-                  <div className="image-container">
-                     <img src={"/images/teams/" + team.name + "-logo.png"} alt={ team.name + " Logo" } />
-                  </div>
-                  <h3>{ team.seed }</h3>
-                  <h2 style={{color: "black"}}>{ team.name }</h2>
-               </ToggleButton>
-            }
-            else
-            {
-               return <ToggleButton
-                  className="playoff-bracket-team"
-                  sx={{bgcolor: "white"}}
-                  style={{backgroundColor: "white", borderRadius: "1em", justifyContent: justifyContentValue, fontSize: "0.7em"}}
                   value={-1}
                   disabled
                   key={index}
                />
             }
+
+            // Team is valid, return clickable button with team details
+            return <ToggleButton
+               className="playoff-bracket-team"
+               style={styles}
+               value={index + 1}
+               key={index}
+            >
+               <div className="image-container">
+                  <img src={"/images/teams/" + team.name + "-logo.png"} alt={ team.name + " Logo" } />
+               </div>
+               <h3>{ team.seed }</h3>
+               {/* White text for winner and black text for unpicked teams */}
+               <h2 style={{color: ( winner === ( index + 1 ) ) ? "white" : "black"}}>{ team.name }</h2>
+            </ToggleButton>
          })}
       </ToggleButtonGroup>
    )

@@ -4,11 +4,10 @@ import { CurrentYear } from "./YearUpdate.js";
 import PlayoffBracketLeaderboard from "./playoff_bracket_leaderboard.jsx";
 import PlayoffBracketPicks from "./playoff_bracket_picks.jsx";
 
+import "./playoff_bracket.css";
+
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
-import "./playoff_bracket.css";
-import "../index.css";
 
 function getOrCreateDeviceId( ) 
 {
