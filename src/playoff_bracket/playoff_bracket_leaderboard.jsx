@@ -7,7 +7,6 @@ import { getCurrentGames, nflTeamColors } from "./playoff_bracket_utils.js";
 import { playoffTeams2025 } from "./playoff_bracket_picks.jsx";
 
 import "./playoff_bracket_leaderboard.css";
-import "../index.css";
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -50,7 +49,8 @@ function PlayoffBracketLeaderboard(props)
                            picks: bracket.picks,
                            tiebreaker: bracket.tiebreaker,
                            points: 0,
-                           maxPoints: 0
+                           maxPoints: 0,
+                           superBowlWinner: "N1"
                         })
                      );
                   }
@@ -71,7 +71,6 @@ function PlayoffBracketLeaderboard(props)
    // Update the current games based on the winning picks
    useEffect( ( ) => {
       const newCurrentGames = getCurrentGames( winningPicks );
-      console.log( newCurrentGames );
 
       // Set the offset where the current games are from the beginning of picks
       switch ( newCurrentGames.length )
@@ -126,8 +125,10 @@ function PlayoffBracketLeaderboard(props)
       // Calculate points, sort, and write the brackets to the global variable
       let brackets = [ ...tempBrackets ];
       brackets.forEach(bracket => {
-         bracket.points = calculatePoints( bracket.picks, scoreSource );
-         // bracket.maxPoints = calculateMaxPoints( bracket.picks, winningPicks );
+         const calculatedData = calculatePoints( bracket.picks, scoreSource );
+         bracket.points = calculatedData.points;
+         bracket.maxPoints = calculatedData.maxPoints;
+         bracket.superBowlWinner = calculatedData.superBowlWinner;
       });
 
       // Sort first on points won, then points available, then by name, then by bracket index
@@ -135,9 +136,9 @@ function PlayoffBracketLeaderboard(props)
          if (b.points !== a.points) {
             return b.points - a.points;
          }
-         // else if (b.maxPoints !== a.maxPoints) {
-         //    return b.maxPoints - a.maxPoints;
-         // }
+         else if (b.maxPoints !== a.maxPoints) {
+            return b.maxPoints - a.maxPoints;
+         }
          else if (b.name !== a.name) {
             return a.name.localeCompare(b.name);
          }
@@ -157,7 +158,7 @@ function PlayoffBracketLeaderboard(props)
          {
             currentGames.map( ( game, gameIndex ) =>
             {
-               const winner = Number( testPicks[ gameIndex ] );
+               const winner = parseInt( testPicks[ gameIndex ] );
 
                const changeHandler = ( event, newWinner ) =>
                {
@@ -217,9 +218,9 @@ function PlayoffBracketLeaderboard(props)
                <h2 className="score" style={{marginTop: 3}}>{ bracket.points }</h2>
 
                {/* Possible score TODO add maxPoints to brackets*/}
-               <h3 className="possible-score"> TBD possible</h3>
+               <h3 className="possible-score">{ bracket.maxPoints } possible</h3>
                
-               <img src={"/images/teams/Vikings-logo.png"}
+               <img src={`/images/teams/${playoffTeams2025[ bracket.superBowlWinner ].name}-logo.png`}
                   alt="Super Bowl winner"
                   className="team-logo"
                />
