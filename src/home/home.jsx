@@ -27,7 +27,7 @@ function MenuBackground( props )
         id="background-picture"
         style={{ backgroundPosition: `${ ( props.sectionIndex * 50 ) }% center`,
                  opacity: `${ ( props.projectsHovered ) ? 0.1 : 0.15 }`,
-                 backgroundSize: `${ ( props.projectsHovered ) ? "100vmax" : "105vmax" }` }}
+                 backgroundSize: `${ ( props.projectsHovered ) ? "130vmax" : "135vmax" }` }}
       />
     </>
   )
