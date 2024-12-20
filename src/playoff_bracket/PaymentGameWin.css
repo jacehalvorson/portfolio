@@ -23,6 +23,13 @@ main#playoff-bracket-entry {
         text-align: center;
     }
 
+#red {
+    color: red;
+}
+#white {
+    color: white;
+}
+
 #back-button {
     color: white;
     fill: white;
