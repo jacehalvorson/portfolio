@@ -10,8 +10,6 @@ function About( props )
           <div id="about-titles">
             <h1>Jace Halvorson</h1>
             <h2>Software Engineer</h2>
-            <p>Bloomington, MN</p>
-            <p>+1 (952) 447-7533</p>
             <a href="mailto:jacehalvorson33@gmail.com">jacehalvorson33@gmail.com</a>
           </div>
         </div>
