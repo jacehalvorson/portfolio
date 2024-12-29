@@ -1,19 +1,19 @@
 export const projectCardList = [
   {
     "title": "Playoff Bracket",
-    "description": "Leaderboard for Kade's 2023 NFL playoff bracket challenge.",
-    "image": "https://static.profootballnetwork.com/wp-content/uploads/2024/01/07231723/image-6-819x1024.png",
-    "href": "/playoffbracket"
+    "description": "Predict this year's NFL Playoff Bracket and see how you compare to others. This app features a user-friendly interface, real-time updates, and a leaderboard to track your progress.",
+    "image": "https://media.vanityfair.com/photos/601da406076ac6cd8714d1b6/master/w_2560%2Cc_limit/lombari-tropy-tiffany.jpg",
+    "href": "https://main.d2ip2yjs34zc9b.amplifyapp.com/"
   },
   {
     "title": "Conway's Game of Life",
-    "description": "A cellular automaton simulation that follows the rules of Conway's Game of Life. This simulation features a variety of preset patterns, a random pattern generator, and a customizable grid size.",
+    "description": "A cellular automaton simulation that follows the rules of Conway's Game of Life. This simulation features a grid of cells that evolve over time based on the initial state of the grid, which can be stepped through or run continuously.",
     "image": "/images/conway-game-of-life.jpg",
     "href": "/conway"
   },
   {
     "title": "Hamming Codes",
-    "description": "C Program used to encode files to be more resistant to single bit errors. Uses (15, 11) Hamming Codes to correct single bit errors and detect double bit errors. With 3 bit errors or more, this program cannot reliably detect or correct errors.",
+    "description": "C Program used to encode files to be more resistant to errors. Uses (15, 11) Hamming Codes to correct single bit errors and detect double bit errors. This project served as my introduction to error-correcting codes, and it demonstrated how redundancy can be used to improve data integrity.",
     "image": "https://pbs.twimg.com/media/EhFhtJHX0AA9qBg.jpg",
     "href": "https://github.com/jacehalvorson/hamming_code"
   },

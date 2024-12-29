@@ -6,7 +6,6 @@
     "@aws-amplify/ui-react": "^4.6.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.6",
     "aws-amplify": "^5.0.25",
     "express": "^4.18.2",
     "jsdom": "^21.1.1",
