@@ -3,7 +3,7 @@ export const projectCardList = [
     "title": "Playoff Bracket",
     "description": "Predict this year's NFL Playoff Bracket and see how you compare to others. This app features a user-friendly interface, real-time updates, and a leaderboard to track your progress.",
     "image": "https://media.vanityfair.com/photos/601da406076ac6cd8714d1b6/master/w_2560%2Cc_limit/lombari-tropy-tiffany.jpg",
-    "href": "https://main.d2ip2yjs34zc9b.amplifyapp.com/"
+    "href": "https://playoff-brackets.com/"
   },
   {
     "title": "Conway's Game of Life",
