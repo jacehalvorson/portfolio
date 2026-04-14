@@ -13,7 +13,7 @@ main#nfl-stats {
 }
 
 .nfl-stats-selection-item {
-   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
    font-size: clamp( 20px, 1vw, 20px );
    color: white;
    margin: 0 1em;
@@ -78,7 +78,7 @@ tbody:hover > tr:hover > td {
 }
 
 th, td {
-   font-family: "Cera Round Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+   font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
    font-size: clamp( 16px, 1vh, 20px );
    color: white;
    text-decoration: none;

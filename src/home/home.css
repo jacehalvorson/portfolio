@@ -22,7 +22,7 @@ main#home {
 }
 
 #home-title {
-   font-family: "Space Mono", monospace, "Cera Round Pro";
+   font-family: "Space Mono", monospace, "Nunito";
    user-select: none;
    z-index: 5;
 }
@@ -56,7 +56,7 @@ main#home {
    font-size: 1.5em;
 }
 .home-slider-button > h2 {
-   font-family: "Space Mono", monospace, "Cera Round Pro";
+   font-family: "Space Mono", monospace, "Nunito";
    user-select: none;
 }
 #home-slider-button-left {
